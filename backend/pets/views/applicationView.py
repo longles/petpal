@@ -1,0 +1,143 @@
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
+from django.shortcuts import get_object_or_404
+
+from ..models import Application, Pet
+from ..serializers import ApplicationSerializer, ApplicationUpdateSerializer
+from accounts.permission import IsPetSeeker, IsShelter
+from ..utils import method_permission_classes
+
+
+class ApplicationCreateListView(APIView, PageNumberPagination):
+    permission_classes = [IsAuthenticated]
+
+
+    @method_permission_classes([IsPetSeeker])
+    def post(self, request):
+        pet_id = request.data.get('pet')
+        responses = request.data.get('responses')
+
+        if not Pet.objects.filter(id=pet_id, status=Pet.Status.AVAILABLE).first():
+            return Response({'error': 'Pet not available for application.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        data = {'pet': pet_id, 'applicant': request.user.user_object.pk, 'responses': responses}
+        serializer = ApplicationSerializer(data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    @method_permission_classes([IsPetSeeker | IsShelter])
+    def get(self, request):
+        current_user = request.user
+        user_type =  request.user.user_type.model
+        filter = {}
+
+        if user_type == 'petseeker':
+            filter['applicant'] = current_user.user_object
+        elif user_type == 'petshelter':
+            filter['pet__shelter'] = current_user.user_object
+        else:
+            return Response({"error": "Unauthorized user type."}, status=status.HTTP_403_FORBIDDEN)
+
+        applications = Application.objects.filter(**filter)
+
+        # Filter by status
+        valid_status_filters = (
+            Application.Status.PENDING,
+            Application.Status.APPROVED,
+            Application.Status.DENIED,
+            Application.Status.WITHDRAWN
+        )
+        try:
+            status_filter = int(request.query_params.get('status'))
+        except (TypeError, ValueError):
+            status_filter = None
+
+        if status_filter not in valid_status_filters:
+            return Response({"error": "Invalid status filter"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Sort by date
+        if status_filter:
+            applications = applications.filter(status=status_filter)
+
+        date_sort = request.query_params.get('date_sort')
+        if date_sort == 'last_updated_asc':
+            applications = applications.order_by('last_updated')
+        elif date_sort == 'last_updated_desc':
+            applications = applications.order_by('-last_updated')
+        elif date_sort == 'created_at_asc':
+            applications = applications.order_by('created_at')
+        elif date_sort == 'created_at_desc':
+            applications = applications.order_by('-created_at')
+        else:
+            return Response({"error": "Invalid sorting parameter"}, status=status.HTTP_400_BAD_REQUEST)
+
+        results = self.paginate_queryset(applications, request, view=self)
+        serializer = ApplicationSerializer(results, many=True)
+        return self.get_paginated_response(serializer.data)
+
+
+
+class ApplicationUpdateDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+
+
+    @method_permission_classes([IsPetSeeker | IsShelter])
+    def get(self, request, pk):
+        current_user = request.user
+        user_type = request.user.user_type.model
+
+        filter = {'pk': pk}
+
+        if user_type == 'petseeker':
+            filter['applicant'] = current_user.user_object
+        elif user_type == 'petshelter':
+            filter['pet__shelter'] = current_user.user_object
+        else:
+            return Response({"error": "Unauthorized user type."}, status=status.HTTP_403_FORBIDDEN)
+
+        application = get_object_or_404(Application, **filter)
+        serializer = ApplicationSerializer(application)
+
+        return Response(serializer.data)
+
+
+    @method_permission_classes([IsPetSeeker | IsShelter])
+    def patch(self, request, pk):
+        current_user = request.user
+        user_type = request.user.user_type.model
+
+        if user_type == 'petseeker':
+            application = get_object_or_404(Application, pk=pk, applicant=current_user.user_object)
+            if application.status in [Application.Status.PENDING, Application.Status.APPROVED]:
+                allowed_status_changes = [Application.Status.WITHDRAWN]
+            else:
+                return Response({"error": "Pet seeker can only withdraw pending or approved applications."}, status=status.HTTP_403_FORBIDDEN)
+
+        elif user_type == 'petshelter':
+            application = get_object_or_404(Application, pk=pk, pet__shelter=current_user.user_object)
+            if application.status == Application.Status.PENDING:
+                allowed_status_changes = [Application.Status.APPROVED, Application.Status.DENIED]
+            else:
+                return Response({"error": "Shelter can only update pending applications."}, status=status.HTTP_403_FORBIDDEN)
+
+        else:
+            return Response({"error": "Unauthorized user type."}, status=status.HTTP_403_FORBIDDEN)
+
+        # Update application status if allowed
+        new_status = request.data.get('status')
+        if new_status in allowed_status_changes:
+            serializer = ApplicationUpdateSerializer(application, data={'status': new_status}, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"error": "Invalid status update."}, status=status.HTTP_400_BAD_REQUEST)
