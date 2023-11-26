@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption Listings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/layout.css" rel="stylesheet">
+    <link href="styles/listings.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Pet Pal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon" style="background-color: #ff6600;"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="listings.html">Adopt a Pet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="applications.html">My Applications</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="badge bg-danger">2</span> <!-- Notification count -->
+                            Profile
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="profile_seeker.html">View Profile</a></li>
+                            <li><a class="dropdown-item" href="edit_profile_seeker.html">Update Profile</a></li>
+                            <li><a class="dropdown-item btn" data-bs-toggle="modal"
+                                    data-bs-target="#notificationModal">Notifications <span
+                                        class="badge bg-danger">2</span> <!-- Notification count --></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        <h2 class="mb-4">Adoption Listings</h2>
+        <div class="row">
+            <!-- Filter Sidebar -->
+            <div class="col-md-3 filter-sidebar">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Sort By</h5>
+                        <form>
+                            <div class="mb-3">
+                                <select class="form-select" id="sort">
+                                    <option value="Date: Descending">Newest</option>
+                                    <option value="Date: Ascending">Oldest</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Filter</h5>
+                        <form id="filterForm">
+                            <div class="mb-3">
+                                <label for="species" class="form-label">Species</label>
+                                <select class="form-select" id="species">
+                                    <option value="Any">Any</option>
+                                    <option value="Dog">Dog</option>
+                                    <option value="Cat">Cat</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="age" class="form-label">Age</label>
+                                <input type="number" class="form-control" id="age" min="1" step="1" placeholder="Any">
+                            </div>
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location</label>
+                                <input type="text" class="form-control" id="location" placeholder="Any">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Apply Filters</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pet Listings -->
+            <div class="col-md-9">
+                <div class="row no-gutters">
+                    <!-- Sample Pet Listings (Repeat for each listing) -->
+                    <div class="col-md-4 mb-4 d-flex align-items-stretch">
+                        <div class="card listing-box">
+                            <img src="../../assets/images/sample_pet_image_1.jpg" class="card-img-top" alt="Sample Pet 1">
+                            <div class="card-body">
+                                <h4 class="card-title">Buddy</h4>
+                                <p class="card-text">Buddy is a friendly Golden Retriever looking for a loving home.</p>
+                                <button class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#petDetailsModal1">Details</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4 d-flex align-items-stretch">
+                        <div class="card listing-box">
+                            <img src="../../assets/images/sample_pet_image_2.jpg" class="card-img-top" alt="Sample Pet 2">
+                            <div class="card-body">
+                                <h4 class="card-title">Whiskers</h4>
+                                <p class="card-text">Whiskers is an adorable tabby cat with a playful personality.</p>
+                                <button class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#petDetailsModal2">Details</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4 d-flex align-items-stretch">
+                        <div class="card listing-box">
+                            <img src="../../assets/images/sample_pet_image_3.jpg" class="card-img-top" alt="Sample Pet 3">
+                            <div class="card-body">
+                                <h4 class="card-title">Rocky</h4>
+                                <p class="card-text">Rocky is a lovable Chihuahua who enjoys long walks.</p>
+                                <button class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#petDetailsModal3">Details</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Sample Pet Listings -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Pet Details Modal -->
+        <div class="modal fade" id="petDetailsModal1" tabindex="-1" aria-labelledby="petDetailsModal1Label"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable custom-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- Move the badge next to the modal title -->
+                        <h3 class="modal-title" id="petDetailsModal1Label">Buddy</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="../../assets/images/sample_pet_image_1.jpg" alt="Pet Image" class="img-fluid">
+                        <span class="badge bg-success">Available for Adoption</span>
+                        <!-- tab for information, medical history and special requirements -->
+                        <ul class="nav nav-tabs" id="myTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" id="tab1-tab" data-bs-toggle="tab" href="#tab1" role="tab"
+                                    aria-controls="tab1" aria-selected="true">Information</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="tab2-tab" data-bs-toggle="tab" href="#tab2" role="tab"
+                                    aria-controls="tab2" aria-selected="false">Medical History</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="tab3-tab" data-bs-toggle="tab" href="#tab3" role="tab"
+                                    aria-controls="tab3" aria-selected="false">Special Requirements</a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                                <!-- Content for Tab 1 -->
+                                <p>Breed: Golden Retreiver</p>
+                                <p>Age: 2 years 3 months</p>
+                                <p>Buddy is a friendly Golden Retriever looking for a loving home.</p>
+                                <hr>
+                                <h5><a href="shelterdetail.html">Doggycares Inc.</a></h5>
+                                <p>1234 Shelter Ave, Toronto ON</p>
+                            </div>
+                            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                                <!-- Content for Tab 2 -->
+                                <p>Up-to-date vaccinations, including rabies, distemper, and parvovirus.</p>
+                                <p>Recent heartworm test and prevention history.</p>
+                                <hr>
+                                <p>Neutered/Spayed: No</p>
+                            </div>
+
+                            <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+                                <!-- Content for Tab 2 -->
+                                <p>Applicant must have a secure fenced yard with a minimum height of 6-foot.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#applicationModal1">Adopt</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="petDetailsModal2" tabindex="-1" aria-labelledby="petDetailsModal2Label"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable custom-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- Move the badge next to the modal title -->
+                        <h3 class="modal-title" id="petDetailsModal2Label">Whiskers</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="../../assets/images/sample_pet_image_2.jpg" alt="Pet Image" class="img-fluid">
+                        <span class="badge bg-danger">Adopted</span>
+                        <!-- tab for information, medical history and special requirements -->
+                        <ul class="nav nav-tabs" id="myTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" id="tab1-tab" data-bs-toggle="tab" href="#tab11" role="tab"
+                                    aria-controls="tab1" aria-selected="true">Information</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="tab2-tab" data-bs-toggle="tab" href="#tab22" role="tab"
+                                    aria-controls="tab2" aria-selected="false">Medical History</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="tab3-tab" data-bs-toggle="tab" href="#tab33" role="tab"
+                                    aria-controls="tab3" aria-selected="false">Special Requirements</a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="tab11" role="tabpanel"
+                                aria-labelledby="tab1-tab">
+                                <!-- Content for Tab 1 -->
+                                <p>Breed: Tabby</p>
+                                <p>Age: 4 years 6 months</p>
+                                <p>Whiskers is an adorable tabby cat with a playful personality.</p>
+                                <hr>
+                                <h5>BestShelters Inc.</h5>
+                                <p>4321 Shelter Street, Toronto ON</p>
+
+                            </div>
+                            <div class="tab-pane fade" id="tab22" role="tabpanel" aria-labelledby="tab2-tab">
+                                <!-- Content for Tab 2 -->
+                                <p>Feline leukemia (FeLV) and Feline Immunodeficiency Virus (FIV) test results.</p>
+                                <p></p>Vaccination records for core vaccines like FVRCP.</p>
+                                <hr>
+                                <p>Neutered/Spayed: Yes</p>
+                            </div>
+
+                            <div class="tab-pane fade" id="tab33" role="tabpanel" aria-labelledby="tab3-tab">
+                                <!-- Content for Tab 2 -->
+                                <p>No homes with dogs or young children due to Whisker's temperament.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary">Adopt</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="petDetailsModal3" tabindex="-1" aria-labelledby="petDetailsModal3Label"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable custom-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- Move the badge next to the modal title -->
+                        <h3 class="modal-title" id="petDetailsModal3Label">Rocky</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="../../assets/images/sample_pet_image_3.jpg" alt="Pet Image" class="img-fluid">
+                        <span class="badge bg-warning">Pending Application</span>
+                        <!-- tab for information, medical history and special requirements -->
+                        <ul class="nav nav-tabs" id="myTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" id="tab1-tab" data-bs-toggle="tab" href="#tab111" role="tab"
+                                    aria-controls="tab1" aria-selected="true">Information</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="tab2-tab" data-bs-toggle="tab" href="#tab222" role="tab"
+                                    aria-controls="tab2" aria-selected="false">Medical History</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="tab3-tab" data-bs-toggle="tab" href="#tab333" role="tab"
+                                    aria-controls="tab3" aria-selected="false">Special Requirements</a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="tab111" role="tabpanel"
+                                aria-labelledby="tab1-tab">
+                                <!-- Content for Tab 1 -->
+                                <p>Breed: Chihuahua</p>
+                                <p>Age: 11 months</p>
+                                <p>Rocky is a lovable Chihuahua who enjoys long walks.</p>
+                                <hr>
+                                <h5><a href="shelterdetail.html">GreenPastures Ltd.</a></h5>
+                                <p>5678 Shelter Road, Toronto ON</p>
+                            </div>
+                            <div class="tab-pane fade" id="tab222" role="tabpanel" aria-labelledby="tab2-tab">
+                                <!-- Content for Tab 2 -->
+                                <p>Up-to-date vaccinations, including rabies, distemper, and parvovirus. Recent
+                                    heartworm test and prevention history.</p>
+                                <p>Neutered/Spayed: No</p>
+                            </div>
+
+                            <div class="tab-pane fade" id="tab333" role="tabpanel" aria-labelledby="tab3-tab">
+                                <!-- Content for Tab 2 -->
+                                <p>There is no special requirements for adopting Rocky.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary">Adopt</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Application Modal -->
+        <div class="modal fade" id="applicationModal1" tabindex="-1" aria-labelledby="applicationModal1Label"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable custom-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="adoptionFormModalLabel">Your Application</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="firstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="firstName" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="lastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="lastName" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Address</label>
+                                <input type="text" class="form-control" id="address" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="peopleAtHome" class="form-label">How many people live at home?</label>
+                                <input type="number" class="form-control" id="peopleAtHome" min="1" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="reasonForAdoption" class="form-label">Why do you want to adopt this
+                                    pet?</label>
+                                <textarea class="form-control" id="reasonForAdoption" rows="4" required></textarea>
+                            </div>
+                            <div class="mb-3" id="alertContainer"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#petDetailsModal1">Back</button>
+                                <button type="button" class="btn btn-primary" id="showAlert">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <!-- Example Notification Item -->
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <!-- Clickable title to toggle details -->
+                                    <h5 class="notification-title" data-bs-toggle="collapse"
+                                        data-bs-target="#notificationDetails1" aria-expanded="false">
+                                        Application Approved
+                                    </h5>
+                                    <!-- Notification content goes here. -->
+                                    <div class="collapse" id="notificationDetails1">
+                                        Your application for Whiskers has been approved
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <!-- Clickable title to toggle details -->
+                                    <h5 class="notification-title" data-bs-toggle="collapse"
+                                        data-bs-target="#notificationDetails2" aria-expanded="false">
+                                        Application Rejected
+                                    </h5>
+                                    <!-- Notification content goes here. -->
+                                    <div class="collapse" id="notificationDetails2">
+                                        Your application for Rocky has been rejected
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Copyright &copy; 2023 | Pet Pal </p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelector('#showAlert').addEventListener('click', function () {
+            // Create an alert div and append it to the alertContainer
+            var alertDiv = $('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error:</strong> You should check in on some of those fields.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+            $('#alertContainer').append(alertDiv);
+        });
+    </script>
+
+    <!-- Link to Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Link to JQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        console.log('hi')
+        document.addEventListener("DOMContentLoaded", function() {
+            const filterForm = document.getElementById('filterForm');
+
+            filterForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const speciesValue = document.getElementById('species').value;
+
+                if (speciesValue === "Dog") {
+                    window.location.href = 'listings-species-dog.html';
+                } else if (speciesValue === "Cat") {
+                    window.location.href = 'listings-species-cat.html';
+                } else {
+                    window.location.href = 'listings.html'
+                }
+
+            });
+        });
+
+    </script>
+
+
+</body>
+
+</html>

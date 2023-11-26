@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/layout.css" rel="stylesheet">
+    <link href="styles/profile.css" rel="stylesheet">
+    <title>Edit Shelter Information</title>
+</head>
+
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">Pet Pal</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" style="background-color: #ff6600;"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="sheltermanagement.html">Manage Pets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="shelterdetail_shelter.html">Manage Shelter</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Profile
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" href="profile_shelter.html">View Profile</a></li>
+                        <li><a class="dropdown-item" href="edit_profile_shelter.html">Update Profile</a></li>
+                        <li><a class="dropdown-item btn" data-bs-toggle="modal"
+                               data-bs-target="#notificationModal">Notifications</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container my-5">
+    <div id="alertContainer"></div>
+    <h2>Edit Shelter Information</h2>
+    <form>
+        <div class="form-group">
+            <label for="username">Shelter Name</label>
+            <input type="text" class="form-control" id="username" placeholder="Username" value="Animal Shelter">
+        </div>
+        <div class="form-group">
+            <label for="location">Shelter Location</label>
+            <input type="text" class="form-control" id="location" value="This, That, and The Other Streets">
+        </div>
+        <div class="form-group">
+            <label for="mission">Mission Statement</label>
+            <textarea class="form-control" id="mission" rows="3">It's our mission to improve and save animal lives
+            </textarea>
+        </div>
+        <div class="form-group">
+            <label for="aboutUsProfile">About Us</label>
+            <textarea class="form-control" id="aboutUsProfile" rows="3">Since our founding in 1982, we have saved thousands of pets and given them forever homes.
+            </textarea>
+        </div>
+<!--        <div class="form-group">-->
+<!--            <label for="petCount">Pet Count</label>-->
+<!--            <input type="text" class="form-control" id="petCount" value="100M">-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <label for="species">Species</label>-->
+<!--            <input type="text" class="form-control" id="species" value="HedgeHog">-->
+<!--        </div>-->
+        <div class="form-group">
+            <label for="email" aria-describedby="emailHelp">Email</label>
+            <input type="text" class="form-control" id="email" placeholder="email"
+                   value="imrich@mail.utoronto.ca">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                else.</small>
+        </div>
+        <div class="form-group">
+            <label for="mobile">Mobile</label>
+            <input type="text" class="form-control" id="mobile" placeholder="(xxx) xxx-xxxx">
+            <small class="form-text text-muted">We'll never share your phone number with anyone
+                else.</small>
+        </div>
+        <div class="form-group">
+            <label for="location">Change Shelter Pic</label>
+            <input type="file" class="form-control" id="profilePic">
+        </div>
+<!--        <button type="submit" class="btn btn-primary" id="showAlert">Save</button>-->
+        <a href="#" class="btn btn-primary" id="showAlert">Save</a>
+        <a href="profile_shelter.html" id="cancel" class="btn btn-dark">Discard Changes</a>
+    </form>
+
+    <div class="container" style="height: 50px"></div>
+    <div id="alertContainer2"></div>
+    <h2>Security and Privacy</h2>
+    <form>
+        <div class="form-group">
+            <label for="oldPassword">Old Password</label>
+            <input type="password" class="form-control" id="oldPassword" value="Type your old password">
+        </div>
+        <div class="form-group">
+            <label for="newPassword">New Password</label>
+            <input type="password" class="form-control" id="newPassword" value="NewPassword">
+        </div>
+        <div class="form-group">
+            <label for="newPassword2">Confirm New Password</label>
+            <input type="password" class="form-control" id="newPassword2" value="NewPassword">
+        </div>
+<!--        <button type="submit" class="btn btn-primary" id="showAlert2">Submit</button>-->
+        <a href="#" class="btn btn-primary" id="showAlert2">Submit</a>
+    </form>
+</div>
+
+<!-- Notification Modal -->
+<div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                No new notifications!
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <p>Copyright &copy; 2023 | Pet Pal </p>
+    </div>
+</footer>
+
+</body>
+
+<script>
+    document.querySelector('#showAlert').addEventListener('click', function () {
+        // Create an alert div and append it to the alertContainer
+        let alertDiv = $('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error:</strong> You should check in on some of those fields.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+        $('#alertContainer').append(alertDiv);
+    });
+    document.querySelector('#showAlert2').addEventListener('click', function () {
+        // Create an alert div and append it to the alertContainer
+        let alertDiv = $('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error:</strong> Passwords do not match.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+        $('#alertContainer2').append(alertDiv);
+    });
+</script>
+
+<!-- Link to Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Link to JQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</html>

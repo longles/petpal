@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption Listings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/layout.css" rel="stylesheet">
+    <link href="styles/listings.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Pet Pal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon" style="background-color: #ff6600;"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="sheltermanagement.html">Manage Pets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="shelterdetail_shelter.html">Manage Shelter</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Profile
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="profile_shelter.html">View Profile</a></li>
+                            <li><a class="dropdown-item" href="edit_profile_shelter.html">Update Profile</a></li>
+                            <li><a class="dropdown-item btn" data-bs-toggle="modal"
+                                    data-bs-target="#notificationModal">Notifications</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        <div class="d-flex align-items-center mb-4">
+            <h2 class="mb-0">Our Pets</h2>
+            <div class="ms-3">
+                <button class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#petCreationModal">Add Pet</button>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Filter Sidebar -->
+            <div class="col-md-3 filter-sidebar">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Sort By</h5>
+                        <form>
+                            <div class="mb-3">
+                                <select class="form-select" id="sort">
+                                    <option value="Date: Descending">Newest</option>
+                                    <option value="Date: Ascending">Oldest</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Filter</h5>
+                        <form>
+                            <div class="mb-3">
+                                <label for="species" class="form-label">Species</label>
+                                <select class="form-select" id="species">
+                                    <option value="Any">Any</option>
+                                    <option value="Dog">Dog</option>
+                                    <option value="Cat">Cat</option>
+                                    <option value="Lizard">Lizard</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="age" class="form-label">Age</label>
+                                <input type="number" class="form-control" id="age" min="1" step="1" placeholder="Any">
+                            </div>
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location</label>
+                                <input type="text" class="form-control" id="location" placeholder="Any">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Apply Filters</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pet Listings -->
+            <div class="col-md-9">
+                <div class="row no-gutters">
+                    <!-- Sample Pet Listings (Repeat for each listing) -->
+                    <div class="col-md-4 mb-4 d-flex align-items-stretch">
+                        <div class="card listing-box">
+                            <img src="../../assets/images/sample_pet_image_1.jpg" class="card-img-top" alt="Sample Pet 1">
+                            <div class="card-body">
+                                <h4 class="card-title">Buddy</h4>
+                                <p class="card-text">Buddy is a friendly Golden Retriever looking for a loving home.</p>
+                                <button class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#petUpdateModal">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4 d-flex align-items-stretch">
+                        <div class="card listing-box">
+                            <img src="../../assets/images/sample_pet_image_2.jpg" class="card-img-top" alt="Sample Pet 2">
+                            <div class="card-body">
+                                <h4 class="card-title">Whiskers</h4>
+                                <p class="card-text">Whiskers is an adorable tabby cat with a playful personality.</p>
+                                <button class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#petUpdateModal">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4 d-flex align-items-stretch">
+                        <div class="card listing-box">
+                            <img src="../../assets/images/sample_pet_image_3.jpg" class="card-img-top" alt="Sample Pet 3">
+                            <div class="card-body">
+                                <h4 class="card-title">Rocky</h4>
+                                <p class="card-text">Rocky is a lovable Chihuahua who enjoys long walks.</p>
+                                <button class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#petUpdateModal">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Sample Pet Listings -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pet Creation Modal -->
+        <div class="modal fade" id="petCreationModal" tabindex="-1" aria-labelledby="petCreationModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable custom-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="petCreationModalLabel">New Pet</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <form id="petcreation" class="mx-2 px-md-5">
+                            <div class="my-4">
+                                <h1>Basic Information</h1>
+                            </div>
+                            <div class="d-flex flex-wrap">
+                                <div class="col-12 col-md-6 d-flex justify-content-start">
+                                    <div class="d-flex flex-column">
+                                        <img src="../../assets/images/select_image.png"></img>
+                                        <label for="petphoto" class="my-2 btn btn-primary">Upload Photo</label>
+                                        <input class="form-control d-none" id="petphoto" type="file">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 d-flex justify-content-end">
+                                    <div class="d-flex flex-column w-75">
+                                        <div class="my-1">
+                                            <label class="form-label" for="name">Name</label>
+                                            <input class="form-control" id="name"></input>
+                                        </div>
+                                        <div class="my-1">
+                                            <label class="form-label" for="breed">Breed</label>
+                                            <input class="form-control" id="breed"></input>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-12 col-md-6 d-flex justify-content-start">
+                                    <div class="w-75 my-1">
+                                        <label class="form-label" for="gender">Gender</label>
+                                        <select class="form-select" id="gender">
+                                            <option value="" selected disabled hidden>Select...</option>
+                                            <option value="M">Male</option>
+                                            <option value="F">Female</option>
+                                            <option value="O">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 d-flex justify-content-end">
+                                    <div class="w-75 my-1">
+                                        <label class="form-label" for="dob">Date of Birth</label>
+                                        <input class="form-control" id="dob" type="date">
+                                        <!-- <div class="d-flex"><input id="dob"></input><span>-</span><input></input><span>-</span><input></input></div> -->
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 d-flex justify-content-start">
+                                    <div class="w-75 my-1">
+                                        <label class="form-label" for="size">Size</label>
+                                        <input class="form-control" id="size"></input>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 d-flex justify-content-end">
+                                    <div class="w-75 my-1">
+                                        <label class="form-label" for="color">Color</label>
+                                        <input class="form-control" id="color"></input>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                            <div class="my-4">
+                                <h1>Additional Information</h1>
+                            </div>
+                            <div class="my-2">
+                                <label for="location">Location</label>
+                                <input class="form-control" id="location" value="original address of shelter"></input>
+                            </div>
+                            <div class="my-2">
+                                <label for="medical_history">Medical History</label>
+                                <textarea class="form-control" id="medical_history"></textarea>
+                                
+                            </div>
+                            <div class="my-2">
+                                <label for="behaviour">Behaviour</label>
+                                <textarea class="form-control" id="behaviour"></textarea>
+                            </div>
+                            <div class="my-2">
+                                <label for="special_needs">Special Needs</label>
+                                <textarea class="form-control" id="special_needs"></textarea>
+                            </div>
+                            <div class="my-2">
+                                <label for="comments">Comments</label>
+                                <textarea class="form-control" id="comments"></textarea>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button class="btn btn-primary">Add Pet</button>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pet Update Modal -->
+        <div class="modal fade" id="petUpdateModal" tabindex="-1" aria-labelledby="petUpdateModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable custom-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="petUpdateModalLabel">Update Buddy</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <form id="petcreation" class="mx-2 px-md-5">
+                            <div class="my-4">
+                                <h1>Basic Information</h1>
+                            </div>
+                            <div class="d-flex flex-wrap">
+                                <div class="col-12 col-md-6 d-flex justify-content-start">
+                                    <div class="d-flex flex-column">
+                                        <img src="../../assets/images/select_image.png"></img>
+                                        <label for="petphoto" class="my-2 btn btn-primary">Upload Photo</label>
+                                        <input class="form-control d-none" id="petphoto" type="file">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 d-flex justify-content-end">
+                                    <div class="d-flex flex-column w-75">
+                                        <div class="my-1">
+                                            <label class="form-label" for="name">Name</label>
+                                            <input class="form-control" id="name" value="Buddy"></input>
+                                        </div>
+                                        <div class="my-1">
+                                            <label class="form-label" for="breed">Breed</label>
+                                            <input class="form-control" id="breed" value="Golden Retriever"></input>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-12 col-md-6 d-flex justify-content-start">
+                                    <div class="w-75 my-1">
+                                        <label class="form-label" for="gender">Gender</label>
+                                        <select class="form-select" id="gender">
+                                            <option value="" disabled hidden>Select...</option>
+                                            <option value="M" selected>Male</option>
+                                            <option value="F">Female</option>
+                                            <option value="O">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 d-flex justify-content-end">
+                                    <div class="w-75 my-1">
+                                        <label class="form-label" for="dob">Date of Birth</label>
+                                        <input class="form-control" id="dob" type="date" value="2021-9-10">
+                                        <!-- <div class="d-flex"><input id="dob"></input><span>-</span><input></input><span>-</span><input></input></div> -->
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 d-flex justify-content-start">
+                                    <div class="w-75 my-1">
+                                        <label class="form-label" for="size">Size</label>
+                                        <input class="form-control" id="size" value="50cm"></input>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 d-flex justify-content-end">
+                                    <div class="w-75 my-1">
+                                        <label class="form-label" for="color">Color</label>
+                                        <input class="form-control" id="color" value="golden brown"></input>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                            <div class="my-4">
+                                <h1>Additional Information</h1>
+                            </div>
+                            <div class="my-2">
+                                <label for="location">Location</label>
+                                <input class="form-control" id="location" value="1234 Shelter Ave, Toronto ON"></input>
+                            </div>
+                            <div class="my-2">
+                                <label for="medical_history">Medical History</label>
+                                <textarea class="form-control" id="medical_history">Some comments...</textarea>
+                            </div>
+                            <div class="my-2">
+                                <label for="behaviour">Behaviour</label>
+                                <textarea class="form-control" id="behaviour">Some comments...</textarea>
+                            </div>
+                            <div class="my-2">
+                                <label for="special_needs">Special Needs</label>
+                                <textarea class="form-control" id="special_needs">Some special needs...</textarea>
+                            </div>
+                            <div class="my-2">
+                                <label for="comments">Comments</label>
+                                <textarea class="form-control" id="comments">Some comments...</textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary">Submit</button>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    No new notifications!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Copyright &copy; 2023 | Pet Pal </p>
+        </div>
+    </footer>
+
+    <!-- Link to Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

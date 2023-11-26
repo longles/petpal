@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petpal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/layout.css" rel="stylesheet">
+    <link href="styles/index.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Pet Pal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon" style="background-color: #ff6600;"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="login.html">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <h1 class="logo-icon">Pet Pal</h1>
+        <div class="search-container">
+            <form action="listings.html">
+                <input type="text" placeholder="Search for pets/shelters" class="search-input">
+                <a href="listings.html" class="search-btn btn btn-primary" type="submit">Search</a>
+            </form>
+        </div>
+        <div class="search-help">
+            <h2>Looking to adopt?</h3>
+        </div>
+        <div class="animal-cards">
+            <a href="listings-species-dog.html" class="animal-card" data-animal="dogs">
+                <div class="card-content">
+                    <p>Dogs</p>
+                </div>
+            </a>
+            <a href="listings-species-cat.html" class="animal-card" data-animal="cats">
+                <div class="card-content">
+                    <p>Cats</p>
+                </div>
+            </a>
+            <a href="#" class="animal-card" data-animal="others">
+                <div class="card-content">
+                    <p>Others</p>
+                </div>
+            </a>
+        </div>
+        <div class="search-help">
+            <h2>Sign up as a shelter?</h2>
+            <h3>Register <a href="signup-shelter.html">here</a></h3>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Copyright &copy; 2023 | Pet Pal </p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
