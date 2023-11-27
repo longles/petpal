@@ -15,12 +15,13 @@ export const authAPIService = () => {
         if (!response.success) {
             return {
                 success: false,
-                message: response.data,
+                message: response.data,  // should be an error message like response.message
             }
         }
 
         return {
             success: true,
+            data: response.data,
         }
     }
 
@@ -33,7 +34,7 @@ export const authAPIService = () => {
         if (!response.success) {
             return {
                 success: false,
-                message: response.data,
+                message: response.data, // same here
             }
         }
 
@@ -42,6 +43,7 @@ export const authAPIService = () => {
 
         return {
             success: true,
+            data: response.data,
         }
     }
 

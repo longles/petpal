@@ -1,7 +1,8 @@
-import configs from './config/config.json' assert { type: "json" };
+import { API_URL } from "./config/config"
+const fetch = require('node-fetch');
+const { Headers } = fetch;
 
 export const APIService = () => {
-    const API_URL = configs.API_URL;
 
     const makeAPICall = async (path, method, data) => {
         const result = {
@@ -9,7 +10,7 @@ export const APIService = () => {
             data: {},
         }
 
-        const headers = new Headers();
+        const headers = new fetch.Headers();
         let requestData = null;
 
         if (method === "POST" || method === "PUT") {
@@ -39,7 +40,7 @@ export const APIService = () => {
             data: {},
         }
 
-        const headers = new Headers();
+        const headers = new fetch.Headers();
         let requestData = null;
 
         if (method === "POST" || method === "PUT") {
