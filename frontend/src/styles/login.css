@@ -1,0 +1,58 @@
+main {
+    align-items: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input[type="email"], input[type="password"] {
+    width: 400px;
+}
+
+.submit-btn {
+    width: 400px;
+    margin-bottom: 20px;
+    background-color: white;
+    border-color: #ff6600;
+    color: black;
+}
+
+.form-label {
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+p {
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+
+    .card {
+        width: 90vw;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    .form-group input[type="email"], input[type="password"] {
+        width: 100%;
+    }
+
+    .form-label {
+        text-align: left;
+    }
+
+    .submit-btn {
+        width: 100%;
+        /*width: 325px;*/
+    }
+}
+
+@media screen and (max-height: 505px) {
+    .card {
+        margin-top: 5rem;
+        margin-bottom: 1rem;
+    }
+}

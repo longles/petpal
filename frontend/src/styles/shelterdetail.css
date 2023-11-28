@@ -1,0 +1,103 @@
+body {
+    background-color: #ccc;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.navbar {
+   background-color: #ff6600;
+}
+.navbar-dark .navbar-toggler-icon {
+   background-color: #ffffff;
+}
+.navbar-dark .navbar-nav .nav-link {
+   color: #ffffff;
+}
+.navbar-dark .navbar-nav .nav-link:hover {
+   color: #ffcc99;
+}
+
+.footer {
+   background-color: #ff6600;
+   color: #ffffff;
+   text-align: center;
+}
+
+.footer p {
+   margin: 1rem;
+}
+
+h1
+{
+   text-align: center;
+}
+
+h2
+{
+   text-align: center;
+}
+
+.review-div
+{
+    margin-bottom: 4px;
+    padding: 0.5rem;
+    border: 2px solid;
+}
+
+input
+{
+   border: 1px solid black;
+   display: block
+}
+
+.review-profile-image-container
+{
+   border-radius: 50% 50% 50% 50%;
+   overflow: hidden;
+   width: 30px;
+   height: 30px;
+}
+
+.review-profile-image
+{
+   width: 30px;
+   height: 30px;
+}
+
+.pet-container
+{
+    width: 100%;
+}
+
+.pet-card
+{
+    width: 30%;
+    height: 100px;
+}
+
+.smaller-75
+{
+    transform: scale(0.75)
+}
+
+.petcreation-input
+{
+   width: 30%
+}
+
+.modal-body label
+{
+   font-size: 20px;
+   font-weight: 700
+}
+
+.nudge_up
+{
+   margin: -2px;
+}
+
+.flex-expand
+{
+   flex: 1
+}
