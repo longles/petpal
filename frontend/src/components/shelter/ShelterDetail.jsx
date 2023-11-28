@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import '../../styles/shelterdetail.css';
 import '../../styles/layout.css';
 import '../../styles/listings.css';
 import PetCard from '../shared/PetCard';
-import PetDetailsModal from '../shared/PetDetailsModal';
+import ReviewCard from '../shared/ReviewCard';
 
 function ShelterDetail() {
   const { shelterId } = useParams(); // Assuming you have a shelterId parameter
@@ -62,30 +62,7 @@ function ShelterDetail() {
             <div className="border rounded-bottom py-2">
               <h2 className="text-center">Reviews</h2>
 
-              <div className="rounded review-div col-12">
-                <div className="d-flex mt-2 flex-wrap justify-content-between">
-                  <div className="px-2">
-                    <div className="d-flex">
-                      <div className="review-profile-image-container me-2">
-                        <img className="review-profile-image" src="../../assets/images/user1.jpg" alt="Reviewer 1"></img>
-                      </div>
-                      <p className="reviewer-name">John Doe</p>
-                    </div>
-                  </div>
-                  <div className="px-2 ms-sm-auto mt-1">
-                    <div className="d-flex justify-content-sm-end">
-                      <span className="fa fa-star"></span>
-                      <span className="fa fa-star"></span>
-                      <span className="fa fa-star"></span>
-                      <span className="fa fa-star"></span>
-                      <span className="fa fa-star"></span>
-                    </div>
-                  </div>
-                </div>
-                <p className="review-text mx-3 mt-2 mb-0">We adopted our lovely dog from Doggycares Inc. and had a fantastic experience. The staff was friendly and helpful, and the facilities were clean and well-maintained.</p>
-              </div>
-
-              {/* Add more reviews as needed */}
+              <ReviewCard id={1}/>
 
               <div className="col-12 d-flex justify-content-center mt-3 px-2 px-xl-4 py-2 py-sm-0">
                 <ul className="pagination">
