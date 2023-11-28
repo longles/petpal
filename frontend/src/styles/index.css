@@ -1,0 +1,155 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links {
+    float: right;
+}
+
+.nav-links a {
+    margin-left: 20px;
+    color: white;
+    text-decoration: none;
+}
+
+.logo{
+    font-size: 20px;
+}
+
+.main-content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
+
+h1.logo-icon{
+    font-size: 70px;
+    color: #ff6600;
+    font-weight: bold;
+}
+
+.petpal-logo {
+    max-width: 300px;
+    display:none;
+}
+
+.search-container {
+    margin-top: 50px;
+    width:70%;
+}
+
+.search-input {
+    padding: 10px 15px;
+    width: 70%;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 16px;
+}
+
+.search-help{
+    margin-top: 50px;
+    color:#f60;
+}
+
+.animal-cards {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin: 50px auto;
+    margin-bottom: 20px;
+
+}
+
+.animal-card {
+    position: relative;
+    flex: 1;
+    margin: 0 10px;
+    text-decoration: none;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 30px 0;
+}
+
+.animal-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    opacity: 0.6;
+    border-radius: 10px;
+}
+
+.animal-card[data-animal="dogs"]::before {
+    background-image: url('../images/dog.png');
+    background-position: -276px -293px;
+    background-size: 0.01;
+    background-repeat: no-repeat;
+}
+
+.animal-card[data-animal="cats"]::before {
+    background-image: url('../images/cat.png');
+    background-position: -128px -158px;
+    background-size: 0.01;
+    background-repeat: no-repeat;
+}
+
+.animal-card[data-animal="others"]::before {
+    background-image: url('../images/bird.png');
+    background-position: -400px -158px;
+    background-size: 0.01;
+    background-repeat: no-repeat;
+}
+
+.animal-card:hover {
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.card-content p {
+    color: #ff6600;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 6px 6px 6px #ffa0a0;
+}
+
+@media screen and (max-width: 600px) {
+    .nav-links a{
+        display:none;
+    }
+}
+
+@media screen and (max-width:745px) {
+    .animal-card[data-animal="cats"]::before {
+        background-position: -249px -152px;
+
+    }
+    .animal-card[data-animal="dogs"]::before {
+        background-position: -309px -293px;
+
+    }
+    .animal-card[data-animal="others"]::before {
+        background-position: -520px -158px;
+    }
+}
+
+@media screen and (min-width:745px) and (max-width:1086px){
+    .animal-card[data-animal="cats"]::before {
+        background-position: -213px -152px;
+
+    }
+
+    .animal-card[data-animal="others"]::before {
+        background-position: -450px -158px;
+    }
+
+}

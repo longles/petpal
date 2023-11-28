@@ -1,0 +1,27 @@
+.listing-box img {
+    height: 100%;
+    width: 100%;
+    flex-grow: 1;
+    object-fit: cover;
+    border-radius: 8px
+}
+
+.custom-modal {
+    max-width: 600px;
+}
+
+.modal-body img {
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    object-fit: contain;
+    width: 100%;
+}
+
+.modal-body .badge {
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+#myTabs{
+    margin-bottom: 15px;
+}

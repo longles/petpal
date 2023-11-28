@@ -1,0 +1,40 @@
+.col-md-4 img {
+    height: 100%;
+    width: 100%;
+    flex-grow: 1;
+    object-fit: cover;
+    border-radius: 8px
+}
+
+/* Custom CSS for the chat modal */
+.chat-container {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.modal-footer {
+    justify-content: space-between;
+}
+
+.chat-modal-body {
+    padding: 0;
+}
+
+.modal-footer .btn-primary {
+    width: 80px;
+}
+
+/* Style for chat messages */
+.message {
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+.other-user {
+    background-color: #cfe7ff;
+    text-align: right;
+}

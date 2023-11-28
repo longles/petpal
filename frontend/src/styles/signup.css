@@ -1,0 +1,53 @@
+.main {
+    align-items: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input[type="email"], input[type="password"] {
+    width: 400px;
+}
+
+p {
+    text-align: center;
+}
+
+.row {
+    margin-bottom: 20px;
+    width: 425px;
+}
+
+@media screen and (max-width: 600px) {
+
+    .card {
+        width: 90vw;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    .form-group input[type="email"], input[type="password"] {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .row {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .submit-btn {
+        width: 100%;
+    }
+}
+
+@media screen and (max-height: 780px) {
+    .card {
+        margin-top: 6rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
