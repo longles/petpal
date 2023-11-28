@@ -2,14 +2,13 @@
   "name": "petpal-backend",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@fontsource/nunito": "^5.0.15",
-    "@mui/material": "^5.14.18",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "jest": "^27.5.1",
+    "node-fetch": "^2.7.0",
     "bootstrap": "^5.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -20,7 +19,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test-ui": "react-scripts test",
+    "test-api": "jest --testPathPattern=src/services/tests",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -40,5 +40,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "setupTestFrameworkScriptFile": "mock-local-storage"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.23.3",
+    "mock-local-storage": "^1.1.24"
   }
 }
