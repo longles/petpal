@@ -6,6 +6,7 @@ import './styles/layout.css';
 import NavBar from './components/shared/NavBar.jsx';
 import ShelterDetail from './components/shelter/ShelterDetail.jsx';
 import Login from './components/auth/Login.jsx';
+import Signup from './components/auth/Signup.jsx'
 
 
 function App() {
@@ -22,6 +23,10 @@ function App() {
     {
       path: "/login/",
       element: <Login/>
+    },
+    {
+      path: "/signup/",
+      element: <Signup/>
     }
   ]);
 
@@ -29,8 +34,8 @@ function App() {
     <div>
       <NavBar />
       <RouterProvider router={router} />
-      <footer class="footer">
-        <div class="container">
+      <footer className="footer">
+        <div className="container">
             <p>Copyright &copy; 2023 | Pet Pal </p>
         </div>
       </footer>
