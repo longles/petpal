@@ -4,6 +4,8 @@ import { Link, useParams } from 'react-router-dom';
 import '../../styles/shelterdetail.css';
 import '../../styles/layout.css';
 import '../../styles/listings.css';
+import PetCard from '../shared/PetCard';
+import PetDetailsModal from '../shared/PetDetailsModal';
 
 function ShelterDetail() {
   const { shelterId } = useParams(); // Assuming you have a shelterId parameter
@@ -37,21 +39,7 @@ function ShelterDetail() {
 
               <div className="pet-container d-flex flex-wrap flex-column flex-sm-row justify-content-between">
                 {/* Sample pet cards */}
-                <div className="col-12 col-sm-4 px-2 px-xl-4 py-2 py-sm-0">
-                  <div className="card">
-                    <img src="../../assets/images/sample_pet_image_1.jpg" className="card-img-top" alt="Sample Pet 1" />
-                    <div className="card-body">
-                      <div className="d-flex align-items-center">
-                        <h5 className="card-title me-2">Buddy</h5>
-                      </div>
-                      <div className="d-flex flex-wrap">
-                        <div className="col-12 col-xxl-6 pe-xxl-2 mb-2 mb-xxl-0">
-                          <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#petDetailsModal1">Details</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <PetCard petId={1}/>
                 {/* Repeat similar blocks for additional pets */}
               </div>
               <div className="d-flex justify-content-end mt-3 px-2 px-xl-4 py-2 py-sm-0">
@@ -112,6 +100,7 @@ function ShelterDetail() {
           </div>
         </div>
       </div>
+      {/* <PetDetailsModal petId={1} petName={"Buddy"} image={"../../assets/images/sample_pet_image_1.jpg"}/> */}
     </div>
   );
 }
