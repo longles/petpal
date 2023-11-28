@@ -1,9 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import '../../styles/shelterdetail.css';
-import '../../styles/layout.css';
-import '../../styles/listings.css';
+import '../../styles/shelterdetail.module.css';
+import '../../styles/listings.module.css';
 import PetCard from '../shared/PetCard';
 import ReviewCard from '../shared/ReviewCard';
 

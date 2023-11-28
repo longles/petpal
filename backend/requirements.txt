@@ -4,3 +4,4 @@ djangorestframework
 djangorestframework-simplejwt
 Pillow
 django-filter
+django-cors-headers
