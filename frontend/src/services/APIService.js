@@ -1,5 +1,5 @@
-import { API_URL } from "./config/config"
-const fetch = require('node-fetch');
+import { API_URL } from "./config/config.js"
+import fetch from 'node-fetch';
 const { Headers } = fetch;
 
 export const APIService = () => {

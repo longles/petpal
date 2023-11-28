@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../styles/layout.css';
 
 function NavBar() {
   // Retrieve userType from sessionStorage
