@@ -35,3 +35,7 @@ body {
 .footer p {
     margin: 1rem;
 }
+
+.error-notif {
+    color: red;
+}
