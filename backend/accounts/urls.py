@@ -6,7 +6,6 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register(r'shelters', PetShelterViewSet, basename="shelter")
 
-
 app_name = 'accounts'
 urlpatterns = [
     # seeker sign-up

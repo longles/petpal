@@ -1,1 +1,1 @@
-from .userPermission import IsPetSeeker, IsShelter, ShelterPermission
+from .userPermission import IsPetSeeker, IsShelter, ShelterPermission, IsShelterSelf
