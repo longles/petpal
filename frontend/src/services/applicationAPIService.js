@@ -72,6 +72,13 @@ export const applicationAPIService = () => {
             data: response.data,
         }
     }
+
+    return {
+        createApplication,
+        getApplicationList,
+        getApplicationDetail,
+        updateApplication,
+    }
 }
 
 // Use this for generating the response object for the application
