@@ -21,7 +21,7 @@ export const seekerAPIService = () => {
     }
 
     const updateSeeker = async (id, to_update) => {
-        const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PUT', to_update);
+        const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', to_update);
 
         if (!response.success) {
             return {
@@ -95,7 +95,7 @@ export const shelterAPIService = () => {
     }
 
     const updateShelter = async (id, to_update) => {
-        const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PUT', to_update);
+        const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', to_update);
 
         if (!response.success) {
             return {
