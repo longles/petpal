@@ -10,7 +10,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from accounts.views.notificationView import NotificationListCreate, NotificationRUD
+from accounts.views.notificationView import NotificationViewset
 
 # admin paths
 urlpatterns = [
@@ -32,12 +32,9 @@ urlpatterns += [
     path('application/<int:pk>/comments/', ApplicationCommentListCreate.as_view(), name="application_comment_list_create")
 ]
 
-# notification paths
-urlpatterns += [
-    path('notifications/', NotificationListCreate.as_view(), name="notification_list_create"),
-    path('notifications/<int:pk>/', NotificationRUD.as_view(), name='notification_update'),
-]
 
 router = DefaultRouter()
 router.register('pets', PetViewSet, basename='pet')
+router.register(r'notifications', NotificationViewset, basename='notification')
+
 urlpatterns += router.urls

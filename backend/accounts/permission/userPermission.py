@@ -21,3 +21,7 @@ class ShelterPermission(BasePermission):
             return False
         else:
             return request.user.is_authenticated()
+
+class IsShelterSelf(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return request.user.is_user("petshelter", obj.pk)

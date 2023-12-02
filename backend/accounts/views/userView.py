@@ -4,13 +4,12 @@ from rest_framework.response import Response
 
 from ..models import User, PetShelter, PetSeeker
 from ..serializers import PetShelterSerializer, PetSeekerSerializer, UserSerializer
-from ..permission.userPermission import *
 from pets.models import Application, Pet
 from rest_framework.exceptions import PermissionDenied, MethodNotAllowed
 from rest_framework import generics
 from rest_framework.decorators import action
 import logging
-from ..permission import ShelterPermission
+from ..permission import IsShelterSelf
 
 
 class AccountCreateView(generics.CreateAPIView):
@@ -25,37 +24,36 @@ class PetShelterViewSet(viewsets.ModelViewSet):
 
     permission_classes_by_action = {'list': [AllowAny],
                                     'retrieve': [AllowAny],
-                                    'update': [IsAuthenticated],
-                                    'destroy': [IsAuthenticated]}
+                                    'partial_update': [IsAuthenticated, IsShelterSelf],
+                                    'update': [IsAuthenticated, IsShelterSelf],
+                                    'destroy': [IsAuthenticated, IsShelterSelf]}
 
     # Get permission for each action
     def get_permissions(self):
-        try:
-            return [permission() for permission in self.permission_classes_by_action[self.action]]
-        except KeyError:
-            return [permission() for permission in self.permission_classes]
+        self.permission_classes = self.permission_classes_by_action[self.action]
+        return super().get_permissions()
 
-    def list(self, request, *args, **kwargs):
-        serializer = PetShelterSerializer(self.queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    # def list(self, request, *args, **kwargs):
+    #     serializer = PetShelterSerializer(self.queryset, many=True)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def update(self, request, *args, **kwargs):
-        user = request.user
-        instance = self.get_object()
+    # def update(self, request, *args, **kwargs):
+    #     user = request.user
+    #     instance = self.get_object()
 
-        if instance.pk != user.user_id:
-            return Response({"error": "This is not your account!"}, status=status.HTTP_403_FORBIDDEN)
+    #     if instance.pk != user.user_id:
+    #         return Response({"error": "This is not your account!"}, status=status.HTTP_403_FORBIDDEN)
 
-        return super().update(request, *args, **kwargs)
+    #     return super().update(request, *args, **kwargs)
 
-    def destroy(self, request, *args, **kwargs):
-        user = request.user
-        instance = self.get_object()
+    # def destroy(self, request, *args, **kwargs):
+    #     user = request.user
+    #     instance = self.get_object()
 
-        if instance.pk != user.user_id:
-            return Response({"error": "This is not your account!"}, status=status.HTTP_403_FORBIDDEN)
+    #     if instance.pk != user.user_id:
+    #         return Response({"error": "This is not your account!"}, status=status.HTTP_403_FORBIDDEN)
 
-        return super().destroy(request, *args, **kwargs)
+    #     return super().destroy(request, *args, **kwargs)
 
 
 class PetSeekerUpdateGetDelete(generics.RetrieveUpdateDestroyAPIView):
@@ -66,27 +64,27 @@ class PetSeekerUpdateGetDelete(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         if self.request.user.user_type.model == "petseeker":
             return PetSeeker.objects.filter(pk=self.request.user.user_id)
-        elif self.request.user.user_type.model == "petshelter":
+        elif self.request.method == "GET" and self.request.user.user_type.model == "petshelter":
             shelter_id = self.request.user.user_object.pk
             return PetSeeker.objects.filter(applications__pet__shelter_id=shelter_id)
 
-    def update(self, request, *args, **kwargs):
-        user = request.user
-        instance = self.get_object()
+    # def update(self, request, *args, **kwargs):
+    #     user = request.user
+    #     instance = self.get_object()
 
-        if instance.pk != user.user_id:
-            return Response({"error": "This is not your account!"}, status=status.HTTP_403_FORBIDDEN)
+    #     if instance.pk != user.user_id:
+    #         return Response({"error": "This is not your account!"}, status=status.HTTP_403_FORBIDDEN)
 
-        return super().update(request, *args, **kwargs)
+    #     return super().update(request, *args, **kwargs)
 
-    def destroy(self, request, *args, **kwargs):
-        user = request.user
-        instance = self.get_object()
+    # def destroy(self, request, *args, **kwargs):
+    #     user = request.user
+    #     instance = self.get_object()
 
-        if instance.pk != user.user_id:
-            return Response({"error": "This is not your account!"}, status=status.HTTP_403_FORBIDDEN)
+    #     if instance.pk != user.user_id:
+    #         return Response({"error": "This is not your account!"}, status=status.HTTP_403_FORBIDDEN)
 
-        return super().destroy(request, *args, **kwargs)
+    #     return super().destroy(request, *args, **kwargs)
 
 # class PetSeekerCreateView(generics.CreateAPIView):
 #     def create(self, request, *args, **kwargs):
