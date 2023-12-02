@@ -42,7 +42,7 @@ class PetShelterViewSet(viewsets.ModelViewSet):
     #     instance = self.get_object()
 
     #     if instance.pk != user.user_id:
-    #         return Response({"error": "This is not your account!"}, status=status.HTTP_403_FORBIDDEN)
+    #         return Response({'detail': "This is not your account!"}, status=status.HTTP_403_FORBIDDEN)
 
     #     return super().update(request, *args, **kwargs)
 
@@ -51,7 +51,7 @@ class PetShelterViewSet(viewsets.ModelViewSet):
     #     instance = self.get_object()
 
     #     if instance.pk != user.user_id:
-    #         return Response({"error": "This is not your account!"}, status=status.HTTP_403_FORBIDDEN)
+    #         return Response({'detail': "This is not your account!"}, status=status.HTTP_403_FORBIDDEN)
 
     #     return super().destroy(request, *args, **kwargs)
 
@@ -73,7 +73,7 @@ class PetSeekerUpdateGetDelete(generics.RetrieveUpdateDestroyAPIView):
     #     instance = self.get_object()
 
     #     if instance.pk != user.user_id:
-    #         return Response({"error": "This is not your account!"}, status=status.HTTP_403_FORBIDDEN)
+    #         return Response({'detail': "This is not your account!"}, status=status.HTTP_403_FORBIDDEN)
 
     #     return super().update(request, *args, **kwargs)
 
@@ -82,7 +82,7 @@ class PetSeekerUpdateGetDelete(generics.RetrieveUpdateDestroyAPIView):
     #     instance = self.get_object()
 
     #     if instance.pk != user.user_id:
-    #         return Response({"error": "This is not your account!"}, status=status.HTTP_403_FORBIDDEN)
+    #         return Response({'detail': "This is not your account!"}, status=status.HTTP_403_FORBIDDEN)
 
     #     return super().destroy(request, *args, **kwargs)
 
