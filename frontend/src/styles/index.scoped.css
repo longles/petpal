@@ -53,6 +53,10 @@ h1.logo-icon{
     font-size: 16px;
 }
 
+.search-btn {
+    display:inline-block;
+}
+
 .search-help{
     margin-top: 50px;
     color:#f60;
@@ -91,21 +95,21 @@ h1.logo-icon{
 }
 
 .animal-card[data-animal="dogs"]::before {
-    background-image: url('../images/dog.png');
+    background-image: url('../assets/images/dog.png');
     background-position: -276px -293px;
     background-size: 0.01;
     background-repeat: no-repeat;
 }
 
 .animal-card[data-animal="cats"]::before {
-    background-image: url('../images/cat.png');
+    background-image: url('../assets/images/cat.png');
     background-position: -128px -158px;
     background-size: 0.01;
     background-repeat: no-repeat;
 }
 
 .animal-card[data-animal="others"]::before {
-    background-image: url('../images/bird.png');
+    background-image: url('../assets/images/bird.png');
     background-position: -400px -158px;
     background-size: 0.01;
     background-repeat: no-repeat;
@@ -152,4 +156,14 @@ h1.logo-icon{
         background-position: -450px -158px;
     }
 
+}
+
+.main-content .form-inline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.main-content .search-input{
+    margin-right: 10px;
 }
