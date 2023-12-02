@@ -25,7 +25,7 @@ export const notificationAPIService = () => {
         }
     }
 
-    const getNOfiticationDetail = async (id) => {
+    const getNofiticationDetail = async (id) => {
         const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'GET');
 
         if (!response.success) {
@@ -41,7 +41,7 @@ export const notificationAPIService = () => {
         }
     }
 
-    const getNotificationList = async (page) => {
+    const getNotificationList = async (page = 1) => {
         const response = await apiService.makePrivateAPICall(`${API_PATH}?page=${page}`, 'GET');
 
         if (!response.success) {
@@ -57,7 +57,7 @@ export const notificationAPIService = () => {
         }
     }
 
-    const updateNotificationIsRead = async (id, status) => {
+    const updateNotificationIsRead = async (id, status = true) => {
         const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', {
             is_read: status,
         });
