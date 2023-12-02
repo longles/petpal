@@ -24,7 +24,7 @@ export const applicationAPIService = () => {
     }
 
     const getApplicationList = async (status, date, page) => {
-        const response = await apiService.makePrivateAPICall(`${API_PATH}?status=${sort_status}&date_sort=${sort_date}&page=${page}`, 'GET', {});
+        const response = await apiService.makePrivateAPICall(`${API_PATH}?status=${status}&date_sort=${date}&page=${page}`, 'GET', {});
 
         if (!response.success) {
             return {
