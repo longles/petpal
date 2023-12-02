@@ -15,7 +15,7 @@ export const authAPIService = () => {
         if (!response.success) {
             return {
                 success: false,
-                message: response.detail,  // should be an error message like response.message
+                message: response.data.detail,  // should be an error message like response.message
             }
         }
 
