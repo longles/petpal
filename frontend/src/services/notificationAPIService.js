@@ -15,7 +15,7 @@ export const notificationAPIService = () => {
         if (!response.success) {
             return {
                 success: false,
-                message: response.detail,
+                message: response.data.detail,
             }
         }
 
@@ -31,7 +31,7 @@ export const notificationAPIService = () => {
         if (!response.success) {
             return {
                 success: false,
-                message: response.detail,
+                message: response.data.detail,
             }
         }
 
@@ -47,7 +47,7 @@ export const notificationAPIService = () => {
         if (!response.success) {
             return {
                 success: false,
-                message: response.detail,
+                message: response.data.detail,
             }
         }
 
@@ -65,7 +65,7 @@ export const notificationAPIService = () => {
         if (!response.success) {
             return {
                 success: false,
-                message: response.detail,
+                message: response.data.detail,
             }
         }
 

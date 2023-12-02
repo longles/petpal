@@ -13,7 +13,7 @@ export const applicationAPIService = () => {
         if (!response.success) {
             return {
                 success: false,
-                message: response.detail,
+                message: response.data.detail,
             }
         }
 
@@ -29,7 +29,7 @@ export const applicationAPIService = () => {
         if (!response.success) {
             return {
                 success: false,
-                message: response.detail,
+                message: response.data.detail,
             }
         }
 
@@ -45,7 +45,7 @@ export const applicationAPIService = () => {
         if (!response.success) {
             return {
                 success: false,
-                message: response.detail,
+                message: response.data.detail,
             }
         }
 
@@ -63,7 +63,7 @@ export const applicationAPIService = () => {
         if (!response.success) {
             return {
                 success: false,
-                message: response.detail,
+                message: response.data.detail,
             }
         }
 
