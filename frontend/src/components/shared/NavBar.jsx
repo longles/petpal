@@ -1,4 +1,5 @@
 import React from 'react';
+import NotificationModal from './NotificationModal';
 
 function NavBar() {
   // Retrieve userType from sessionStorage
@@ -56,25 +57,29 @@ function NavBar() {
   )
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark">
-      <div className="container">
-        <a className="navbar-brand" href="index.html">Pet Pal</a>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon" style={{ backgroundColor: '#ff6600' }}></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            {userType === 'seeker' && renderSeekerNavbar()}
-            {userType === 'shelter' && renderShelterNavbar()}
-            {/* Other common links */}
-          </ul>
-          <ul className="navbar-nav ml-auto">
-            {userType === 'none' && renderLogin()}
-            {userType !== 'none' && renderProfile()}
-          </ul>
+    <>
+      <nav className="navbar navbar-expand-lg navbar-dark">
+        <div className="container">
+          <a className="navbar-brand" href="index.html">Pet Pal</a>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon" style={{ backgroundColor: '#ff6600' }}></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              {userType === 'seeker' && renderSeekerNavbar()}
+              {userType === 'shelter' && renderShelterNavbar()}
+              {/* Other common links */}
+            </ul>
+            <ul className="navbar-nav ml-auto">
+              {userType === 'none' && renderLogin()}
+              {userType !== 'none' && renderProfile()}
+            </ul>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+      <NotificationModal/>
+    </>
+    
     
   );
 }
