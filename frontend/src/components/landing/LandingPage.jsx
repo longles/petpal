@@ -1,9 +1,5 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
 import '../../styles/layout.css';
 import '../../styles/index.scoped.css';
-
-
 
 const LandingPage = () => {
     return (

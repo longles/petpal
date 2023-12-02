@@ -10,38 +10,39 @@ const petData = [
   ];
 
   const PetListingsPage = () => {
+    let pho = '/assets/images/sample_pet_image_1.jpg'
+    let desc = 'Buddy is a friendly Golden Retriever looking for a loving home.'
     return (
-    //   <div>
-    //     {/* Include your navigation bar here */}
-  
-    //     <div className="container main-content">
-    //       <h2 className="mb-4">Adoption Listings</h2>
-    //       <div className="row">
-    //         {/* Include the sidebar filter component */}
-    //         <SideBarFilter />
-  
-    //         {/* Pet Listings */}
-    //         <div className="col-md-9">
-    //           <div className="row no-gutters">
-    //             {/* Mapping over petData and rendering PetCard for each pet */}
-    //             {petData.map((pet, index) => (
-    //               <PetCard
-    //                 key={index}
-    //                 name={pet.name}
-    //                 image={pet.image}
-    //                 description={pet.description}
-    //               />
-    //             ))}
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-  
-    //     {/* Include your PetDetailsModal or any other modals here */}
-    //   </div>
-    <div>
-        hello world
+      <div>
+      <div className="container main-content">
+        <h2 className="mb-4">Adoption Listings</h2>
+        <div className="row">
+          <SideBarFilter/>
+          
+          {/* Pet Listings */}
+          <div className="col-md-9">
+            <div className="row no-gutters">
+              {/* Sample Pet Listings (Repeat for each listing) */}
+              {/* petcard  start*/}
+              <PetCard name='Buddy' photo={pho} description={desc}/>
+              <PetCard name='Buddy' photo={pho} description={desc}/>
+
+              <PetCard name='Buddy' photo={pho} description={desc}/>
+
+              {/* petcard end */}
+
+            </div>
+          </div>
+        </div>
+
+        {/* Pet Details Modals */}
+
+        {/* Submit Application Modal */}
+      </div>
     </div>
+
+      
+
     );
   }
   
