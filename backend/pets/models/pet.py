@@ -45,7 +45,7 @@ class Pet(models.Model):
 
 
     name = models.CharField(max_length=100)
-    birth_date = models.DateField()
+    birth_date = models.DateField(null=True, blank=True)
 
     sex = models.PositiveSmallIntegerField(choices=Sex.choices, default=Sex.UNKNOWN)
     species = models.PositiveSmallIntegerField(choices=Species.choices, default=Species.UNKNOWN)
@@ -56,8 +56,8 @@ class Pet(models.Model):
     status = models.PositiveSmallIntegerField(choices=Status.choices, default=Status.AVAILABLE)
 
     photo = models.ImageField(upload_to='pet_photos/', null=True, blank=True)
-    medical_history = models.TextField()
-    behaviour = models.TextField()
+    medical_history = models.TextField(null=True, blank=True)
+    behaviour = models.TextField(null=True, blank=True)
     special_needs = models.TextField(null=True, blank=True)
     comments = models.TextField(null=True, blank=True)
     weight = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)

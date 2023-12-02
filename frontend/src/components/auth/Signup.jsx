@@ -1,6 +1,6 @@
 import React from 'react';
-import '../../styles/signup.css'
-
+import '../../styles/signup.scoped.css'
+import '../../styles/user.scoped.css'
 function SignUp() {
 
     const onSignup = (data) => {

@@ -15,7 +15,7 @@ export const authAPIService = () => {
         if (!response.success) {
             return {
                 success: false,
-                message: response.data,  // should be an error message like response.message
+                message: response.data.detail,  // should be an error message like response.message
             }
         }
 
@@ -34,7 +34,7 @@ export const authAPIService = () => {
         if (!response.success) {
             return {
                 success: false,
-                message: response.data, // same here
+                message: response.data.detail, // same here
             }
         }
 

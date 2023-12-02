@@ -13,7 +13,7 @@ export const APIService = () => {
         const headers = new fetch.Headers();
         let requestData = null;
 
-        if (method === "POST" || method === "PUT") {
+        if (method === "POST" || method === "PUT" || method === "PATCH") {
             headers.set('Content-Type', 'application/json');
             headers.set('Accept', 'application/json');
             requestData = JSON.stringify(data);
@@ -43,7 +43,7 @@ export const APIService = () => {
         const headers = new fetch.Headers();
         let requestData = null;
 
-        if (method === "POST" || method === "PUT") {
+        if (method === "POST" || method === "PUT" || method === "PATCH") {
             headers.set('Content-Type', 'application/json');
             headers.set('Accept', 'application/json');
             requestData = JSON.stringify(data);
