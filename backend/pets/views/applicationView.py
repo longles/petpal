@@ -21,7 +21,7 @@ class ApplicationCreateListView(APIView, PageNumberPagination):
         responses = request.data.get('responses')
 
         if not Pet.objects.filter(id=pet_id, status=Pet.Status.AVAILABLE).first():
-            return Response({'error': 'Pet not available for application.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': 'Pet not available for application.'}, status=status.HTTP_400_BAD_REQUEST)
 
         data = {'pet': pet_id, 'applicant': request.user.user_object.pk, 'responses': responses}
         serializer = ApplicationSerializer(data=data)
@@ -30,7 +30,7 @@ class ApplicationCreateListView(APIView, PageNumberPagination):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'detail': "Could not seriaize the request"}, status=status.HTTP_400_BAD_REQUEST)
 
 
     @method_permission_classes([IsPetSeeker | IsShelter])
@@ -44,7 +44,7 @@ class ApplicationCreateListView(APIView, PageNumberPagination):
         elif user_type == 'petshelter':
             filter['pet__shelter'] = current_user.user_object
         else:
-            return Response({"error": "Unauthorized user type."}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'detail': "Unauthorized user type."}, status=status.HTTP_403_FORBIDDEN)
 
         applications = Application.objects.filter(**filter)
 
@@ -61,7 +61,7 @@ class ApplicationCreateListView(APIView, PageNumberPagination):
             status_filter = None
 
         if status_filter not in valid_status_filters:
-            return Response({"error": "Invalid status filter"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': "Invalid status filter"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Sort by date
         if status_filter:
@@ -77,7 +77,7 @@ class ApplicationCreateListView(APIView, PageNumberPagination):
         elif date_sort == 'created_at_desc':
             applications = applications.order_by('-created_at')
         else:
-            return Response({"error": "Invalid sorting parameter"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': "Invalid sorting parameter"}, status=status.HTTP_400_BAD_REQUEST)
 
         results = self.paginate_queryset(applications, request, view=self)
         serializer = ApplicationSerializer(results, many=True)
@@ -101,7 +101,7 @@ class ApplicationUpdateDetailView(APIView):
         elif user_type == 'petshelter':
             filter['pet__shelter'] = current_user.user_object
         else:
-            return Response({"error": "Unauthorized user type."}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'detail': "Unauthorized user type."}, status=status.HTTP_403_FORBIDDEN)
 
         application = get_object_or_404(Application, **filter)
         serializer = ApplicationSerializer(application)
@@ -119,17 +119,17 @@ class ApplicationUpdateDetailView(APIView):
             if application.status in [Application.Status.PENDING, Application.Status.APPROVED]:
                 allowed_status_changes = [Application.Status.WITHDRAWN]
             else:
-                return Response({"error": "Pet seeker can only withdraw pending or approved applications."}, status=status.HTTP_403_FORBIDDEN)
+                return Response({'detail': "Pet seeker can only withdraw pending or approved applications."}, status=status.HTTP_403_FORBIDDEN)
 
         elif user_type == 'petshelter':
             application = get_object_or_404(Application, pk=pk, pet__shelter=current_user.user_object)
             if application.status == Application.Status.PENDING:
                 allowed_status_changes = [Application.Status.APPROVED, Application.Status.DENIED]
             else:
-                return Response({"error": "Shelter can only update pending applications."}, status=status.HTTP_403_FORBIDDEN)
+                return Response({'detail': "Shelter can only update pending applications."}, status=status.HTTP_403_FORBIDDEN)
 
         else:
-            return Response({"error": "Unauthorized user type."}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'detail': "Unauthorized user type."}, status=status.HTTP_403_FORBIDDEN)
 
         # Update application status if allowed
         new_status = request.data.get('status')
@@ -138,6 +138,6 @@ class ApplicationUpdateDetailView(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': "Could not seriaize the request"}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({"error": "Invalid status update."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': "Invalid status update."}, status=status.HTTP_400_BAD_REQUEST)
