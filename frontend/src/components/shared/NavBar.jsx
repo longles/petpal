@@ -1,8 +1,8 @@
 import React from 'react';
 
 function NavBar() {
-  // Retrieve userType from sessionStorage
-  const userType = sessionStorage.getItem('userType') || 'none';
+  // Retrieve userType from localStorage
+  const userType = localStorage.getItem('userType') || 'none';
 
   const renderNoneNavbar = () => (
     <>
@@ -19,7 +19,7 @@ function NavBar() {
             <a className="nav-link active" aria-current="page" href="shelterdetail_shelter.html">Manage Shelter</a>
         </li>
     </>
-    
+
   );
 
   const renderSeekerNavbar = () => (
@@ -42,7 +42,7 @@ function NavBar() {
   const renderProfile = () => (
     <>
       <li className="nav-item dropdown">
-        <button className="nav-link dropdown-toggle" id="profileDropdown" 
+        <button className="nav-link dropdown-toggle" id="profileDropdown"
                             data-bs-toggle="dropdown" aria-expanded="false">
           Profile
         </button>
@@ -75,7 +75,7 @@ function NavBar() {
         </div>
       </div>
     </nav>
-    
+
   );
 }
 

@@ -49,7 +49,7 @@ export const APIService = () => {
             requestData = JSON.stringify(data);
         }
 
-        const token = sessionStorage.getItem('token'); // Fetch token from local storage
+        const token = localStorage.getItem('token'); // Fetch token from local storage
 
         if (token) {
             headers.set('Authorization', `Bearer ${token}`);
