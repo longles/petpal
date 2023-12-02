@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button, Nav } from 'react-bootstrap';
+import '../../styles/listings.scoped.css'
 
 const PetDetailsModal = ({ closeModal }) => {
   const [activeTab, setActiveTab] = useState('tab1');
@@ -13,8 +14,8 @@ const PetDetailsModal = ({ closeModal }) => {
       <Modal.Header closeButton>
         <Modal.Title>Pet Details</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <img src="../../assets/images/sample_pet_image_1.jpg" alt="Pet Image" className="img-fluid" />
+      <Modal.Body className='custom-modal'>
+        <img src="../../assets/images/sample_pet_image_1.jpg" alt="Pet" className="img-fluid" />
         <span className="badge bg-success">Available for Adoption</span>
 
         <Nav variant="tabs" activeKey={activeTab} onSelect={handleTabChange}>

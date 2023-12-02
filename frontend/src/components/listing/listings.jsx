@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PetCard from '../shared/PetCard';
-import PetDetailsModal from '../shared/PetDetailsModal';
 import SideBarFilter from './SideBarFilter';
 
-const petData = [
-    {name: 'Buddy', image: '../../assets/images/sample_pet_image_1'},
-    {name: 'Whiskers', image:'../../assets/images/sample_pet_image_2' },
-    {name: 'Rocky',image:'../../assets/images/sample_pet_image_3' },
-  ];
 
   const PetListingsPage = () => {
     let pho = '/assets/images/sample_pet_image_1.jpg'
@@ -22,11 +16,9 @@ const petData = [
           {/* Pet Listings */}
           <div className="col-md-9">
             <div className="row no-gutters">
-              {/* Sample Pet Listings (Repeat for each listing) */}
-              {/* petcard  start*/}
+              {/* petcard */}
               <PetCard name='Buddy' photo={pho} description={desc}/>
               <PetCard name='Buddy' photo={pho} description={desc}/>
-
               <PetCard name='Buddy' photo={pho} description={desc}/>
 
               {/* petcard end */}
@@ -34,8 +26,6 @@ const petData = [
             </div>
           </div>
         </div>
-
-        {/* Pet Details Modals */}
 
         {/* Submit Application Modal */}
       </div>
