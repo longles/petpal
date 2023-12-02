@@ -78,8 +78,8 @@ export const shelterAPIService = () => {
         }
     }
 
-    const getShelterList = async (filters, page) => {
-        const response = await apiService.makeAPICall(`${API_PATH}?${filters}&page=${page}`, 'GET');
+    const getShelterList = async (page) => {
+        const response = await apiService.makePrivateAPICall(`${API_PATH}?page=${page}`, 'GET');
 
         if (!response.success) {
             return {
