@@ -14,6 +14,7 @@ const PetCard = ({ petId }) => {
       const petAPI = petAPIService();
       const response = await petAPI.getPetDetail(petId);
       if (response.success) {
+        // console.log("Fetched pet details:", response.data);
         setPetDetails(response.data);
       }
     } catch (error) {
@@ -23,6 +24,7 @@ const PetCard = ({ petId }) => {
 
   useEffect(() => {
     fetchPetDetail();
+
   }, [petId]);
 
   if (!petDetails) {
@@ -45,10 +47,11 @@ const PetCard = ({ petId }) => {
     setIsApplicationModalOpen(false);
   };
 
+  const photo = petDetails.photo === null ? '/assets/images/sample_pet_image_2.jpg' : petDetails.photo;
   return (
     <div className="col-md-4 mb-4 d-flex align-items-stretch">
       <div className="card listing-box">
-        <img src={petDetails.photo} className="card-img-top" alt={petDetails.name} />
+        <img src={photo} className="card-img-top" alt={petDetails.name} />
         <div className="card-body">
           <h4 className="card-title">{petDetails.name}</h4>
           <p className="card-text">{petDetails.comments}</p>
@@ -58,6 +61,7 @@ const PetCard = ({ petId }) => {
             </button>
             {isModalOpen && (
               <PetDetailsModal
+                petId={petId}
                 closeModal={closeModal}
                 openApplicationModal={openApplicationModal}
               />
