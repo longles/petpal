@@ -5,10 +5,10 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from accounts.views import ShelterCommentListCreate, ApplicationCommentListCreate
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
+from accounts.serializers import CustomTokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenRefreshView
+from accounts.views import CustomTokenObtainPairView
+
 
 from accounts.views.notificationView import NotificationViewset
 
@@ -22,7 +22,7 @@ urlpatterns = [
 # auth paths
 # code from simplejwt docs https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
 urlpatterns += [
-    path('accounts/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('accounts/login/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('accounts/login/refresh/', TokenRefreshView.as_view(), name='token_refresh')
 ]
 
