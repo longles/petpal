@@ -4,7 +4,7 @@ import { applicationAPIService } from '../../services/applicationAPIService';
 const Applications = () => {
     const [applications, setApplications] = useState([]);
     const [statusOption, setsSatusOption] = useState(1); // Assuming 1-4 represent different sort options
-    const [dateOption, setDateOption] = useState('desc');
+    const [dateOption, setDateOption] = useState('last_updated_asc');
     const [petNameFilter, setPetNameFilter] = useState('');
     const applicationService = applicationAPIService();
 
@@ -69,8 +69,10 @@ const Applications = () => {
                                 </div>
                                 <div className="mb-3">
                                     <select className="form-select" value={dateOption} onChange={handleDateChange}>
-                                        <option value="desc">Descending</option>
-                                        <option value="asc">Ascending</option>
+                                        <option value="last_updated_asc">Last Updated Asc</option>
+                                        <option value="last_updated_desc">Last Updated Desc</option>
+                                        <option value="created_at_asc">Created At Asc</option>
+                                        <option value="created_at_desc">Created At Desc</option>
                                     </select>
                                 </div>
                                 <div className="mb-3">

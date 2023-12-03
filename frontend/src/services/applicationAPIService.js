@@ -25,7 +25,7 @@ export const applicationAPIService = () => {
 
     const getApplicationList = async (filters, page) => {
         const query_params = new URLSearchParams(filters).toString();
-        const response = await apiService.makeAPICall(`${API_PATH}?${query_params}&page=${page}`, 'GET');
+        const response = await apiService.makePrivateAPICall(`${API_PATH}?${query_params}&page=${page}`, 'GET');
 
         if (!response.success) {
             return {
