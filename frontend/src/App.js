@@ -37,16 +37,19 @@ function App() {
   ]);
 
   return (
-    <div>
-      <NavBar />
-      <RouterProvider router={router} />
-      <footer className="footer">
-        <div className="container">
-            <p>Copyright &copy; 2023 | Pet Pal </p>
+    <>
+      <div id="body">
+        <div id="content-wrap">
+          <NavBar />
+          <RouterProvider router={router} />
         </div>
-      </footer>
-    </div>
-    
+        <footer className="footer">
+          <div className="container">
+              <p>Copyright &copy; 2023 | Pet Pal </p>
+          </div>
+        </footer>
+      </div>
+    </>
   );
 }
 
