@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import '../../styles/layout.css';
 import '../../styles/profile.css';
 
-const EditProfile = () => {
-    // State for form fields
+const EditProfileSeeker = () => {
+    // temporary placeholders
     const [username, setUsername] = useState('handsome_guy12345');
     const [bio, setBio] = useState("I'm the richest guy on this planet.");
     const [firstName, setFirstName] = useState('Bill');
@@ -17,21 +17,14 @@ const EditProfile = () => {
 
     // Event handlers
     const handleProfileSave = () => {
-        // Implement save functionality
     };
 
     const handleSecuritySave = () => {
-        // Implement save functionality
     };
 
     // JSX
     return (
         <div>
-            {/* Navbar */}
-            <nav className="navbar navbar-expand-lg navbar-dark">
-                {/* ... Navbar content ... */}
-            </nav>
-
             {/* Profile Edit Form */}
             <div className="container my-5">
                 <h2>Edit Profile</h2>
@@ -48,28 +41,17 @@ const EditProfile = () => {
                             onChange={(e) => setUsername(e.target.value)}
                         />
                     </div>
-                    {/* Bio */}
-                    {/* ... Other input fields ... */}
                     <button type="button" className="btn btn-primary" onClick={handleProfileSave}>Save</button>
                     <a href="profile_seeker.html" className="btn btn-dark">Discard Changes</a>
                 </form>
 
                 <h2>Security and Privacy</h2>
                 <form>
-                    {/* Old Password */}
-                    {/* ... Other input fields for security ... */}
                     <button type="button" className="btn btn-primary" onClick={handleSecuritySave}>Submit</button>
                 </form>
             </div>
-
-            {/* Footer */}
-            <footer className="footer">
-                <div className="container">
-                    {/* ... Footer content ... */}
-                </div>
-            </footer>
         </div>
     );
 };
 
-export default EditProfile;
+export default EditProfileSeeker;
