@@ -59,5 +59,5 @@ class PetSeekerSerializer(serializers.ModelSerializer):
 class PetShelterSerializer(serializers.ModelSerializer):
     class Meta:
         model = PetShelter
-        fields = ('id', 'shelter_name', 'mission', 'about_us', 'location', 'phone_num', 'profile_pic')
+        fields = ('id', 'shelter_name', 'mission', 'about_us', 'location', 'phone_num', 'profile_pic', 'contact_email')
         read_only_fields = ('id', )
