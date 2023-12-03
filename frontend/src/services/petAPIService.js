@@ -1,4 +1,4 @@
-import { APIService } from "./APIService";
+import { APIService } from "./APIService.js";
 
 export const petAPIService = () => {
     const API_PATH = 'pets/';
@@ -41,7 +41,7 @@ export const petAPIService = () => {
     }
 
     const getPetList = async (filters, page) => {
-        query_params = new URLSearchParams(filters).toString();
+        let query_params = new URLSearchParams(filters).toString();
         const response = await apiService.makeAPICall(`${API_PATH}?${query_params}&page=${page}`, 'GET');
 
         if (!response.success) {
