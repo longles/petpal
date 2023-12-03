@@ -50,7 +50,7 @@ export const applicationCommentAPIService = () => {
 
     const createApplicationComment = async (application_id, comment) => {
         const response = await apiService.makePrivateAPICall(`${API_PATH}${application_id}/comments/`, 'POST', {
-            comment: comment,
+            content: comment,
         });
 
         if (!response.success) {
@@ -66,8 +66,8 @@ export const applicationCommentAPIService = () => {
         }
     }
 
-    const getApplicationCommentList = async (application_id) => {
-        const response = await apiService.makeAPICall(`${API_PATH}${application_id}/comments/`, 'GET');
+    const getApplicationCommentList = async (application_id, page) => {
+        const response = await apiService.makePrivateAPICall(`${API_PATH}${application_id}/comments/?page=${page}`, 'GET');
 
         if (!response.success) {
             return {

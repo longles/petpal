@@ -9,7 +9,7 @@ import Login from './components/auth/Login.jsx';
 import Signup from './components/auth/Signup.jsx'
 import LandingPage from './components/landing/LandingPage.jsx';
 import PetListingsPage from './components/listing/listings.jsx';
-import Applications from './components/applications/Application.jsx';
+import Applications from './components/application/Application.jsx';
 
 
 function App() {
