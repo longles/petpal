@@ -1,4 +1,4 @@
-import { APIService } from "./APIService";
+import { APIService } from "./APIService.js";
 
 export const petAPIService = () => {
     const API_PATH = 'pets/';

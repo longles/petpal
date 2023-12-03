@@ -7,6 +7,8 @@ import NavBar from './components/shared/NavBar.jsx';
 import ShelterDetail from './components/shelter/ShelterDetail.jsx';
 import Login from './components/auth/Login.jsx';
 import Signup from './components/auth/Signup.jsx'
+import LandingPage from './components/landing/LandingPage.jsx';
+import PetListingsPage from './components/listing/listings.jsx';
 
 
 function App() {
@@ -14,7 +16,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <div>Hello world!</div>,
+      element: <LandingPage/>,
     },
     {
       path: "/shelterdetail/",
@@ -27,6 +29,10 @@ function App() {
     {
       path: "/signup/",
       element: <Signup/>
+    },
+    {
+      path: "/pets/",
+      element: <PetListingsPage/>
     }
   ]);
 
