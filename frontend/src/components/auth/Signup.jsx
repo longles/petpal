@@ -27,6 +27,9 @@ function SignUp() {
                                 </div>
                             </div>
                             <div className="form-group">
+                                <input type="username" className="form-control" placeholder="Enter Username" required />
+                            </div>
+                            <div className="form-group">
                                 <input type="email" className="form-control" placeholder="Enter Email Address" required />
                             </div>
                             <div className="form-group">
