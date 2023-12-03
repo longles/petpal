@@ -21,10 +21,6 @@ const Applications = () => {
         }
     };
 
-    useEffect(() => {
-        fetchApplications();
-    }, [statusOption, dateOption, petNameFilter]);
-
     const handleSortChange = (e) => {
         setsSatusOption(e.target.value);
     };
@@ -39,7 +35,7 @@ const Applications = () => {
 
     useEffect(() => {
         fetchApplications();
-    }, [statusOption, dateOption, petNameFilter]);
+    }, []);
 
     const applyFilters = (e) => {
         e.preventDefault();
