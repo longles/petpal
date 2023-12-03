@@ -1,6 +1,8 @@
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from ..models import User, PetShelter, PetSeeker
 from ..serializers import PetShelterSerializer, PetSeekerSerializer, UserSerializer
@@ -8,13 +10,19 @@ from pets.models import Application, Pet
 from rest_framework.exceptions import PermissionDenied, MethodNotAllowed
 from rest_framework import generics
 from rest_framework.decorators import action
-import logging
 from ..permission import IsShelterSelf
+from ..serializers import CustomTokenObtainPairSerializer
+
+
 
 
 class AccountCreateView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+    
 
 class PetShelterViewSet(viewsets.ModelViewSet):
     queryset = PetShelter.objects.all()
