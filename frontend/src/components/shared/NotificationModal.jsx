@@ -1,7 +1,21 @@
 import React from 'react';
 import Notification from './Notification'; 
+import { useState, useEffect } from 'react';
+import { notificationAPIService } from '../../services/notificationAPIService';
 
 const NotificationModal = () => {
+  const API = notificationAPIService()
+  const [notifs, setNotifs] = useState([])
+  useEffect(() => {
+    API.getNotificationList().then((ret) => {
+      if (ret.success) {
+        setNotifs(ret.data.results)
+      } else {
+
+      }
+    })
+  }, [])
+  console.log(notifs)
   return (
     <div className="modal fade" id="notificationModal" tabIndex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
       <div className="modal-dialog modal-lg">
@@ -12,8 +26,7 @@ const NotificationModal = () => {
           </div>
           <div className="modal-body">
             <ul className="list-group">
-              <Notification id={1} title="Application Approved" details="Your application for Whiskers has been approved" />
-              <Notification id={2} title="Application Rejected" details="Your application for Rocky has been rejected" />
+              {[...notifs].map((x,i) => {return <Notification key={i} id={x.id} data={x} />})}
             </ul>
           </div>
         </div>

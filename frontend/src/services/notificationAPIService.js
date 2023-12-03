@@ -25,7 +25,7 @@ export const notificationAPIService = () => {
         }
     }
 
-    const getNofiticationDetail = async (id) => {
+    const getNotificationDetail = async (id) => {
         const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'GET');
 
         if (!response.success) {
@@ -76,7 +76,7 @@ export const notificationAPIService = () => {
 
     return {
         createNotification,
-        getNOfiticationDetail,
+        getNotificationDetail,
         getNotificationList,
         updateNotificationIsRead,
     }
