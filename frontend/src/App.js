@@ -19,7 +19,7 @@ function App() {
       element: <LandingPage/>,
     },
     {
-      path: "/shelterdetail/",
+      path: "/shelterdetail/:shelterId/",
       element: <ShelterDetail/>,
     },
     {
