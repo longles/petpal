@@ -80,7 +80,7 @@ function NavBar() {
       <NotificationModal/>
     </>
     
-
+    
   );
 }
 
