@@ -3,7 +3,7 @@ import { applicationAPIService } from '../../services/applicationAPIService';
 
 const Applications = () => {
     const [applications, setApplications] = useState([]);
-    const [statusOption, setsSatusOption] = useState(1); // Assuming 1-4 represent different sort options
+    const [statusOption, setStatusOption] = useState(1); // Assuming 1-4 represent different sort options
     const [dateOption, setDateOption] = useState('last_updated_asc');
     const [petNameFilter, setPetNameFilter] = useState('');
     const applicationService = applicationAPIService();
@@ -22,7 +22,7 @@ const Applications = () => {
     };
 
     const handleSortChange = (e) => {
-        setsSatusOption(e.target.value);
+        setStatusOption(e.target.value);
     };
 
     const handleDateChange = (e) => {
