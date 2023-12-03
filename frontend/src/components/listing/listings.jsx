@@ -5,23 +5,36 @@ import {petAPIService} from '../../services/petAPIService'
 
 
   const PetListingsPage = () => {
+    const [petIDs, setPetIDs] = useState([]);
+    const petAPI = petAPIService();
 
     const fetchPetList = async()=>{
       try{
         const filters = {};
         const page = 1;
-        const petAPI = petAPIService()
         const response = await petAPI.getPetList(filters, page);
-        console.log(response)
+        if (response.success){
+          // petIDs is a list of fetched pet id
+          const petIDs = response.data.results.map((pet) => pet.id);
+          setPetIDs(response.data.results.map((pet) => pet.id));
+
+          // console.log(petIDs);
+        }
+        const response2 = await petAPI.getPetDetail(2);
+
+        // console.log(response);
+        // console.log(response2);
       }catch (error) {
         console.error('Error fetching pet list:', error);
       }
+      
     }
 
     useEffect(() => {
       fetchPetList();
     }, []);
 
+    //testing data
     let pho = '/assets/images/sample_pet_image_1.jpg'
     let desc = 'Buddy is a friendly Golden Retriever looking for a loving home.'
     return (
@@ -35,12 +48,9 @@ import {petAPIService} from '../../services/petAPIService'
           <div className="col-md-9">
             <div className="row no-gutters">
               {/* petcard */}
-              <PetCard name='Buddy' photo={pho} description={desc}/>
-              <PetCard name='Buddy' photo={pho} description={desc}/>
-              <PetCard name='Buddy' photo={pho} description={desc}/>
-
-              {/* petcard end */}
-
+              {petIDs.map((petID) => (
+                <PetCard key={petID} petId={petID} />
+                ))}
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button, Nav } from 'react-bootstrap';
 import '../../styles/listings.scoped.css';
 
+// pet detail should get a pet id and fetch info from server
 const PetDetailsModal = ({ closeModal, openApplicationModal }) => {
   const [activeTab, setActiveTab] = useState('tab1');
 
