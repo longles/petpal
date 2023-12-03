@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import PetDetailsModal from './PetDetailsModal';
+import ApplicationModal from './ApplicationModal';
 
 const PetCard = ({ name, photo, description }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -10,6 +12,14 @@ const PetCard = ({ name, photo, description }) => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const openApplicationModal = () => {
+    setIsApplicationModalOpen(true);
+  };
+
+  const closeApplicationModal = () => {
+    setIsApplicationModalOpen(false);
   };
 
   return (
@@ -23,10 +33,21 @@ const PetCard = ({ name, photo, description }) => {
             <button className="btn btn-primary" onClick={openModal}>
               Details
             </button>
-            {isModalOpen && <PetDetailsModal closeModal={closeModal} />}
+            {isModalOpen && (
+              <PetDetailsModal
+                closeModal={closeModal}
+                openApplicationModal={openApplicationModal}
+              />
+            )}
           </div>
         </div>
       </div>
+      {isApplicationModalOpen && (
+        <ApplicationModal
+          show={isApplicationModalOpen}
+          closeModal={closeApplicationModal}
+        />
+      )}
     </div>
   );
 };

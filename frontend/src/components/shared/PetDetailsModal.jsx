@@ -1,13 +1,27 @@
 import React, { useState } from 'react';
 import { Modal, Button, Nav } from 'react-bootstrap';
-import '../../styles/listings.scoped.css'
+import '../../styles/listings.scoped.css';
 
-const PetDetailsModal = ({ closeModal }) => {
+const PetDetailsModal = ({ closeModal, openApplicationModal }) => {
   const [activeTab, setActiveTab] = useState('tab1');
 
   const handleTabChange = (eventKey) => {
     setActiveTab(eventKey);
   };
+
+  const handleAdoptClick = () => {
+    openApplicationModal();
+  };
+
+  let breed = 'Golden Retriever'
+  let photo = "../../assets/images/sample_pet_image_1.jpg"
+  let age = '2'
+  let description = "Buddy is a friendly Golden Retriever looking for a loving home."
+  let shelterName = "Doggycares Inc."
+  let shelterAddress = "1234 Shelter Ave, Toronto ON"
+  let medicalHistory = "Up-to-date vaccinations, including rabies, distemper, and parvovirus. Recent heartworm test and prevention history."
+  let neuterStatus = "No"
+  let specialRequirements = "Applicant must have a secure fenced yard with a minimum height of 6-foot."
 
   return (
     <Modal show={true} onHide={closeModal} size="lg">
@@ -15,7 +29,7 @@ const PetDetailsModal = ({ closeModal }) => {
         <Modal.Title>Pet Details</Modal.Title>
       </Modal.Header>
       <Modal.Body className='custom-modal'>
-        <img src="../../assets/images/sample_pet_image_1.jpg" alt="Pet" className="img-fluid" />
+        <img src={photo} alt="Pet" className="img-fluid" />
         <span className="badge bg-success">Available for Adoption</span>
 
         <Nav variant="tabs" activeKey={activeTab} onSelect={handleTabChange}>
@@ -32,26 +46,27 @@ const PetDetailsModal = ({ closeModal }) => {
 
         <div className="tab-content">
           <div className={`tab-pane ${activeTab === 'tab1' ? 'active' : ''}`} id="tab1">
-            <p>Breed: Golden Retriever</p>
-            <p>Age: 2 years 3 months</p>
-            <p>Buddy is a friendly Golden Retriever looking for a loving home.</p>
+            <p>Breed: {breed}</p>
+            <p>Age: {age} years</p>
+            <p>{description}</p>
             <hr />
-            <h5><a href="shelterdetail.html">Doggycares Inc.</a></h5>
-            <p>1234 Shelter Ave, Toronto ON</p>
+            <h5><a href="shelterdetail.html">{shelterName}</a></h5>
+            <p>{shelterAddress}</p>
           </div>
           <div className={`tab-pane ${activeTab === 'tab2' ? 'active' : ''}`} id="tab2">
-            <p>Up-to-date vaccinations, including rabies, distemper, and parvovirus.</p>
-            <p>Recent heartworm test and prevention history.</p>
+            {medicalHistory}
             <hr />
-            <p>Neutered/Spayed: No</p>
+            <p>Neutered/Spayed: {neuterStatus}</p>
+            <p></p>
+
           </div>
           <div className={`tab-pane ${activeTab === 'tab3' ? 'active' : ''}`} id="tab3">
-            <p>Applicant must have a secure fenced yard with a minimum height of 6-foot.</p>
+            <p>{specialRequirements}</p>
           </div>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" data-bs-toggle="modal" data-bs-target="#applicationModal1">
+        <Button variant="primary" onClick={() => openApplicationModal()}>
           Adopt
         </Button>
       </Modal.Footer>
