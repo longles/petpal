@@ -8,7 +8,7 @@ const Notification = ({ id }) => {
         title: "Title",
         details: "Details"
     })
-  })
+  }, [id])
   return (
     <li className="list-group-item">
       <div className="d-flex justify-content-between">
