@@ -38,8 +38,10 @@ export const authAPIService = () => {
             }
         }
 
-        sessionStorage.setItem('token', response.data.access); // Store token in local storage
-        sessionStorage.setItem('refresh', response.data.refresh);
+        localStorage.setItem('token', response.data.access); // Store token in local storage
+        localStorage.setItem('refresh', response.data.refresh);
+        localStorage.setItem('user_id', response.data.user_id);
+        localStorage.setItem('user_type', response.data.user_type);
 
         return {
             success: true,
@@ -48,8 +50,10 @@ export const authAPIService = () => {
     }
 
     const logout = async () => {
-        sessionStorage.removeItem('token');
-        sessionStorage.removeItem('refresh');
+        localStorage.removeItem('token');
+        localStorage.removeItem('refresh');
+        localStorage.removeItem('user_id');
+        localStorage.removeItem('user_type');
 
         return {
             success: true,
