@@ -79,10 +79,14 @@ class ApplicationCreateListView(APIView, PageNumberPagination):
         else:
             return Response({'detail': "Invalid sorting parameter"}, status=status.HTTP_400_BAD_REQUEST)
 
+        # Filter by pet name
+        pet_name = request.query_params.get('pet_name')
+        if pet_name or pet_name != '':
+            applications = applications.filter(pet__name__icontains=pet_name)
+
         results = self.paginate_queryset(applications, request, view=self)
         serializer = ApplicationSerializer(results, many=True)
         return self.get_paginated_response(serializer.data)
-
 
 
 class ApplicationUpdateDetailView(APIView):
