@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import './styles/layout.css';
-import './styles/profile.css';
+import '../../styles/layout.css';
+import '../../styles/profile.css';
 
 const EditProfile = () => {
     // State for form fields
@@ -61,9 +61,6 @@ const EditProfile = () => {
                     <button type="button" className="btn btn-primary" onClick={handleSecuritySave}>Submit</button>
                 </form>
             </div>
-
-            {/* Notification Modal */}
-            {/* ... Modal content ... */}
 
             {/* Footer */}
             <footer className="footer">

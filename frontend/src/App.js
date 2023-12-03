@@ -9,6 +9,8 @@ import Login from './components/auth/Login.jsx';
 import Signup from './components/auth/Signup.jsx'
 import LandingPage from './components/landing/LandingPage.jsx';
 import PetListingsPage from './components/listing/listings.jsx';
+import ProfileSeeker from "./components/profile/ProfileSeeker.jsx";
+import ProfileShelter from "./components/profile/ProfileShelter.jsx";
 
 
 function App() {
@@ -27,8 +29,16 @@ function App() {
       element: <Login/>
     },
     {
-      path: "/signup/",
+      path: "/accounts/",
       element: <Signup/>
+    },
+    {
+      path: "/accounts/seekers/",
+      element: <ProfileSeeker/>
+    },
+    {
+      path: "/accounts/shelters/",
+      element: <ProfileShelter/>
     },
     {
       path: "/pets/",
