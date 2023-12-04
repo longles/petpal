@@ -6,6 +6,8 @@ import '../../styles/listings.scoped.css';
 import PetCard from '../shared/PetCard';
 import ShelterReviews from './ShelterReviews';
 import { shelterAPIService } from '../../services/userAPIService';
+import { petAPIService } from '../../services/petAPIService';
+import PetCardManager from '../shared/PetCardManager';
 
 function ShelterDetail() {
   const { shelterId } = useParams(); // Assuming you have a shelterId parameter
@@ -51,7 +53,7 @@ function ShelterDetail() {
 
               <div className="pet-container d-flex flex-wrap flex-column flex-sm-row justify-content-between">
                 {/* Sample pet cards */}
-                <PetCard petId={1}/>
+                <PetCardManager filters={{shelter: shelterId, page_size: 3}}/>
                 {/* Repeat similar blocks for additional pets */}
               </div>
               <div className="d-flex justify-content-end mt-3 px-2 px-xl-4 py-2 py-sm-0">
