@@ -28,7 +28,7 @@ const LandingPage = () => {
             </a>
             <a href="/pets/?species=3" className="animal-card" data-animal="others">
               <div className="card-content">
-                <p>Others</p>
+                <p>Birds</p>
               </div>
             </a>
           </div>
