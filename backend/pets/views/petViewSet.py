@@ -15,7 +15,7 @@ from datetime import datetime
 
 class PetViewSet(viewsets.ModelViewSet):
     serializer_class = PetSerializer
-    search_fields = ['shelter', 'status', 'breed', 'size', 'color', 'gender', 'species']  # filter fields
+    search_fields = ['shelter', 'status', 'breed', 'size', 'color', 'sex', 'species']  # filter fields
     ordering_fields = ['name', 'size', 'birth_date']  # sorting fields
     filter_backends = [OrderingFilter, SearchFilter]
     ordering = ['-birth_date']
@@ -30,7 +30,7 @@ class PetViewSet(viewsets.ModelViewSet):
         species = self.request.query_params.get('species')
         size = self.request.query_params.get('size')
         color = self.request.query_params.get('color')
-        gender = self.request.query_params.get('gender')
+        gender = self.request.query_params.get('sex')
 
         if status:
             queryset = queryset.filter(status=status)
