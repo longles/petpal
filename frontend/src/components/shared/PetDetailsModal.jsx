@@ -108,7 +108,12 @@ function calculateAge(birthDateString) {
       </Modal.Header>
       <Modal.Body className='custom-modal'>
         <img src={photo} alt="Pet" className="img-fluid" />
-        <span className="badge bg-success">Available for Adoption</span>
+        {petDetails.status === 1 ? (
+          <span className="badge bg-danger">Adopted</span>
+        ) : (
+          <span className="badge bg-success">Available for Adoption</span>
+        )}
+  
 
         <Nav variant="tabs" activeKey={activeTab} onSelect={handleTabChange}>
           <Nav.Item>

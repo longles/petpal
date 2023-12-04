@@ -42,7 +42,13 @@ function App() {
     },
     {
       path: "/pets/",
-      element: <PetListingsPage/>
+      element: <PetListingsPage />,
+      children: [
+        {
+          path: '',
+          element: <PetListingsPage />,
+        },
+      ],
     }
   ]);
 
