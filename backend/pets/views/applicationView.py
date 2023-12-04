@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from django.shortcuts import get_object_or_404
 
-from ..models import Application, Pet
+from ..models import Application, Pet, ApplicationForm
 from ..serializers import ApplicationSerializer, ApplicationUpdateSerializer
 from accounts.permission import IsPetSeeker, IsShelter
 from ..utils import method_permission_classes
@@ -18,12 +18,16 @@ class ApplicationCreateListView(APIView, PageNumberPagination):
     @method_permission_classes([IsPetSeeker])
     def post(self, request):
         pet_id = request.data.get('pet')
+        form_id = request.data.get('form')
         responses = request.data.get('responses')
 
         if not Pet.objects.filter(id=pet_id, status=Pet.Status.AVAILABLE).first():
             return Response({'detail': 'Pet not available for application.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        data = {'pet': pet_id, 'applicant': request.user.user_object.pk, 'responses': responses}
+        if not ApplicationForm.objects.filter(id=form_id).first():
+            return Response({'detail': 'Application form not available for application.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        data = {'pet': pet_id, 'form': form_id, 'applicant': request.user.user_object.pk, 'responses': responses}
         serializer = ApplicationSerializer(data=data)
 
         if serializer.is_valid():

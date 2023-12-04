@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { petAPIService } from '../../services/petAPIService';
 import ChatModal from './ApplicationChatModal'; // Import the ChatModal component
+import ApplicationReviewModal from './ApplicationModal';
 import '../../styles/applications.scoped.css'
 import dog from '../../assets/images/dog.png'
 
-const PetCard = ({ petId, status, submissionDate, applicationId }) => {
+const PetCard = ({ petId, status, submissionDate, applicationId, formId, responses }) => {
     const [petInfo, setPetInfo] = useState({});
     const petService = petAPIService();
 
@@ -44,13 +45,14 @@ const PetCard = ({ petId, status, submissionDate, applicationId }) => {
                             <p></p>
                             <span className="badge" style={{ backgroundColor: "lightcoral", fontSize: "14px" }}>Submitted: {submissionDate}</span>
                             <p></p>
-                            <button type="button" className="btn btn-primary" style={{ marginRight: "15px" }} data-bs-toggle="modal" data-bs-target={`#applicationModal${applicationId}`}>View Application</button>
+                            <button type="button" className="btn btn-primary" style={{ marginRight: "15px" }} data-bs-toggle="modal" data-bs-target={`#applicationReviewModal${applicationId}`}>View Application</button>
                             <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#chatModal${applicationId}`}>Open Chat</button>
                         </div>
                     </div>
                 </div>
             </div>
             <ChatModal applicationId={applicationId} />
+            <ApplicationReviewModal applicationId={applicationId} responses={responses} formId={formId} />
         </>
     );
 };

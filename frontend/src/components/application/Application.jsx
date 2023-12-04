@@ -102,6 +102,8 @@ const Applications = () => {
                             status={application.status}
                             submissionDate={application.created_at.split('T')[0]}
                             applicationId={application.id}
+                            formId={application.form}
+                            responses={application.responses}
                         />
                     ))}
                 </div>

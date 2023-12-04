@@ -56,11 +56,15 @@ const ChatModal = ({ applicationId }) => {
                     </div>
                     <div className="modal-body chat-modal-body">
                         <div className="chat-container">
-                            {messages.map((message) => (
-                                <div key={message.id} className={`${String(message.sender) === localStorage.getItem('user_id') ? 'message' : 'message other-user'}`}>
-                                    {message.content}
-                                </div>
-                            ))}
+                        {messages.length === 0 ? (
+                                <div className="no-messages">No messages</div>
+                            ) : (
+                                messages.map((message) => (
+                                    <div key={message.id} className={`${String(message.sender) === localStorage.getItem('user_id') ? 'message' : 'message other-user'}`}>
+                                        {message.content}
+                                    </div>
+                                ))
+                            )}
                         </div>
                     </div>
                     <div className="modal-footer">
