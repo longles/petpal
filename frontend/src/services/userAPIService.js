@@ -63,7 +63,7 @@ export const shelterAPIService = () => {
     const apiService = APIService();
 
     const getShelterDetail = async (id) => {
-        const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'GET');
+        const response = await apiService.makeAPICall(`${API_PATH}${id}/`, 'GET');
 
         if (!response.success) {
             return {
