@@ -9,8 +9,10 @@ import Login from './components/auth/Login.jsx';
 import Signup from './components/auth/Signup.jsx'
 import LandingPage from './components/landing/LandingPage.jsx';
 import PetListingsPage from './components/listing/listings.jsx';
+import Applications from './components/application/Application.jsx';
 import ProfileSeeker from "./components/profile/ProfileSeeker.jsx";
 import ProfileShelter from "./components/profile/ProfileShelter.jsx";
+
 
 
 function App() {
@@ -43,6 +45,10 @@ function App() {
     {
       path: "/pets/",
       element: <PetListingsPage/>
+    },
+    {
+        path: "/applications/",
+        element: <Applications/>
     }
   ]);
 
@@ -56,7 +62,7 @@ function App() {
         </div>
       </footer>
     </div>
-    
+
   );
 }
 
