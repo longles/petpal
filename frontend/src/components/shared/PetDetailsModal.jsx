@@ -152,3 +152,7 @@ function calculateAge(birthDateString) {
 };
 
 export default PetDetailsModal;
+
+
+// const PetDetailsModal = ({ petId, closeModal, openApplicationModal }) => {return (<p>hello</p>)}
+// export default PetDetailsModal;

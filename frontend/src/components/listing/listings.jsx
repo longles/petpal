@@ -2,37 +2,31 @@ import React, { useState, useEffect } from 'react';
 import PetCard from '../shared/PetCard';
 import SideBarFilter from './SideBarFilter';
 import {petAPIService} from '../../services/petAPIService'
+import { useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 
 
-  const PetListingsPage = () => {
-    const [petIDs, setPetIDs] = useState([]);
-    const petAPI = petAPIService();
+const PetListingsPage = () => {
+  const [petIDs, setPetIDs] = useState([]);
+  const petAPI = petAPIService();
+  const { status, shelter, breed, species, size, color, gender } = useParams();
 
-    const fetchPetList = async()=>{
-      try{
-        const filters = {};
-        const page = 1;
-        const response = await petAPI.getPetList(filters, page);
-        if (response.success){
-          // petIDs is a list of fetched pet id
-          const petIDs = response.data.results.map((pet) => pet.id);
-          setPetIDs(response.data.results.map((pet) => pet.id));
-
-          // console.log(petIDs);
-        }
-        const response2 = await petAPI.getPetDetail(2);
-
-        // console.log(response);
-        // console.log(response2);
-      }catch (error) {
-        console.error('Error fetching pet list:', error);
+  const fetchPetList = useCallback(async () => {
+    try {
+      const filters = {};
+      const page = 1;
+      const response = await petAPI.getPetList(filters, page);
+      if (response.success) {
+        setPetIDs(response.data.results.map((pet) => pet.id));
       }
-      
+    } catch (error) {
+      console.error('Error fetching pet list:', error);
     }
+  }, [petAPI]);
 
-    useEffect(() => {
-      fetchPetList();
-    }, []);
+  useEffect(() => {
+    fetchPetList();
+  }, []);
 
     //testing data
     let pho = '/assets/images/sample_pet_image_1.jpg'

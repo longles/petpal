@@ -1,31 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { petAPIService } from '../../services/petAPIService';
 import PetDetailsModal from './PetDetailsModal';
 import ApplicationModal from './ApplicationModal';
 
-// PetCard should take in a petid and fetch info from the server
 const PetCard = ({ petId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
   const [petDetails, setPetDetails] = useState(null);
 
-  const fetchPetDetail = async () => {
+  const fetchPetDetail = useCallback(async () => {
     try {
       const petAPI = petAPIService();
       const response = await petAPI.getPetDetail(petId);
       if (response.success) {
-        // console.log("Fetched pet details:", response.data);
         setPetDetails(response.data);
       }
     } catch (error) {
       console.error(`Error fetching pet detail for ID ${petId}:`, error);
     }
-  };
+  }, [petId]);
 
   useEffect(() => {
     fetchPetDetail();
-
-  }, [petId]);
+  }, [fetchPetDetail]);
 
   if (!petDetails) {
     return <div>Loading...</div>;

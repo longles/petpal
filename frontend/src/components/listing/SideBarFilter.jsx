@@ -26,6 +26,8 @@ const SideBarFilter = () => {
                 <option value="Any">Any</option>
                 <option value="Dog">Dog</option>
                 <option value="Cat">Cat</option>
+                <option value="Cat">Bird</option>
+
               </select>
             </div>
             <div className="mb-3">
