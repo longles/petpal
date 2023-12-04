@@ -1,9 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button, Nav } from 'react-bootstrap';
 import '../../styles/listings.scoped.css';
+import { petAPIService } from '../../services/petAPIService';
+import { shelterAPIService } from '../../services/userAPIService';
 
-const PetDetailsModal = ({ closeModal, openApplicationModal }) => {
+// pet detail should get a pet id and fetch info from server
+const PetDetailsModal = ({ petId, closeModal, openApplicationModal }) => {
   const [activeTab, setActiveTab] = useState('tab1');
+  const [petDetails, setPetDetails] = useState(null);
+  const [shelterDetails, setShelterDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchPetDetail = async () => {
+    try {
+      const petAPI = petAPIService();
+      const response = await petAPI.getPetDetail(petId);
+      if (response.success) {
+        setPetDetails(response.data);
+        console.log("Fetched pet details:", response.data);
+        return response.data.shelter;
+      }
+    } catch (error) {
+      console.error(`Error fetching pet detail for ID ${petId}:, error`);
+    }
+  };
+
+  const fetchShelterDetail = async (shelterId) => {
+    try {
+      const shelterAPI = shelterAPIService();
+      const response = await shelterAPI.getShelterDetail(shelterId);
+      if (response.success) {
+        setShelterDetails(response.data);
+        console.log("Fetched shelter details:", response.data);
+      }
+    } catch (error) {
+      console.error(`Error fetching shelter detail for ID ${shelterId}:`, error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const shelterId = await fetchPetDetail();
+      if (shelterId) {
+        await fetchShelterDetail(shelterId);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [petId]);
+
+  if (loading || !petDetails || !shelterDetails) {
+    return <div>Loading...</div>;
+  }
+
 
   const handleTabChange = (eventKey) => {
     setActiveTab(eventKey);
@@ -12,16 +61,45 @@ const PetDetailsModal = ({ closeModal, openApplicationModal }) => {
   const handleAdoptClick = () => {
     openApplicationModal();
   };
+//test data
+  // let breed = 'Golden Retriever'
+  // let photo = "../../assets/images/sample_pet_image_1.jpg"
+  // let age = '2'
+  // let description = "Buddy is a friendly Golden Retriever looking for a loving home."
+  // let shelterName = "Doggycares Inc."
+  // let shelterAddress = "1234 Shelter Ave, Toronto ON"
+  // let medicalHistory = "Up-to-date vaccinations, including rabies, distemper, and parvovirus. Recent heartworm test and prevention history."
+  // let neuterStatus = "No"
+  // let specialRequirements = "Applicant must have a secure fenced yard with a minimum height of 6-foot."
 
-  let breed = 'Golden Retriever'
-  let photo = "../../assets/images/sample_pet_image_1.jpg"
-  let age = '2'
-  let description = "Buddy is a friendly Golden Retriever looking for a loving home."
-  let shelterName = "Doggycares Inc."
-  let shelterAddress = "1234 Shelter Ave, Toronto ON"
-  let medicalHistory = "Up-to-date vaccinations, including rabies, distemper, and parvovirus. Recent heartworm test and prevention history."
-  let neuterStatus = "No"
-  let specialRequirements = "Applicant must have a secure fenced yard with a minimum height of 6-foot."
+//real shelter data
+function calculateAge(birthDateString) {
+  const birthDate = new Date(birthDateString);
+  const currentDate = new Date();
+
+  const timeDifference = currentDate - birthDate;
+
+  // Calculate age in milliseconds, seconds, minutes, hours, and years
+  const millisecondsInYear = 1000 * 60 * 60 * 24 * 365.25;
+  const ageInYears = timeDifference / millisecondsInYear;
+
+  // Round the age to 1 decimal place
+  const roundedAge = Math.round(ageInYears * 10) / 10;
+
+  return roundedAge;
+}
+  let breed = petDetails.breed
+  // set the default pic to sample pet image2 
+  let photo = petDetails.photo === null ? '/assets/images/sample_pet_image_2.jpg' : petDetails.photo;
+  let age = calculateAge(petDetails.birth_date)
+  let description = petDetails.comments
+
+  let medicalHistory = petDetails.medical_history
+  let specialRequirements = petDetails.special_needs
+
+  //shelter info
+  let shelterName = shelterDetails.shelter_name
+  let shelterAddress = shelterDetails.shelter_name
 
   return (
     <Modal show={true} onHide={closeModal} size="lg">
@@ -30,7 +108,12 @@ const PetDetailsModal = ({ closeModal, openApplicationModal }) => {
       </Modal.Header>
       <Modal.Body className='custom-modal'>
         <img src={photo} alt="Pet" className="img-fluid" />
-        <span className="badge bg-success">Available for Adoption</span>
+        {petDetails.status === 1 ? (
+          <span className="badge bg-danger">Adopted</span>
+        ) : (
+          <span className="badge bg-success">Available for Adoption</span>
+        )}
+  
 
         <Nav variant="tabs" activeKey={activeTab} onSelect={handleTabChange}>
           <Nav.Item>
@@ -45,6 +128,7 @@ const PetDetailsModal = ({ closeModal, openApplicationModal }) => {
         </Nav>
 
         <div className="tab-content">
+          {/* tab1 */}
           <div className={`tab-pane ${activeTab === 'tab1' ? 'active' : ''}`} id="tab1">
             <p>Breed: {breed}</p>
             <p>Age: {age} years</p>
@@ -53,13 +137,11 @@ const PetDetailsModal = ({ closeModal, openApplicationModal }) => {
             <h5><a href="shelterdetail.html">{shelterName}</a></h5>
             <p>{shelterAddress}</p>
           </div>
+          {/* tab2 */}
           <div className={`tab-pane ${activeTab === 'tab2' ? 'active' : ''}`} id="tab2">
-            {medicalHistory}
-            <hr />
-            <p>Neutered/Spayed: {neuterStatus}</p>
-            <p></p>
-
+            <p>{medicalHistory}</p>
           </div>
+          {/* tab3 */}
           <div className={`tab-pane ${activeTab === 'tab3' ? 'active' : ''}`} id="tab3">
             <p>{specialRequirements}</p>
           </div>
@@ -75,3 +157,7 @@ const PetDetailsModal = ({ closeModal, openApplicationModal }) => {
 };
 
 export default PetDetailsModal;
+
+
+// const PetDetailsModal = ({ petId, closeModal, openApplicationModal }) => {return (<p>hello</p>)}
+// export default PetDetailsModal;
