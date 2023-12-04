@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { applicationAPIService } from '../../services/applicationAPIService';
 import PetCard from './ApplicationTile';
 
+
+
 const Applications = () => {
     const [applications, setApplications] = useState([]);
     const [statusOption, setStatusOption] = useState(1); // Assuming 1-4 represent different sort options
