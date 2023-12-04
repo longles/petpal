@@ -28,13 +28,14 @@
 
 /* Style for chat messages */
 .message {
-    background-color: #f0f0f0;
+    background-color: rgb(255, 221, 170);
     padding: 5px 10px;
     margin: 5px 0;
     border-radius: 5px;
+    text-align: right;
 }
 
 .other-user {
-    background-color: #cfe7ff;
-    text-align: right;
+    background-color: rgb(211, 192, 255);
+    text-align: left;
 }

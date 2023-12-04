@@ -11,6 +11,7 @@ class Application(models.Model):
 
     pet = models.ForeignKey("Pet", on_delete=models.CASCADE)
     applicant = models.ForeignKey("accounts.PetSeeker", on_delete=models.CASCADE, related_name="applications")
+    form = models.ForeignKey("ApplicationForm", on_delete=models.CASCADE)
 
     status = models.PositiveSmallIntegerField(choices=Status.choices, default=Status.PENDING)
     last_updated = models.DateTimeField(auto_now=True)

@@ -9,6 +9,10 @@ import Login from './components/auth/Login.jsx';
 import Signup from './components/auth/Signup.jsx'
 import LandingPage from './components/landing/LandingPage.jsx';
 import PetListingsPage from './components/listing/listings.jsx';
+import Applications from './components/application/Application.jsx';
+import ProfileSeeker from "./components/profile/ProfileSeeker.jsx";
+import ProfileShelter from "./components/profile/ProfileShelter.jsx";
+
 
 
 function App() {
@@ -19,7 +23,7 @@ function App() {
       element: <LandingPage/>,
     },
     {
-      path: "/shelterdetail/",
+      path: "/shelterdetail/:shelterId/",
       element: <ShelterDetail/>,
     },
     {
@@ -27,12 +31,24 @@ function App() {
       element: <Login/>
     },
     {
-      path: "/signup/",
+      path: "/accounts/",
       element: <Signup/>
+    },
+    {
+      path: "/accounts/seekers/",
+      element: <ProfileSeeker/>
+    },
+    {
+      path: "/accounts/shelters/",
+      element: <ProfileShelter/>
     },
     {
       path: "/pets/",
       element: <PetListingsPage/>
+    },
+    {
+        path: "/applications/",
+        element: <Applications/>
     }
   ]);
 

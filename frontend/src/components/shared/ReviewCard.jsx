@@ -1,9 +1,9 @@
 import React from 'react';
 
-function ReviewCard({id}) {
-    let name = "John Doe"
-    let content = "We adopted our lovely dog from Doggycares Inc. and had a fantastic experience. The staff was friendly and helpful, and the facilities were clean and well-maintained."
-    let img = "../../assets/images/user1.jpg"
+function ReviewCard({data}) {
+    let name = data.name
+    let content = data.content
+    let img = data.img
     
     //let rating = [1, 2, 3, 4, 5]
     return (
