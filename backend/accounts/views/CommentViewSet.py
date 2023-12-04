@@ -38,10 +38,10 @@ class ApplicationCommentListCreate(generics.ListCreateAPIView):
         user = self.request.user
 
         if user.is_user('petseeker', application.applicant_id) or user.is_user('petshelter', application.pet.shelter_id):
-            return Comment.objects.filter(receiver_type__model="application", receiver_id=pk).order_by("-timestamp")
+            return Comment.objects.filter(receiver_type__model="application", receiver_id=pk).order_by("timestamp")
         else:
             raise PermissionDenied("You do not have permission to view this application.")
-    
+
     def perform_create(self, serializer):
         user = self.request.user
         application_id = self.kwargs.get('pk')
@@ -54,4 +54,3 @@ class ApplicationCommentListCreate(generics.ListCreateAPIView):
                             receiver=application)
         else:
             raise PermissionDenied("You do not have the permission to comment.")
-        

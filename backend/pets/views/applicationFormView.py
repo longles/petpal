@@ -7,7 +7,8 @@ from django.shortcuts import get_object_or_404
 
 from ..models import ApplicationForm
 from ..serializers import ApplicationFormSerializer
-from accounts.permission import IsShelter
+from accounts.permission import IsShelter, IsPetSeeker
+from ..utils import method_permission_classes
 
 
 class ApplicationFormCreateListView(APIView, PageNumberPagination):
@@ -32,16 +33,17 @@ class ApplicationFormCreateListView(APIView, PageNumberPagination):
 
 
 class ApplicationFormDeleteDetailView(APIView):
-    permission_classes = [IsAuthenticated, IsShelter]
+    permission_classes = [IsAuthenticated]
 
-
+    @method_permission_classes([IsShelter])
     def delete(self, request, pk):
         application_form = get_object_or_404(ApplicationForm, pk=pk, shelter=request.user.user_object)
         application_form.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+    @method_permission_classes([IsPetSeeker])
     def get(self, request, pk):
-        application_form = get_object_or_404(ApplicationForm, pk=pk, shelter=request.user.user_object)
+        application_form = get_object_or_404(ApplicationForm, pk=pk)
         serializer = ApplicationFormSerializer(application_form)
         return Response(serializer.data)

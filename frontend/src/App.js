@@ -9,8 +9,10 @@ import Login from './components/auth/Login.jsx';
 import Signup from './components/auth/Signup.jsx'
 import LandingPage from './components/landing/LandingPage.jsx';
 import PetListingsPage from './components/listing/listings.jsx';
+import Applications from './components/application/Application.jsx';
 import ProfileSeeker from "./components/profile/ProfileSeeker.jsx";
 import ProfileShelter from "./components/profile/ProfileShelter.jsx";
+
 
 
 function App() {
@@ -49,20 +51,27 @@ function App() {
           element: <PetListingsPage />,
         },
       ],
+    },
+    {
+        path: "/applications/",
+        element: <Applications/>
     }
   ]);
 
   return (
-    <div>
-      <NavBar />
-      <RouterProvider router={router} />
-      <footer className="footer">
-        <div className="container">
-            <p>Copyright &copy; 2023 | Pet Pal </p>
+    <>
+      <div id="body">
+        <div id="content-wrap">
+          <NavBar />
+          <RouterProvider router={router} />
         </div>
-      </footer>
-    </div>
-    
+        <footer className="footer">
+          <div className="container">
+              <p>Copyright &copy; 2023 | Pet Pal </p>
+          </div>
+        </footer>
+      </div>
+    </>
   );
 }
 
