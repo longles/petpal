@@ -16,6 +16,8 @@ function ShelterDetail() {
 
   const API = shelterAPIService()
 
+  const petRenderFunc = (x) => {return <PetCard key={x.id} petId={x.id} data={x} manageFlag={true}/>}
+
   useEffect(() => {
     API.getShelterDetail(shelterId).then(ret => {
       if (ret.success) {
@@ -53,7 +55,7 @@ function ShelterDetail() {
 
               <div className="pet-container d-flex flex-wrap flex-column flex-sm-row justify-content-between">
                 {/* Sample pet cards */}
-                <PetCardManager filters={{shelter: shelterId, page_size: 3}}/>
+                <PetCardManager filters={{shelter: shelterId, page_size: 3}} render={petRenderFunc}/>
                 {/* Repeat similar blocks for additional pets */}
               </div>
               <div className="d-flex justify-content-end mt-3 px-2 px-xl-4 py-2 py-sm-0">

@@ -6,7 +6,7 @@ import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
 
-const PetListingsPage = () => {
+const PetListingsPage = ({manageFlag = false, defaultFilters = {}}) => {
   const [petIDs, setPetIDs] = useState([]);
   const petAPI = petAPIService();
 
@@ -65,7 +65,7 @@ const PetListingsPage = () => {
   const fetchPetList = useCallback(async () => {
     try {
       // Construct filters based on selected options
-      const filters = {};
+      const filters = defaultFilters;
 
       for (const key in selectedFilters) {
         if (selectedFilters[key] !== 'Any') {
@@ -95,16 +95,16 @@ const PetListingsPage = () => {
     return (
       <div>
       <div className="container main-content">
-        <h2 className="mb-4">Adoption Listings</h2>
+        <h2 className="mb-4">{manageFlag ? "Our Pets" : "Adoption Listings" }</h2>
         <div className="row">
-        <SideBarFilter updateFilters={updateFilters} selectedFilters={selectedFilters} />
+        <SideBarFilter manageFlag={manageFlag} updateFilters={updateFilters} selectedFilters={selectedFilters} />
           
           {/* Pet Listings */}
           <div className="col-md-9">
             <div className="row no-gutters">
               {/* petcard */}
               {petIDs.map((petID) => (
-                <PetCard key={petID} petId={petID} />
+                <PetCard manageFlag={manageFlag} key={petID} petId={petID} />
                 ))}
             </div>
           </div>
