@@ -1,10 +1,10 @@
 import React from 'react';
 
-function getUpdateModalId(petId) {
+export const getUpdateModalId = (petId) => {
     return `petUpdateModal${petId}`;
 }
 
-function PetUpdateModal({ petId }) {
+const PetUpdateModal = ({ petId }) => {
     const modalId = getUpdateModalId(petId)
     let petName = "TestPet" //should get from api call
     return (

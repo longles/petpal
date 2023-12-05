@@ -2,8 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { petAPIService } from '../../services/petAPIService';
 import PetDetailsModal from './PetDetailsModal';
 import ApplicationModal from './ApplicationModal';
+import PetUpdateModal, {getUpdateModalId} from './PetUpdateModal';
 
-const PetCard = ({ petId }) => {
+const PetCard = ({ manageFlag = false, petId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
   const [petDetails, setPetDetails] = useState(null);
@@ -53,16 +54,23 @@ const PetCard = ({ petId }) => {
           <h4 className="card-title">{petDetails.name}</h4>
           <p className="card-text">{petDetails.comments}</p>
           <div>
-            <button className="btn btn-primary" onClick={openModal}>
-              Details
-            </button>
-            {isModalOpen && (
-              <PetDetailsModal
-                petId={petId}
-                closeModal={closeModal}
-                openApplicationModal={openApplicationModal}
-              />
-            )}
+            {!manageFlag && <>
+              <button className="btn btn-primary" onClick={openModal}>
+                Details
+              </button>
+              {isModalOpen && (
+                <PetDetailsModal
+                  petId={petId}
+                  closeModal={closeModal}
+                  openApplicationModal={openApplicationModal}
+                />
+              )}
+            </>}
+            {manageFlag && <>
+              <button className="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target={"#"+getUpdateModalId(petId)}>Edit</button>
+              <PetUpdateModal petId={petId}/>
+            </>}
           </div>
         </div>
       </div>
