@@ -1,9 +1,18 @@
 import React from 'react';
 import NotificationModal from './NotificationModal';
+import { authAPIService } from '../../services/authAPIService';
+import { useNavigate } from 'react-router-dom';
 
-function NavBar() {
+const NavBar = () => {
   // Retrieve userType from localStorage
-  const userType = localStorage.getItem('userType') || 'none';
+  const userType = localStorage.getItem('user_type') || 'none';
+  const logoutAPI = authAPIService()
+  const navigate = useNavigate()
+
+  const logoutFunc = () => {
+    logoutAPI.logout()
+    navigate("/")
+  }
 
   const renderNoneNavbar = () => (
     <>
@@ -40,6 +49,8 @@ function NavBar() {
     </>
   )
 
+  
+
   const renderProfile = () => (
     <>
       <li className="nav-item dropdown">
@@ -51,6 +62,7 @@ function NavBar() {
           <li><a className="dropdown-item" href="/profile">View Profile</a></li>
           <li><a className="dropdown-item" href="/profile/edit">Update Profile</a></li>
           <li><a className="dropdown-item btn" data-bs-toggle="modal" data-bs-target="#notificationModal">Notifications</a></li>
+          <li><button className="dropdown-item btn" onClick={logoutFunc}>Logout</button></li>
         </ul>
       </li>
     </>
