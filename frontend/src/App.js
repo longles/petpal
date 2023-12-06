@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter, Outlet } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import './styles/layout.css';
@@ -15,73 +15,71 @@ import ProfileShelter from "./components/profile/ProfileShelter.jsx";
 import ShelterManagement from './components/shelter/ShelterManagement.jsx';
 import ApplicationFormUpdateModal from './components/application/ApplicationFormUpdateModal.jsx';
 
-
+const RootLayout = () => {
+  return (<div id="body">
+    <div id="content-wrap">
+      <NavBar />
+      <Outlet/>
+    </div>
+    <footer className="footer">
+      <div className="container">
+          <p>Copyright &copy; 2023 | Pet Pal </p>
+      </div>
+    </footer>
+  </div>)
+}
 
 function App() {
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <LandingPage/>,
-    },
-    {
-      path: "/shelterdetail/:shelterId/",
-      element: <ShelterDetail/>,
-    },
-    {
-      path: "/pets/manage/",
-      element: <ShelterManagement/>,
-    },
-    {
-      path: "/login/",
-      element: <Login/>
-    },
-    {
-      path: "/accounts/",
-      element: <Signup/>
-    },
-    {
-      path: "/accounts/seekers/",
-      element: <ProfileSeeker/>
-    },
-    {
-      path: "/accounts/shelters/",
-      element: <ProfileShelter/>
-    },
-    {
-      path: "/pets/",
-      element: <PetListingsPage />,
-      children: [
-        {
-          path: '',
-          element: <PetListingsPage />,
-        },
-      ],
-    },
-    {
-        path: "/applications/",
-        element: <Applications/>
-    },
-    {
-        path: "/test/",
-        element: <ApplicationFormUpdateModal/>
+      element: <RootLayout/>,
+      children: [{
+        path: "",
+        element: <LandingPage/>,
+      },
+      {
+        path: "shelterdetail/:shelterId/",
+        element: <ShelterDetail/>,
+      },
+      {
+        path: "pets/manage/",
+        element: <ShelterManagement/>,
+      },
+      {
+        path: "login/",
+        element: <Login/>
+      },
+      {
+        path: "accounts/",
+        element: <Signup/>
+      },
+      {
+        path: "accounts/seekers/",
+        element: <ProfileSeeker/>
+      },
+      {
+        path: "accounts/shelters/",
+        element: <ProfileShelter/>
+      },
+      {
+        path: "pets/",
+        element: <PetListingsPage />,
+      },
+      {
+          path: "applications/",
+          element: <Applications/>
+      },
+      {
+          path: "test/",
+          element: <ApplicationFormUpdateModal/>
+      }]
     }
   ]);
 
   return (
-    <>
-      <div id="body">
-        <div id="content-wrap">
-          <NavBar />
-          <RouterProvider router={router} />
-        </div>
-        <footer className="footer">
-          <div className="container">
-              <p>Copyright &copy; 2023 | Pet Pal </p>
-          </div>
-        </footer>
-      </div>
-    </>
+    <RouterProvider router={router} />
   );
 }
 
