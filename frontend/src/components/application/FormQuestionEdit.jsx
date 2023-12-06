@@ -4,7 +4,7 @@ import '../../styles/formquestion.scoped.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 
-const FormQuestion = ({title, question, editFunc, deleteFunc}) => {
+const FormQuestionEdit = ({title, question, editFunc, deleteFunc}) => {
     const question_type_display = {
         "Long Answer": 1,
         "Dropdown": 2,
@@ -89,4 +89,4 @@ const FormQuestion = ({title, question, editFunc, deleteFunc}) => {
     )
 }
 
-export default FormQuestion
+export default FormQuestionEdit

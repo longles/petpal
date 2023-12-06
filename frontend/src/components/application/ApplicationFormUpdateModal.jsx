@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useReducer, useMemo, useCallback } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import FormQuestion from './FormQuestion';
+import FormQuestionEdit from './FormQuestionEdit';
 import { applicationAPIService } from '../../services/applicationAPIService';
 import { applicationFormAPIService } from '../../services/applicationFormAPIService';
 
@@ -56,7 +56,7 @@ const ApplicationFormUpdateModal = ({updateFlag, initialQuestions = []}) => {
                 <Modal.Title>{updateFlag ? "Update" : "Create"} Application Form</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {questions.map((x, i) => <FormQuestion key={i} edit={true} title={x.title} question={x.question_object} editFunc={editQuestionByIndex(i)} deleteFunc={deleteQuestionByIndex(i)}/>)}
+                {questions.map((x, i) => <FormQuestionEdit key={i} edit={true} title={x.title} question={x.question_object} editFunc={editQuestionByIndex(i)} deleteFunc={deleteQuestionByIndex(i)}/>)}
             </Modal.Body>
             <div className="d-flex justify-content-center mb-2">
                 <button className='btn btn-primary' onClick={addQuestion}>Add new question</button>
