@@ -12,6 +12,7 @@ import PetListingsPage from './components/listing/listings.jsx';
 import Applications from './components/application/Application.jsx';
 import ProfileSeeker from "./components/profile/ProfileSeeker.jsx";
 import ProfileShelter from "./components/profile/ProfileShelter.jsx";
+import ShelterManagement from './components/shelter/ShelterManagement.jsx';
 
 
 
@@ -25,6 +26,10 @@ function App() {
     {
       path: "/shelterdetail/:shelterId/",
       element: <ShelterDetail/>,
+    },
+    {
+      path: "/pets/manage/",
+      element: <ShelterManagement/>,
     },
     {
       path: "/login/",
