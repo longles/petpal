@@ -56,7 +56,7 @@ const ChatModal = ({ applicationId }) => {
                     </div>
                     <div className="modal-body chat-modal-body">
                         <div className="chat-container">
-                        {messages.length === 0 ? (
+                            {messages.length === 0 ? (
                                 <div className="no-messages">No messages</div>
                             ) : (
                                 messages.map((message) => (

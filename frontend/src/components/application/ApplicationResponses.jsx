@@ -27,7 +27,6 @@ const ApplicationResponses = ({ formId, responses }) => {
     };
 
     const isSelectedCheckbox = (key, option, answer) => {
-        console.log(option, answer)
         if (answer.includes(option)) {
             return <input key={key} className="form-check-input" type="checkbox" value={option} checked disabled />;
         } else {
@@ -35,7 +34,7 @@ const ApplicationResponses = ({ formId, responses }) => {
         }
     };
 
-    const renderQuestion= (question) => {
+    const renderQuestion = (question) => {
         const question_object = question.question_object;
         const type = question_object.type;
         const question_id = question.id;
