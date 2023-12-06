@@ -61,6 +61,7 @@ const PetCard = ({
     };
 
     return (
+        <>
         <div className="card mb-4">
             <div className="row no-gutters">
                 <div className="col-md-4">
@@ -114,6 +115,9 @@ const PetCard = ({
                 </div>
             </div>
         </div>
+        <ChatModal applicationId={applicationId} />
+        <ApplicationReviewModal applicationId={applicationId} formId={formId} responses={responses} />
+        </>
     );
 };
 
