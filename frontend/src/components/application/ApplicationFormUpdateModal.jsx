@@ -94,7 +94,7 @@ const ApplicationFormUpdateModal = ({id, initialQuestions}) => {
     return (
         <Modal show={showModal} onHide={() => {setShowModal(false)}} size="lg">
             <Modal.Header closeButton>
-                <Modal.Title>Pet Details</Modal.Title>
+                <Modal.Title>Update Application Form</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {questions.map((x, i) => <FormQuestion key={i} edit={true} title={x.title} question={x.question_object} editFunc={editQuestionByIndex(i)} deleteFunc={deleteQuestionByIndex(i)}/>)}
