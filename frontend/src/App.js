@@ -72,7 +72,7 @@ function App() {
     <>
       <div id="body">
         <div id="content-wrap">
-          {/* <NavBar /> */}
+          <NavBar />
           <RouterProvider router={router} />
         </div>
         <footer className="footer">
