@@ -53,7 +53,7 @@ const Applications = () => {
 
     return (
         <div className="container main-content">
-            <h2 className="mb-4">My Applications</h2>
+            <h2 className="mb-4">{localStorage.getItem('user_type') === 'petshelter' ? 'Applications' : 'My Applications'}</h2>
             <div className="row">
                 <div className="col-md-3">
                     <div className="card mb-4">

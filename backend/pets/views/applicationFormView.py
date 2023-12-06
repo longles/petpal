@@ -55,7 +55,6 @@ class ApplicationFormRUD(APIView):
         return Response({serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
-    @method_permission_classes([IsPetSeeker])
     def get(self, request, pk):
         application_form = get_object_or_404(ApplicationForm, pk=pk)
         serializer = ApplicationFormSerializer(application_form)
