@@ -1,3 +1,9 @@
 .header-input {
     text-align: center
 }
+
+.icon-button {
+    background: none;
+    color: inherit;
+    border: none;
+}

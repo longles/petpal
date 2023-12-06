@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../../styles/formquestion.scoped.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import { set } from 'react-hook-form';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 
-const FormQuestion = ({edit, title, question, editFunc, deleteFunc}) => {
+const FormQuestion = ({title, question, editFunc, deleteFunc}) => {
     const question_type_display = {
         "Long Answer": 1,
         "Dropdown": 2,
@@ -60,9 +59,12 @@ const FormQuestion = ({edit, title, question, editFunc, deleteFunc}) => {
 
     return (<div>
         {editTitleState && <h4><input className="form-control form-control-lg header-input" size="lg" value={title} onChange={editQuestionTitle} onBlur={() => setEditTitleState(false)}></input></h4>}
-        {!editTitleState && <h4 className="text-center">{title} {edit && <FontAwesomeIcon style={{color:"blue"}} icon={faEdit} onClick={()=>setEditTitleState(true)} />}</h4>}
+        {!editTitleState && (<h4 className="text-center">{title} 
+        <button className="icon-button"><FontAwesomeIcon style={{color:"blue"}} icon={faEdit} onClick={()=>setEditTitleState(true)} /></button>
+        <button className="icon-button"><FontAwesomeIcon style={{color:"red"}} icon={faTrash} onClick={deleteFunc} /></button>
+        </h4>)}
         <div>
-            {edit && (<div className="d-flex p-2 align-content-center">
+            <div className="d-flex p-2 align-content-center">
                 <h5 className="align-middle my-auto me-2">Type: </h5>
                 <div className="col-3">
                     <select className="form-select" value={question.type} onChange={editQuestionType}>
@@ -70,8 +72,8 @@ const FormQuestion = ({edit, title, question, editFunc, deleteFunc}) => {
                     </select>
                 </div>
                 
-            </div>)}
-            {edit && hasOptions && (<div className="p-2">
+            </div>
+            {hasOptions && (<div className="p-2">
                 <h5>Options: <button className="btn btn-primary" onClick={addOption}>Add Option</button></h5>
                 <div className="d-flex flex-wrap">
                     {options.map((x, i) => {
