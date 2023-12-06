@@ -37,7 +37,6 @@ class ApplicationCreateListView(APIView, PageNumberPagination):
         return Response({'detail': "Could not seriaize the request"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-    @method_permission_classes([IsPetSeeker | IsShelter])
     def get(self, request):
         current_user = request.user
         user_type =  request.user.user_type.model
@@ -97,7 +96,6 @@ class ApplicationUpdateDetailView(APIView):
     permission_classes = [IsAuthenticated]
 
 
-    @method_permission_classes([IsPetSeeker | IsShelter])
     def get(self, request, pk):
         current_user = request.user
         user_type = request.user.user_type.model
@@ -117,7 +115,6 @@ class ApplicationUpdateDetailView(APIView):
         return Response(serializer.data)
 
 
-    @method_permission_classes([IsPetSeeker | IsShelter])
     def patch(self, request, pk):
         current_user = request.user
         user_type = request.user.user_type.model

@@ -32,7 +32,7 @@ class ApplicationFormCreateListView(APIView, PageNumberPagination):
         return self.get_paginated_response(serializer.data)
 
 
-class ApplicationFormDeleteDetailView(APIView):
+class ApplicationFormRUD(APIView):
     permission_classes = [IsAuthenticated]
 
     @method_permission_classes([IsShelter])
@@ -40,6 +40,19 @@ class ApplicationFormDeleteDetailView(APIView):
         application_form = get_object_or_404(ApplicationForm, pk=pk, shelter=request.user.user_object)
         application_form.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+    @method_permission_classes([IsShelter])
+    def put(self, request, pk):
+        application_form = get_object_or_404(ApplicationForm, pk=pk, shelter=request.user.user_object)
+        serializer = ApplicationFormSerializer(application_form, data=request.data, partial=True)
+        print(request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response({serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
     @method_permission_classes([IsPetSeeker])

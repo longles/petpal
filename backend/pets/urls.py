@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import ApplicationCreateListView, ApplicationUpdateDetailView
-from .views import ApplicationFormCreateListView, ApplicationFormDeleteDetailView
+from .views import ApplicationFormCreateListView, ApplicationFormRUD
 
 
 urlpatterns = [
@@ -10,5 +10,5 @@ urlpatterns = [
 
 urlpatterns += [
     path('applications/form/', ApplicationFormCreateListView.as_view(), name='application-create-list'),
-    path('applications/form/<int:pk>/', ApplicationFormDeleteDetailView.as_view(), name='application-form-delete-detail'),
+    path('applications/form/<int:pk>/', ApplicationFormRUD.as_view(), name='application-form-delete-detail'),
 ]
