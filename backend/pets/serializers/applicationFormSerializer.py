@@ -9,7 +9,7 @@ from ..models import QuestionType
 class TextareaPromptSerializer(serializers.ModelSerializer):
     class Meta:
         model = TextareaPrompt
-        fields = ('id', 'type', 'prompt')
+        fields = ('id', 'type')
 
 
 class DropdownPromptSerializer(serializers.ModelSerializer):

@@ -44,7 +44,10 @@ const FormQuestion = ({edit, title, question, editFunc, deleteFunc}) => {
 
     const editQuestionType = (e) => {
         let newQuestion = {title: title, question_object: question}
-        newQuestion.question_object.type = e.target.value
+        newQuestion.question_object.type = parseInt(e.target.value)
+        if (newQuestion.question_object.prompt === undefined) {
+            newQuestion.question_object.prompt = []
+        }
         editFunc(newQuestion)
     }
 

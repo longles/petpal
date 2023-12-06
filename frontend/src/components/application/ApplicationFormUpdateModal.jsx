@@ -1,64 +1,13 @@
 import React, { useEffect, useState, useReducer, useMemo, useCallback } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import FormQuestion from './FormQuestion';
+import { applicationAPIService } from '../../services/applicationAPIService';
+import { applicationFormAPIService } from '../../services/applicationFormAPIService';
 
-const ApplicationFormUpdateModal = ({id, initialQuestions}) => {
-    initialQuestions = [
-        {
-            "id": 4,
-            "title": "How much do you earn?",
-            "question_object": {
-                "id": 3,
-                "type": 1,
-                "prompt": "Write the amount you've earned in the past year."
-            }
-        },
-        {
-            "id": 5,
-            "title": "How many chairs do you own?",
-            "question_object": {
-                "id": 1,
-                "type": 2,
-                "prompt": [
-                    1,
-                    2,
-                    3,
-                    4
-                ]
-            }
-        },
-        {
-            "id": 6,
-            "title": "Do you smoke?",
-            "question_object": {
-                "id": 2,
-                "type": 3,
-                "prompt": [
-                    "Yes",
-                    "No"
-                ]
-            }
-        },
-        {
-            "id": 7,
-            "title": "What animals do you like",
-            "question_object": {
-                "id": 1,
-                "type": 4,
-                "prompt": [
-                    "Cat",
-                    "Dog",
-                    "Cow",
-                    "Chicken"
-                ]
-            }
-        }
-    ]
-
+const ApplicationFormUpdateModal = ({updateFlag, initialQuestions = []}) => {
     const questionReducer = (questions, action) => {
         console.log(action)
         const {type, idx, question} = action
-        console.log("idk why this was called")
         if (type === 'add') {
             return [...questions, question]
         }
@@ -79,22 +28,32 @@ const ApplicationFormUpdateModal = ({id, initialQuestions}) => {
 
     const editQuestionByIndex = useCallback((idx) => {
         return (question) => {
-            console.log(question)
             dispatch({type: "update", idx: idx, question: question})
         }
-    }, [questions])
+    }, [])
 
     const deleteQuestionByIndex = useCallback((idx) => {
         return () => {dispatch({type: "delete", idx: idx})}
-    }, [questions])
+    }, [])
 
     const [showModal, setShowModal] = useState(true)
+
+    const saveApplicationForm = () => {
+        const API = applicationFormAPIService()
+        API.createApplication(questions).then(response => {
+            if (response.success) {
+                console.log(response.data)
+            } else {
+                console.error(response.message)
+            }
+        })
+    }
     
     console.log(questions)
     return (
         <Modal show={showModal} onHide={() => {setShowModal(false)}} size="lg">
             <Modal.Header closeButton>
-                <Modal.Title>Update Application Form</Modal.Title>
+                <Modal.Title>{updateFlag ? "Update" : "Create"} Application Form</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {questions.map((x, i) => <FormQuestion key={i} edit={true} title={x.title} question={x.question_object} editFunc={editQuestionByIndex(i)} deleteFunc={deleteQuestionByIndex(i)}/>)}
@@ -103,11 +62,9 @@ const ApplicationFormUpdateModal = ({id, initialQuestions}) => {
                 <button className='btn btn-primary' onClick={addQuestion}>Add new question</button>
             </div>
             <Modal.Footer>
-                <button className='btn btn-primary' onClick={addQuestion}>Save</button>
+                {/* <button className='btn btn-primary'>Preview</button> */}
+                <button className='btn btn-primary' onClick={saveApplicationForm}>Save</button>
             </Modal.Footer>
-            
-
-            
         </Modal>
         
     )
