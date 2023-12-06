@@ -13,6 +13,7 @@ import Applications from './components/application/Application.jsx';
 import ProfileSeeker from "./components/profile/ProfileSeeker.jsx";
 import ProfileShelter from "./components/profile/ProfileShelter.jsx";
 import ShelterManagement from './components/shelter/ShelterManagement.jsx';
+import ApplicationFormUpdateModal from './components/application/ApplicationFormUpdateModal.jsx';
 
 
 
@@ -60,6 +61,10 @@ function App() {
     {
         path: "/applications/",
         element: <Applications/>
+    },
+    {
+        path: "/test/",
+        element: <ApplicationFormUpdateModal/>
     }
   ]);
 
