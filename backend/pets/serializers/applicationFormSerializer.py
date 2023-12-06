@@ -99,3 +99,13 @@ class ApplicationFormSerializer(serializers.ModelSerializer):
             ApplicationQuestion.objects.create(application_form=application_form, **question_data)
 
         return application_form
+
+
+    def update(self, instance, validated_data):
+        questions_data = validated_data.pop('questions')
+        instance.questions.all().delete()
+
+        for question_data in questions_data:
+            ApplicationQuestion.objects.create(application_form=instance, **question_data)
+
+        return instance
