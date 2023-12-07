@@ -4,7 +4,7 @@ import FormQuestionEdit from './FormQuestionEdit';
 import { applicationAPIService } from '../../services/applicationAPIService';
 import { applicationFormAPIService } from '../../services/applicationFormAPIService';
 
-const ApplicationFormUpdateModal = ({updateFlag, initialQuestions = []}) => {
+const ApplicationFormUpdateModal = ({updateFlag, initialQuestions = [], showModal, setShowModal}) => {
     const questionReducer = (questions, action) => {
         console.log(action)
         const {type, idx, question} = action
@@ -36,8 +36,6 @@ const ApplicationFormUpdateModal = ({updateFlag, initialQuestions = []}) => {
         return () => {dispatch({type: "delete", idx: idx})}
     }, [])
 
-    const [showModal, setShowModal] = useState(true)
-
     const saveApplicationForm = () => {
         const API = applicationFormAPIService()
         API.createApplication(questions).then(response => {
@@ -48,7 +46,7 @@ const ApplicationFormUpdateModal = ({updateFlag, initialQuestions = []}) => {
             }
         })
     }
-    
+
     console.log(questions)
     return (
         <Modal show={showModal} onHide={() => {setShowModal(false)}} size="lg">
@@ -66,7 +64,7 @@ const ApplicationFormUpdateModal = ({updateFlag, initialQuestions = []}) => {
                 <button className='btn btn-primary' onClick={saveApplicationForm}>Save</button>
             </Modal.Footer>
         </Modal>
-        
+
     )
 }
 

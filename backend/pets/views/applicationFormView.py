@@ -15,7 +15,12 @@ class ApplicationFormCreateListView(APIView, PageNumberPagination):
     permission_classes = [IsAuthenticated, IsShelter]
 
     def post(self, request):
-        data = {'shelter': request.user.user_object.pk, 'questions': request.data.get('questions')}
+        data = {
+            'shelter': request.user.user_object.pk,
+            'questions': request.data.get('questions'),
+            'name': request.data.get('name'),
+            'description': request.data.get('description')
+        }
         serializer = ApplicationFormSerializer(data=data)
 
         if serializer.is_valid():
@@ -52,7 +57,7 @@ class ApplicationFormRUD(APIView):
             serializer.save()
             return Response(serializer.data)
 
-        return Response({serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'detail': "Could not seriaize the request"}, status=status.HTTP_400_BAD_REQUEST)
 
 
     def get(self, request, pk):
