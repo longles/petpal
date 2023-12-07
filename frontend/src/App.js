@@ -14,6 +14,7 @@ import ProfileSeeker from "./components/profile/ProfileSeeker.jsx";
 import ProfileShelter from "./components/profile/ProfileShelter.jsx";
 import ShelterManagement from './components/shelter/ShelterManagement.jsx';
 import ApplicationFormUpdateModal from './components/application/ApplicationFormUpdateModal.jsx';
+import PetUpdateModal from './components/shared/PetUpdateModal.jsx';
 
 const RootLayout = () => {
   return (<div id="body">
@@ -70,6 +71,10 @@ function App() {
       {
           path: "applications/",
           element: <Applications/>
+      },
+      {
+          path: "testcreate/",
+          element: <PetUpdateModal/>
       },
       {
           path: "test/",

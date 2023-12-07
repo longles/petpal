@@ -1,12 +1,88 @@
 import React from 'react';
+import { useState,useEffect } from 'react';
+import { petAPIService } from '../../services/petAPIService';
+import { shelterAPIService } from '../../services/userAPIService';
 
-export const getUpdateModalId = (petId) => {
+
+export function getUpdateModalId(petId) {
     return `petUpdateModal${petId}`;
-}
+  }
 
-const PetUpdateModal = ({ petId }) => {
+function PetUpdateModal({ petId }) {
+    const [petDetails, setPetDetails] = useState(null);
     const modalId = getUpdateModalId(petId)
-    let petName = "TestPet" //should get from api call
+
+    const [shelterDetails, setShelterDetails] = useState(null);
+    const [loading, setLoading] = useState(true);
+  
+    const fetchPetDetail = async () => {
+      try {
+        const petAPI = petAPIService();
+        const response = await petAPI.getPetDetail(petId);
+        if (response.success) {
+          setPetDetails(response.data);
+          console.log("Fetched pet details:", response.data);
+          return response.data.shelter;
+        }
+      } catch (error) {
+        console.error(`Error fetching pet detail for ID ${petId}:, error`);
+      }
+    };
+  
+    const fetchShelterDetail = async (shelterId) => {
+      try {
+        const shelterAPI = shelterAPIService();
+        const response = await shelterAPI.getShelterDetail(shelterId);
+        if (response.success) {
+          setShelterDetails(response.data);
+          console.log("Fetched shelter details:", response.data);
+        }
+      } catch (error) {
+        console.error(`Error fetching shelter detail for ID ${shelterId}:`, error);
+      }
+    };
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        const shelterId = await fetchPetDetail();
+        if (shelterId) {
+          await fetchShelterDetail(shelterId);
+          setLoading(false);
+        }
+      };
+      fetchData();
+    }, [petId]);
+  
+    if (loading || !petDetails || !shelterDetails) {
+      return <div>Loading...</div>;
+    }
+  
+  function calculateAge(birthDateString) {
+    const birthDate = new Date(birthDateString);
+    const currentDate = new Date();
+  
+    const timeDifference = currentDate - birthDate;
+
+    const millisecondsInYear = 1000 * 60 * 60 * 24 * 365.25;
+    const ageInYears = timeDifference / millisecondsInYear;
+  
+    const roundedAge = Math.round(ageInYears * 10) / 10;
+  
+    return roundedAge;
+  }
+    let breed = petDetails.breed
+    let photo = petDetails.photo === null ? '/assets/images/sample_pet_image_2.jpg' : petDetails.photo;
+    let age = calculateAge(petDetails.birth_date)
+    let description = petDetails.comments
+  
+    let medicalHistory = petDetails.medical_history
+    let specialRequirements = petDetails.special_needs
+  
+    //shelter info
+    let shelterName = shelterDetails.shelter_name
+    let shelterAddress = shelterDetails.shelter_name
+    let petName = 'a'
+
     return (
         <div className="modal fade" id={modalId} tabIndex="-1" aria-labelledby={`${modalId}Label`} aria-hidden="true">
             <div className="modal-dialog modal-lg modal-dialog-scrollable custom-modal">
