@@ -28,5 +28,13 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'receiver', 'content', 'sender', 'timestamp', )
+        fields = ('id', 'receiver', 'content', 'sender', 'timestamp')
+        read_only_fields = ('sender', 'timestamp', 'receiver')
+
+class ShelterCommentSerializer(serializers.ModelSerializer):
+    receiver = CommentObjectRelatedField(read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = ('id', 'receiver', 'content', 'sender', 'timestamp', 'rating')
         read_only_fields = ('sender', 'timestamp', 'receiver')

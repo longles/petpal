@@ -16,6 +16,7 @@ const ShelterReviews = ({id}) => {
     const [active, setActive] = useState(1)
 
     const API = shelterCommentAPIService()
+
     useEffect(() => {
         API.getShelterCommentList(id, active, PAGE_SIZE).then(ret => {
             console.log("Hi")

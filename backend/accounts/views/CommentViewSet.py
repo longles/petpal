@@ -5,7 +5,7 @@ from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import IsAuthenticated
 
 from accounts.models import User, PetShelter
-from ..serializers import CommentSerializer
+from ..serializers import CommentSerializer, ShelterCommentSerializer
 from ..models import Comment
 from pets.models import Application,Pet
 from django.contrib.contenttypes.models import ContentType
@@ -16,7 +16,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class ShelterCommentListCreate(generics.ListCreateAPIView):
     #permission_classes = (IsAuthenticated,)
-    serializer_class = CommentSerializer
+    serializer_class = ShelterCommentSerializer
 
     def get_queryset(self):
         pk = self.kwargs['pk']
