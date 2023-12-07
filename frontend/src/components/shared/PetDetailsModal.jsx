@@ -99,7 +99,7 @@ function calculateAge(birthDateString) {
 
   //shelter info
   let shelterName = shelterDetails.shelter_name
-  let shelterAddress = shelterDetails.shelter_name
+  let shelterAddress = shelterDetails.location
 
   return (
     <Modal show={true} onHide={closeModal} size="lg">

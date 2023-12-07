@@ -80,8 +80,11 @@ function PetUpdateModal({ petId }) {
   
     //shelter info
     let shelterName = shelterDetails.shelter_name
-    let shelterAddress = shelterDetails.shelter_name
-    let petName = 'a'
+    let shelterAddress = shelterDetails.location
+    let petName = petDetails.name
+    let birthdate = petDetails.birth_date
+    let size = petDetails.size
+    let colour = petDetails.colour
 
     return (
         <div className="modal fade" id={modalId} tabIndex="-1" aria-labelledby={`${modalId}Label`} aria-hidden="true">
@@ -100,7 +103,8 @@ function PetUpdateModal({ petId }) {
                             <div className="d-flex flex-wrap">
                                 <div className="col-12 col-md-6 d-flex justify-content-start">
                                     <div className="d-flex flex-column">
-                                        <img src="./images/select_image.png" alt="Pet" />
+                                    {/* fix photo size */}
+                                        <img src={photo} alt="Pet" style={{maxWidth: '300px', maxHeight: '300px'}}/>  
                                         <label htmlFor="petphoto" className="my-2 btn btn-primary">Upload Photo</label>
                                         <input className="form-control d-none" id="petphoto" type="file" />
                                     </div>
@@ -109,11 +113,11 @@ function PetUpdateModal({ petId }) {
                                     <div className="d-flex flex-column w-75">
                                         <div className="my-1">
                                             <label className="form-label" htmlFor="name">Name</label>
-                                            <input className="form-control" id="name" value="Buddy" />
+                                            <input className="form-control" id="name" value={petName} />
                                         </div>
                                         <div className="my-1">
                                             <label className="form-label" htmlFor="breed">Breed</label>
-                                            <input className="form-control" id="breed" value="Golden Retriever" />
+                                            <input className="form-control" id="breed" value={breed} />
                                         </div>
                                     </div>
                                 </div>
@@ -131,19 +135,19 @@ function PetUpdateModal({ petId }) {
                                 <div className="col-12 col-md-6 d-flex justify-content-end">
                                     <div className="w-75 my-1">
                                         <label className="form-label" htmlFor="dob">Date of Birth</label>
-                                        <input className="form-control" id="dob" type="date" value="2021-9-10" />
+                                        <input className="form-control" id="dob" type="date" value={birthdate} />
                                     </div>
                                 </div>
                                 <div className="col-12 col-md-6 d-flex justify-content-start">
                                     <div className="w-75 my-1">
                                         <label className="form-label" htmlFor="size">Size</label>
-                                        <input className="form-control" id="size" value="50cm" />
+                                        <input className="form-control" id="size" value={size} />
                                     </div>
                                 </div>
                                 <div className="col-12 col-md-6 d-flex justify-content-end">
                                     <div className="w-75 my-1">
                                         <label className="form-label" htmlFor="color">Color</label>
-                                        <input className="form-control" id="color" value="golden brown" />
+                                        <input className="form-control" id="color" value={colour} />
                                     </div>
                                 </div>
                             </div>
@@ -152,11 +156,11 @@ function PetUpdateModal({ petId }) {
                             </div>
                             <div className="my-2">
                                 <label htmlFor="location">Location</label>
-                                <input className="form-control" id="location" value="1234 Shelter Ave, Toronto ON" />
+                                <input className="form-control" id="location" value={shelterAddress} />
                             </div>
                             <div className="my-2">
                                 <label htmlFor="medical_history">Medical History</label>
-                                <textarea className="form-control" id="medical_history">Some comments...</textarea>
+                                <textarea className="form-control" id="medical_history">{}</textarea>
                             </div>
                             <div className="my-2">
                                 <label htmlFor="behaviour">Behaviour</label>
