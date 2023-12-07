@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { applicationAPIService } from '../../services/applicationAPIService';
 import PetCard from './ApplicationTile';
+import { useLocation } from 'react-router-dom';
 
 
 
@@ -10,14 +11,17 @@ const Applications = () => {
     const [dateOption, setDateOption] = useState('last_updated_asc');
     const [petNameFilter, setPetNameFilter] = useState('');
     const applicationService = applicationAPIService();
-
+    const {state} = useLocation()
+    console.log(state)
+    var defaultFilters = state?.defaultFilters || {}
     const fetchApplications = async () => {
         const response = await applicationService.getApplicationList({
             status: statusOption,
             date_sort: dateOption,
             pet_name: petNameFilter,
+            ...defaultFilters
         }, 1);
-
+        defaultFilters = {}
         if (!response.success) {
             console.error('Error fetching applications:', response.message);
             return;
