@@ -14,13 +14,6 @@ const PetListingsPage = ({ manageFlag = false, defaultFilters = {} }) => {
   const petAPI = petAPIService();
   const [sortOrder, setSortOrder] = useState('-birth_date');
 
-
-  const handleSortOrderChange = useCallback((newSortOrder) => {
-    console.log("New Sort Order in Listing Page: ", newSortOrder); 
-    setSortOrder(newSortOrder);
-    fetchPetList(defaultFilters, currentPage,newSortOrder); 
-  }, []);
-
   const updateFilters = useCallback((newFilters) => {
     fetchPetList(newFilters,currentPage);
   }, []);
@@ -63,7 +56,7 @@ const PetListingsPage = ({ manageFlag = false, defaultFilters = {} }) => {
         <h2 className="mb-4">{manageFlag ? "Our Pets" : "Adoption Listings"}</h2>
         <div className="row">
           <div className="col-md-3 filter-sidebar">
-            <SideBarSorter onSortChange={handleSortOrderChange} />
+            <SideBarSorter sortOrder={sortOrder} setSortOrder={setSortOrder} />
             <SideBarFilter updateFilters={updateFilters} />
           </div>
           <div className="col-md-9">
