@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-const SideBarSorter = ({ onSortChange }) => {
-  const [sortOrder, setSortOrder] = useState('-birth_date'); // Default to latest
+const SideBarSorter = ({ sortOrder, setSortOrder }) => {
 
   const handleSortChange = (event) => {
     setSortOrder(event.target.value);
@@ -10,7 +9,6 @@ const SideBarSorter = ({ onSortChange }) => {
 
   const applySort = () => {
     console.log("Applying Sort: ", sortOrder); // Add this line for debugging
-    onSortChange(sortOrder);
   };
 
   return (
@@ -23,7 +21,7 @@ const SideBarSorter = ({ onSortChange }) => {
             <option value="birth_date">Earliest Birth Date</option>
           </select>
         </div>
-        <button onClick={applySort} className="btn btn-primary">Apply Sort</button>
+        {/* <button onClick={applySort} className="btn btn-primary">Apply Sort</button> */}
       </div>
     </div>
   );
