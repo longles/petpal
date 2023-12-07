@@ -1,11 +1,16 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 function ReviewCard({data}) {
     let name = data.name
     let content = data.content
     let img = data.img
+    let ratingnum = data.rating
+
+
     
-    //let rating = [1, 2, 3, 4, 5]
+    let rating = [1, 2, 3, 4, 5].filter(i => i <= ratingnum)
     return (
         <div className="rounded review-div col-12">
             <div className="d-flex mt-2 flex-wrap justify-content-between">
@@ -19,7 +24,7 @@ function ReviewCard({data}) {
                 </div>
                 <div className="px-2 ms-sm-auto mt-1">
                     <div className="d-flex justify-content-sm-end">
-                        {/* {rating.map(i => {return (<span key={"star-"+i} className="fa fa-star"/>)})} */}
+                        {rating.map(i => {return (<FontAwesomeIcon key={i} icon={faStar}/>)})}
                     </div>
                 </div>
             </div>

@@ -5,9 +5,7 @@ export const shelterCommentAPIService = () => {
     const apiService = APIService();
 
     const createShelterComment = async (shelter_id, comment) => {
-        const response = await apiService.makePrivateAPICall(`${API_PATH}${shelter_id}/comments/`, 'POST', {
-            comment: comment,
-        });
+        const response = await apiService.makePrivateAPICall(`${API_PATH}${shelter_id}/comments/`, 'POST', comment);
 
         if (!response.success) {
             return {
