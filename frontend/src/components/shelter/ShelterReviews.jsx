@@ -3,6 +3,9 @@ import ReviewCard from '../shared/ReviewCard';
 import { useState, useEffect } from 'react';
 import Pagination from 'react-bootstrap/Pagination';
 import { shelterCommentAPIService } from '../../services/commentAPIService'
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import CreateShelterReview from './CreateShelterReview';
 
 const PAGE_SIZE = 3
 
@@ -63,6 +66,7 @@ const ShelterReviews = ({id}) => {
                     <Pagination.Last onClick={() => onPageClick(count)}/>
                 </Pagination>
             </div>
+            <CreateShelterReview id={id}/>
         </>
     );
 };
