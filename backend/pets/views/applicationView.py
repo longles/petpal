@@ -51,25 +51,26 @@ class ApplicationCreateListView(APIView, PageNumberPagination):
 
         applications = Application.objects.filter(**filter)
 
+        # Filter by id
+        id_filter = request.query_params.get('id')
+        if id_filter != None:
+            applications = applications.filter(id=id_filter)
+
         # Filter by status
         valid_status_filters = (
             Application.Status.PENDING,
             Application.Status.APPROVED,
             Application.Status.DENIED,
-            Application.Status.WITHDRAWN
+            Application.Status.WITHDRAWN,
         )
-        try:
-            status_filter = int(request.query_params.get('status'))
-        except (TypeError, ValueError):
-            status_filter = None
 
-        if status_filter not in valid_status_filters:
+        status_filter = request.query_params.get('status')
+        if status_filter != None and int(status_filter) not in valid_status_filters:
             return Response({'detail': "Invalid status filter"}, status=status.HTTP_400_BAD_REQUEST)
+        if status_filter != None:
+            applications = applications.filter(status=int(status_filter))
 
         # Sort by date
-        if status_filter:
-            applications = applications.filter(status=status_filter)
-
         date_sort = request.query_params.get('date_sort')
         if date_sort == 'last_updated_asc':
             applications = applications.order_by('last_updated')
@@ -84,7 +85,7 @@ class ApplicationCreateListView(APIView, PageNumberPagination):
 
         # Filter by pet name
         pet_name = request.query_params.get('pet_name')
-        if pet_name or pet_name != '':
+        if pet_name != None:
             applications = applications.filter(pet__name__icontains=pet_name)
 
         results = self.paginate_queryset(applications, request, view=self)
