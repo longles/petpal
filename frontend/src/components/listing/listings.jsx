@@ -22,8 +22,9 @@ const PetListingsPage = ({ manageFlag = false, defaultFilters = {} }) => {
     try {
       // Ensure sortOrder is included under the 'ordering' key
       console.log("Fetching with Sort Order: ", sort, " Page: ", page);
-      const queryParams = { ...filters, ordering: sort, page };
-      const response = await petAPI.getPetList(queryParams);
+      const queryParams = { ...filters};
+      console.log(queryParams)
+      const response = await petAPI.getPetList(queryParams, page, sort);
       if (response.success) {
         setPetIDs(response.data.results.map((pet) => pet.id));
         setTotalPages(Math.ceil(response.data.count / PAGE_SIZE));
