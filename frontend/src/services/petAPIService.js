@@ -40,9 +40,9 @@ export const petAPIService = () => {
         }
     }
 
-    const getPetList = async (filters, page = 1) => {
-        const query_params = new URLSearchParams(filters).toString();
-        const response = await apiService.makeAPICall(`${API_PATH}?${query_params}&page=${page}`, 'GET');
+    const getPetList = async (filters, page = 1, sortOrder = 'birth_date') => {
+        const query_params = new URLSearchParams({ ...filters, ordering: sortOrder, page });
+        const response = await apiService.makeAPICall(`${API_PATH}?${query_params.toString()}`, 'GET');
 
         if (!response.success) {
             return {
