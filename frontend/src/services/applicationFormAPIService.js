@@ -54,10 +54,8 @@ export const applicationFormAPIService = () => {
         }
     }
 
-    const deleteApplicationForm = async (form_id, questions_arr) => {
-        const response = await apiService.makePrivateAPICall(`${API_PATH}${form_id}/`, 'DELETE', {
-            questions: questions_arr,
-        });
+    const deleteApplicationForm = async (form_id) => {
+        const response = await apiService.makePrivateAPICall(`${API_PATH}${form_id}/`, 'DELETE');
 
         if (!response.success) {
             return {
@@ -68,7 +66,6 @@ export const applicationFormAPIService = () => {
 
         return {
             success: true,
-            data: response.data,
         }
     }
 

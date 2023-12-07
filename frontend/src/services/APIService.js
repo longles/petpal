@@ -1,6 +1,5 @@
 import { API_URL } from "./config/config.js"
 import fetch from 'node-fetch';
-const { Headers } = fetch;
 
 export const APIService = () => {
 
@@ -25,10 +24,14 @@ export const APIService = () => {
             body: requestData,
         });
 
-        result.data = await response.json();
-
         if (response.ok) {
             result.success = true;
+        }
+
+        if (method === "DELETE") {
+            return result;
+        } else {
+            result.data = await response.json();
         }
 
         return result;
@@ -61,10 +64,14 @@ export const APIService = () => {
             body: requestData,
         });
 
-        result.data = await response.json();
-
         if (response.ok) {
             result.success = true;
+        }
+
+        if (method === "DELETE") {
+            return result;
+        } else {
+            result.data = await response.json();
         }
 
         return result;
