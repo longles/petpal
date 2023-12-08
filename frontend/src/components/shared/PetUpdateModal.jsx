@@ -17,8 +17,6 @@ function PetUpdateModal({ petId }) {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const [formInitialized, setFormInitialized] = useState(false);
 
-
-
   const fetchPetDetail = async () => {
     try {
       const response = await petAPI.getPetDetail(petId);
