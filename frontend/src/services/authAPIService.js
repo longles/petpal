@@ -66,7 +66,7 @@ export const authAPIService = () => {
     }
 
     return {
-        register,
+        register: register,
         login,
         logout,
     }
