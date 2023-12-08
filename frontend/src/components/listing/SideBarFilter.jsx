@@ -3,7 +3,7 @@ import FilterRow from './FilterRow';
 import { shelterAPIService } from '../../services/userAPIService';
 import SideBarSorter from './SideBarSorter'; // Import SideBarSorter
 
-const SideBarFilter = ({ updateFilters }) => {
+const SideBarFilter = ({ manageFlag = false, updateFilters }) => {
 
   const shelterAPI = shelterAPIService();
   const statusOptions = ['Any', 'Adopted', 'Available'];
@@ -65,7 +65,6 @@ const SideBarFilter = ({ updateFilters }) => {
       try {
         const response = await shelterAPI.getShelterList(1);
         if (response.success) {
-          
           const shelterMap = {};
           
           const addShelterOptions = [];
@@ -78,8 +77,6 @@ const SideBarFilter = ({ updateFilters }) => {
           addShelterOptions.sort((x, y) => x > y)
 
           const updatedShelterOptions = ['Any'].concat(addShelterOptions)
-          
-
           setShelterOptions(updatedShelterOptions);
           setFilterValueMap((prevMap) => ({ ...prevMap, shelter: shelterMap }));
         }
@@ -117,7 +114,7 @@ const SideBarFilter = ({ updateFilters }) => {
         <form id="filterForm" onSubmit={handleFilterSubmit}>
           {/* Status filter */}
           <FilterRow name="Status" options={statusOptions} />
-          
+
         {/* species filter */}
           <FilterRow name="Species" options={speciesOptions} />
 
@@ -134,7 +131,7 @@ const SideBarFilter = ({ updateFilters }) => {
           <FilterRow name="Sex" options={sexOptions} />
 
           {/* shelter filter */}
-          <FilterRow name="Shelter" options={shelterOptions} />
+          {!manageFlag && <FilterRow name="Shelter" options={shelterOptions} />}
 
           <button type="submit" className="btn btn-primary">Apply Filters</button>
         </form>

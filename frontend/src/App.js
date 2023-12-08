@@ -78,6 +78,10 @@ function App() {
                 element: <ApplicationForms />
             },
             {
+                path: "testcreate/",
+                element: <PetUpdateModal/>
+            },
+            {
                 path: "test/",
                 element: <ApplicationFormUpdateModal />
             }]

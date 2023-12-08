@@ -4,6 +4,7 @@ import SideBarFilter from './SideBarFilter';
 import { petAPIService } from '../../services/petAPIService';
 import SideBarSorter from './SideBarSorter';
 import Pagination from 'react-bootstrap/Pagination';
+import PetCreationModal from '../shared/PetCreationModal';
 
 const PAGE_SIZE = 10; // Define the number of items per page
 
@@ -13,16 +14,17 @@ const PetListingsPage = ({ manageFlag = false, defaultFilters = {} }) => {
   const [totalPages, setTotalPages] = useState(0);
   const petAPI = petAPIService();
   const [sortOrder, setSortOrder] = useState('-birth_date');
+  const [petFilters, setPetFilters] = useState(defaultFilters)
 
   const updateFilters = useCallback((newFilters) => {
-    fetchPetList(newFilters,currentPage);
+    setPetFilters(newFilters)
   }, []);
 
-  const fetchPetList = useCallback(async (filters = defaultFilters, page = currentPage, sort = sortOrder) => {
+  const fetchPetList = useCallback(async (page = currentPage, sort = sortOrder) => {
     try {
       // Ensure sortOrder is included under the 'ordering' key
       console.log("Fetching with Sort Order: ", sort, " Page: ", page);
-      const queryParams = { ...filters};
+      const queryParams = { ...petFilters};
       console.log(queryParams)
       const response = await petAPI.getPetList(queryParams, page, sort);
       if (response.success) {
@@ -32,11 +34,11 @@ const PetListingsPage = ({ manageFlag = false, defaultFilters = {} }) => {
     } catch (error) {
       console.error('Error fetching pet list:', error);
     }
-  }, [petAPI, defaultFilters, currentPage, sortOrder]);
+  }, [petAPI, currentPage, sortOrder]);
 
   useEffect(() => {
-    fetchPetList(defaultFilters, currentPage, sortOrder);
-  }, [sortOrder,currentPage]);
+    fetchPetList(currentPage, sortOrder);
+  }, [petFilters, sortOrder,currentPage]);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -51,14 +53,34 @@ const PetListingsPage = ({ manageFlag = false, defaultFilters = {} }) => {
     );
   }
 
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  const openCreateModal = () => {
+    setIsCreateModalOpen(true);
+  };
+  const closeCreateModal = () => {
+    setIsCreateModalOpen(false);
+  };
+
   return (
     <div>
       <div className="container main-content">
-        <h2 className="mb-4">{manageFlag ? "Our Pets" : "Adoption Listings"}</h2>
+        <div className="d-flex mb-4 align-items-center">
+          <h2 className="me-2 my-auto">{manageFlag ? "Our Pets" : "Adoption Listings"}</h2>
+          {manageFlag && (<button className="btn btn-primary" onClick={openCreateModal}>
+            New Pet
+          </button>)}
+          {manageFlag && isCreateModalOpen && (
+            <PetCreationModal
+              closeModal={closeCreateModal}
+            />
+          )}
+        </div>
+        
         <div className="row">
           <div className="col-md-3 filter-sidebar">
             <SideBarSorter sortOrder={sortOrder} setSortOrder={setSortOrder} />
-            <SideBarFilter updateFilters={updateFilters} />
+            <SideBarFilter manageFlag={manageFlag} updateFilters={updateFilters} />
           </div>
           <div className="col-md-9">
             <div className="row no-gutters">

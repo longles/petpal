@@ -92,11 +92,11 @@ function PetUpdateModal({ petId }) {
                     <input className="form-control" id="breed" {...register('breed')} />
                 </div>
                 <div className="my-1">
-                    <label className="form-label" htmlFor="gender">Gender</label>
-                    <select className="form-select" id="gender" {...register('gender')}>
-                    <option value="">Select...</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
+                    <label className="form-label" htmlFor="sex">Gender</label>
+                    <select className="form-select" id="sex" {...register('sex')}>
+                    <option value="0">Unknown</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
                     </select>
                 </div>
                 <div className="my-1">
@@ -141,10 +141,10 @@ function PetUpdateModal({ petId }) {
                     <label htmlFor="comments">Comments</label>
                     <textarea className="form-control" id="comments" {...register('comments')}></textarea>
                 </div>
-                <div className="my-2 d-flex justify-content-center">
-                    <div className="col-3">
-                    <button type="submit" className="form-control btn btn-primary">Update</button>
-                    </div>
+                <div className="my-2 d-flex justify-content-between">
+                    <div className="col-3"></div>
+                    <div className="col-3 d-flex justify-content-center"><button type="submit" className="btn btn-primary me-3">Update</button></div>
+                    <div className="col-3 d-flex justify-content-end"><button type="button" className="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Close</button></div>
                 </div>
             </form>
           </div>
