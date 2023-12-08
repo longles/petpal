@@ -3,7 +3,7 @@ import { petAPIService } from "../../services/petAPIService";
 import PetCard from "./PetCard";
 
 
-const defaultRenderFunc = (x) => {return <PetCard key={x.id} petId={x.id} data={x}/>}
+const defaultRenderFunc = (x) => {return <PetCard key={x.id} data={x}/>}
 
 const PetCardManager = ({filters, page, render = defaultRenderFunc}) => {
     const [pets, setPets] = useState([]);
