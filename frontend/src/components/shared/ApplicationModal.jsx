@@ -107,10 +107,12 @@ const ApplicationModal = ({ closeModal, show, petId, formId }) => {
         // Formatting responses for submission
         console.log(data)
 
-        const formattedResponses = Object.entries(fields).map(([questionId, responseObj]) => ({
-            question: parseInt(questionId),
+        const formattedResponses = data.response.map((responseObj, idx) => ({
+            question: parseInt(questions[idx].id),
             response_object: responseObj
         }));
+
+        console.log(formattedResponses)
 
         const requestBody = {
             pet: petId,
