@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { applicationFormAPIService } from '../../services/applicationFormAPIService';
 
-const PAGE_SIZE = 10; // Number of items per page
+const PAGE_SIZE = 12; // Number of items per page
 
 const ApplicationForms = () => {
     const [applicationTemplates, setApplicationTemplates] = useState([]);

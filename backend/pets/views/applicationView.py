@@ -11,7 +11,11 @@ from accounts.permission import IsPetSeeker, IsShelter
 from ..utils import method_permission_classes
 
 
-class ApplicationCreateListView(APIView, PageNumberPagination):
+class ApplicationPagination(PageNumberPagination):
+    page_size = 5
+
+
+class ApplicationCreateListView(APIView, ApplicationPagination):
     permission_classes = [IsAuthenticated]
 
 

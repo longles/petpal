@@ -11,7 +11,11 @@ from accounts.permission import IsShelter, IsPetSeeker
 from ..utils import method_permission_classes
 
 
-class ApplicationFormCreateListView(APIView, PageNumberPagination):
+class ApplicationFormPagination(PageNumberPagination):
+    page_size = 12
+
+
+class ApplicationFormCreateListView(APIView, ApplicationFormPagination):
     permission_classes = [IsAuthenticated, IsShelter]
 
     def post(self, request):
