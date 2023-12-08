@@ -76,35 +76,35 @@ const EditProfileSeeker = ({id}) => {
                         <label htmlFor="username">Username</label>
                         <input type="text" className="form-control" id="username" placeholder="Username"
                                defaultValue={profileData.username} value={profileData.username}
-                               onClick={handleProfileChange}
+                               onChange={handleProfileChange}
                         />
                     </div>
                     <div className="form-group">
                         <label htmlFor="bio">Bio</label>
                         <textarea className="form-control" id="bio" rows="3"
                                   defaultValue={profileData.bio} value={profileData.bio}
-                                  onClick={handleProfileChange}
+                                  onChange={handleProfileChange}
                         />
                     </div>
                     <div className="form-group">
                         <label htmlFor="firstName">First Name</label>
                         <input type="text" className="form-control" id="firstName" placeholder="First name"
                                defaultValue={profileData.firstName} value={profileData.firstName}
-                               onClick={handleProfileChange}
+                               onChange={handleProfileChange}
                         />
                     </div>
                     <div className="form-group">
                         <label htmlFor="lastName">Last Name</label>
                         <input type="text" className="form-control" id="lastName" placeholder="Last name"
                                defaultValue={profileData.lastName} value={profileData.lastName}
-                               onClick={handleProfileChange}
+                               onChange={handleProfileChange}
                         />
                     </div>
                     <div className="form-group">
                         <label htmlFor="email" aria-describedby="emailHelp">Email</label>
                         <input type="text" className="form-control" id="email" placeholder="email"
                                defaultValue={profileData.email} value={profileData.email}
-                               onClick={handleProfileChange}
+                               onChange={handleProfileChange}
                         />
                         <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone
                             else.</small>
@@ -113,7 +113,7 @@ const EditProfileSeeker = ({id}) => {
                         <label htmlFor="mobile">Mobile</label>
                         <input type="text" className="form-control" id="mobile" placeholder="xxx-xxx-xxxx"
                                defaultValue={profileData.mobile} value={profileData.mobile}
-                               onClick={handleProfileChange}
+                               onChange={handleProfileChange}
                         />
                         <small className="form-text text-muted">We'll never share your phone number with anyone
                             else.</small>
@@ -122,14 +122,14 @@ const EditProfileSeeker = ({id}) => {
                         <label htmlFor="location">Location</label>
                         <input type="text" className="form-control" id="location"
                                defaultValue={profileData.location} value={profileData.location}
-                               onClick={handleProfileChange}
+                               onChange={handleProfileChange}
                         />
                     </div>
                     <div className="form-group">
                         <label htmlFor="profilePic">Change Profile Pic</label>
                         <input type="file" className="form-control" id="profilePic"
                                defaultValue={profileData.profilePic} value={profileData.profilePic}
-                               onClick={handleProfileChange}
+                               onChange={handleProfileChange}
                         />
                     </div>
                     <button className="btn btn-primary">Save</button>
@@ -143,13 +143,13 @@ const EditProfileSeeker = ({id}) => {
                         <label htmlFor="newPassword1">New Password</label>
                         <input type="password" className="form-control" id="newPassword1" name="newPassword1"
                                value={securityData.newPassword1}
-                                onClick={handleSecurityChange} required/>
+                                onChange={handleSecurityChange} required/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="newPassword2">Confirm New Password</label>
                         <input type="password" className="form-control" id="newPassword2" name="newPassword2"
                                value={securityData.newPassword2}
-                               onClick={handleSecurityChange} required/>
+                               onChange={handleSecurityChange} required/>
                     </div>
                     <button className="btn btn-primary">Submit</button>
                 </form>
