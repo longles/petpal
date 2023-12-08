@@ -8,9 +8,10 @@ import ShelterReviews from './ShelterReviews';
 import { shelterAPIService } from '../../services/userAPIService';
 import { petAPIService } from '../../services/petAPIService';
 import PetCardManager from '../shared/PetCardManager';
+import { Link } from 'react-router-dom';
 
 function ShelterDetail() {
-  const { shelterId } = useParams(); // Assuming you have a shelterId parameter
+  const { shelterId } = useParams();
   
   const [data, setData] = useState({})
 
@@ -59,7 +60,7 @@ function ShelterDetail() {
                 {/* Repeat similar blocks for additional pets */}
               </div>
               <div className="d-flex justify-content-end mt-3 px-2 px-xl-4 py-2 py-sm-0">
-                <a className="text-end" href="#">View All</a>
+                <Link className="text-end" to="/pets/" state={{defaultFilters:{shelter: shelterId}}}>View All</Link>
               </div>
             </div>
           </div>

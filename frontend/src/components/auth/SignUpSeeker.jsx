@@ -5,7 +5,7 @@ import * as yup from "yup"
 import '../../styles/signup.scoped.css'
 import '../../styles/user.scoped.css'
 import {authAPIService} from "../../services/authAPIService.js";
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 
 const signUpSeekerSchema = yup
     .object({
@@ -83,7 +83,7 @@ function SignUpSeeker() {
                 </div>
                 <input type="submit" value="Sign Up" className="btn btn-dark submit-btn"/>
                 <p>
-                    Have an account with us? <a href="login/" className="text-link">Login now!</a>
+                    Have an account with us? <Link to="/accounts/login/" className="text-link">Login now!</Link>
                 </p>
             </form>
         </div>

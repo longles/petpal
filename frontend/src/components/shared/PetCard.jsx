@@ -4,11 +4,12 @@ import PetDetailsModal from './PetDetailsModal';
 import ApplicationModal from './ApplicationModal';
 import PetUpdateModal, {getUpdateModalId} from './PetUpdateModal';
 
-// set manageflag = false after testing
-const PetCard = ({ manageFlag = false, petId }) => {
+const PetCard = ({ manageFlag = false, petId, data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
-  const [petDetails, setPetDetails] = useState(null);
+  const [petDetails, setPetDetails] = useState(data);
+
+
 
   const fetchPetDetail = useCallback(async () => {
     try {
@@ -23,7 +24,9 @@ const PetCard = ({ manageFlag = false, petId }) => {
   }, [petId]);
 
   useEffect(() => {
-    fetchPetDetail();
+    if (petId) {
+      fetchPetDetail();
+    }
   }, [fetchPetDetail]);
 
   if (!petDetails) {

@@ -60,5 +60,5 @@ class PetShelterSerializer(serializers.ModelSerializer):
     account_id = PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = PetShelter
-        fields = ('id', 'shelter_name', 'mission', 'about_us', 'location', 'phone_num', 'profile_pic', 'contact_email', 'account_id')
+        fields = ('id', 'name', 'mission', 'about_us', 'location', 'phone_num', 'profile_pic', 'contact_email', 'account_id')
         read_only_fields = ('id', )

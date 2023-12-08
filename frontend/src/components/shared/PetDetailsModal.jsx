@@ -3,6 +3,7 @@ import { Modal, Button, Nav } from 'react-bootstrap';
 import '../../styles/listings.scoped.css';
 import { petAPIService } from '../../services/petAPIService';
 import { shelterAPIService } from '../../services/userAPIService';
+import { Link } from 'react-router-dom';
 
 // pet detail should get a pet id and fetch info from server
 const PetDetailsModal = ({ petId, closeModal, openApplicationModal }) => {
@@ -87,6 +88,7 @@ function calculateAge(birthDateString) {
   let specialRequirements = petDetails.special_needs
 
   //shelter info
+  let shelterId = shelterDetails.id
   let shelterName = shelterDetails.name
   let shelterAddress = shelterDetails.location
 
@@ -123,7 +125,7 @@ function calculateAge(birthDateString) {
             <p>Age: {age} years</p>
             <p>{description}</p>
             <hr />
-            <h5><a href="shelterdetail.html">{shelterName}</a></h5>
+            <h5><Link to={`/shelterdetail/${shelterId}`}>{shelterName}</Link></h5>
             <p>{shelterAddress}</p>
           </div>
           {/* tab2 */}
