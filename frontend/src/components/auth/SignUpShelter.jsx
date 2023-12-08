@@ -8,7 +8,7 @@ import {authAPIService} from "../../services/authAPIService.js";
 import {useNavigate} from 'react-router-dom';
 
 const signUpShelterSchema = yup.object({
-    shelterName: yup.string().required("Shelter name is required"),
+    name: yup.string().required("Shelter name is required"),
     username: yup.string().required("Username is required"),
     location: yup.string().required("Location is required"),
     email: yup.string().required("Email is required"),
@@ -26,7 +26,7 @@ function SignUpShelter() {
         const userObject = {
             type: "petshelter",
             user: {
-                shelter_name: event.shelterName,
+                name: event.name,
                 mission: "Your mission statement goes here",
                 about_us: "Your organization background goes here",
                 location: event.location
@@ -54,7 +54,7 @@ function SignUpShelter() {
         <div>
             <div className="mb-3" id="alertContainer">
                 {validationError !== "" && <div className="error-notif">{validationError}</div>}
-                {errors.shelterName && <div className="error-notif">{errors.name.message}</div>}
+                {errors.name && <div className="error-notif">{errors.name.message}</div>}
                 {errors.email && <div className="error-notif">{errors.email.message}</div>}
                 {errors.username && <div className="error-notif">{errors.username.message}</div>}
                 {errors.location && <div className="error-notif">{errors.location.message}</div>}

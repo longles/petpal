@@ -88,7 +88,7 @@ class UserPermissionTest(TestCase):
             password='shelter_password1',
             phone_num="0987654321",
             user_object=PetShelter.objects.create(
-                shelter_name="shelter1",
+                name="shelter1",
                 mission="We love dogs!",
                 about_us="We are a shelter that cares for dogs.",
                 location="1234 Doggy Lane"
@@ -100,7 +100,7 @@ class UserPermissionTest(TestCase):
             password='shelter_password2',
             phone_num="0887654321",
             user_object=PetShelter.objects.create(
-                shelter_name="shelter2",
+                name="shelter2",
                 mission="We love cats!",
                 about_us="We are a shelter that cares for cats.",
                 location="4321 Kitty Lane"
