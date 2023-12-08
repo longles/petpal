@@ -9,6 +9,7 @@ import ColourOptions from './ColorOptions';
 const petCreationSchema = yup.object({
   name: yup.string().required('Name is required'),
   breed: yup.number().required('Breed is required'),
+  species: yup.number().required('Species is required'),
   sex: yup.string().required('Gender is required'),
   birth_date: yup.date().required('Date of Birth is required'),
   size: yup.number().required('Size is required'),
@@ -34,6 +35,7 @@ function PetCreationModal({ closeModal }) {
       sex: data.sex === "Male" ? 1 : 2, // Assuming 1 for Male and 2 for Female
       size: parseInt(data.size, 10),
       colour: parseInt(data.colour, 10),
+      birth_date: formatDate(data.birth_date)
       // Add other fields that need conversion here
     };
   
@@ -42,9 +44,19 @@ function PetCreationModal({ closeModal }) {
     const response = await petAPI.createPet(formattedData.name, formattedData);
     if (response.success) {
       console.log('create successful');
+      closeModal();
+      window.location.reload(); //delete this if we do not want a refresh
     } else {
       console.log('create failed');
     }
+  };
+
+  const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+    const year = date.getFullYear();
+    const month = `${date.getMonth() + 1}`.padStart(2, '0');
+    const day = `${date.getDate()}`.padStart(2, '0');
+    return `${year}-${month}-${day}`;
   };
 
   return (

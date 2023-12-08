@@ -1,7 +1,7 @@
 
 const ColourOptions = () =>{
     return(
-        <div>
+        <>
         <option value="0">Select...</option>
         <option value="1">Yellow</option>
         <option value="2">Black</option>
@@ -11,8 +11,7 @@ const ColourOptions = () =>{
         <option value="6">Red</option>
         <option value="7">Blue</option>
         <option value="8">Green</option>
-        </div>
-
+        </>
     )
 }
 
