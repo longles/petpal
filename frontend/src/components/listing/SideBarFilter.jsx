@@ -3,7 +3,7 @@ import FilterRow from './FilterRow';
 import { shelterAPIService } from '../../services/userAPIService';
 import SideBarSorter from './SideBarSorter'; // Import SideBarSorter
 
-const SideBarFilter = ({ updateFilters }) => {
+const SideBarFilter = ({ manageFlag = false, updateFilters }) => {
 
   const shelterAPI = shelterAPIService();
   const statusOptions = ['Any', 'Adopted', 'Available'];
@@ -131,7 +131,7 @@ const SideBarFilter = ({ updateFilters }) => {
           <FilterRow name="Sex" options={sexOptions} />
 
           {/* shelter filter */}
-          <FilterRow name="Shelter" options={shelterOptions} />
+          {!manageFlag && <FilterRow name="Shelter" options={shelterOptions} />}
 
           <button type="submit" className="btn btn-primary">Apply Filters</button>
         </form>
