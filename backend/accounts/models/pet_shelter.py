@@ -15,8 +15,20 @@ class PetShelter(models.Model):
     user = GenericRelation(User, object_id_field='user_id', content_type_field='user_type', related_query_name="user")
 
     @property
-    def account_id(self):
+    def account(self):
         return self.user.first()
+
+    @account.setter
+    def account(self, value):
+        print(value)
+        accountobj = self.user.first()
+        if ('username' in value):
+            accountobj.username = value['username']
+        if ('email' in value):
+            accountobj.email = value['email']
+        if ('password' in value):
+            accountobj.set_password(value['password'])
+        accountobj.save()
 
     def __str__(self):
         return self.name
