@@ -4,9 +4,10 @@ export const applicationAPIService = () => {
     const API_PATH = 'pets/applications/';
     const apiService = APIService();
 
-    const createApplication = async (pet_id, responses_arr) => {
+    const createApplication = async (pet_id, form_id, responses_arr) => {
         const response = await apiService.makePrivateAPICall(`${API_PATH}`, 'POST', {
             pet: pet_id,
+            form: form_id,
             responses: responses_arr,
         });
 

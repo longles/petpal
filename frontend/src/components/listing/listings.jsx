@@ -69,7 +69,6 @@ const PetListingsPage = ({ manageFlag = false, defaultFilters = {} }) => {
             <div className="d-flex justify-content-center mt-3">
               <Pagination>{paginationItems}</Pagination>
             </div>
-          </div>
         </div>
       </div>
     </div>
