@@ -14,8 +14,7 @@ const Applications = () => {
     const [totalPages, setTotalPages] = useState(1);
     const applicationService = applicationAPIService();
     const {state} = useLocation()
-    console.log(state)
-    var defaultFilters = state?.defaultFilters || {}
+    const [defaultFilters, setDefaultFilters] = useState(state?.defaultFilters || {})
     const fetchApplications = async (page) => {
         const response = await applicationService.getApplicationList({
             date_sort: dateOption,
@@ -23,6 +22,7 @@ const Applications = () => {
             ...defaultFilters,
             ...(statusOption !== '0' && { status: statusOption })
         }, page);
+        setDefaultFilters({})
 
         if (!response.success) {
             console.error('Error fetching applications:', response.message);
