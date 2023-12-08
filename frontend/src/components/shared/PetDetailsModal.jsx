@@ -87,7 +87,7 @@ function calculateAge(birthDateString) {
   let specialRequirements = petDetails.special_needs
 
   //shelter info
-  let shelterName = shelterDetails.shelter_name
+  let shelterName = shelterDetails.name
   let shelterAddress = shelterDetails.location
 
   return (

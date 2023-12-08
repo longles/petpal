@@ -47,3 +47,9 @@
 .error-notif {
     color: red;
 }
+
+.icon-button {
+    background: none;
+    color: inherit;
+    border: none;
+}

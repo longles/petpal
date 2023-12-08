@@ -21,7 +21,7 @@ class UserSetup1Test(TestCase):
             password='shelter_password1',
             phone_num="0987654321",
             user_object=PetShelter.objects.create(
-                shelter_name="Doggycares",
+                name="Doggycares",
                 mission="We love dogs!",
                 about_us="We are a shelter that cares for dogs.",
                 location="1234 Doggy Lane"
@@ -51,7 +51,7 @@ class UserSetup2Test(UserSetup1Test):
             password='shelter_password2',
             phone_num="0887654321",
             user_object=PetShelter.objects.create(
-                shelter_name="Kittycares",
+                name="Kittycares",
                 mission="We love cats!",
                 about_us="We are a shelter that cares for cats.",
                 location="4321 Kitty Lane"

@@ -74,10 +74,26 @@ export const notificationAPIService = () => {
         }
     }
 
+    const deleteNotification = async (id) => {
+        const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'DELETE');
+
+        if (!response.success) {
+            return {
+                success: false,
+                message: response.data.detail,
+            }
+        }
+
+        return {
+            success: true,
+        }
+    }
+
     return {
         createNotification,
         getNotificationDetail,
         getNotificationList,
         updateNotificationIsRead,
+        deleteNotification,
     }
 }
