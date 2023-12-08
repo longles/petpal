@@ -41,7 +41,7 @@ export const petAPIService = () => {
     }
 
     const getPetList = async (filters, page = 1, sortOrder = 'birth_date') => {
-        const query_params = new URLSearchParams({ ...filters, ordering: sortOrder, page });
+        const query_params = new URLSearchParams({ ...filters, page, ordering: sortOrder, });
         const response = await apiService.makeAPICall(`${API_PATH}?${query_params.toString()}`, 'GET');
 
         if (!response.success) {

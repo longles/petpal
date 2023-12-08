@@ -11,6 +11,7 @@ const SideBarFilter = ({ updateFilters }) => {
   const sizeOptions = ['Any', 'Small', 'Medium', 'Large'];
   const colourOptions = ['Any', 'Yellow', 'Black', 'White', 'Brown', 'Grey', 'Red', 'Blue', 'Green'];
   const sexOptions = ['Any', 'Male', 'Female'];
+  const speciesOptions = ['Any', 'Dog', 'Cat', 'Bird'];
   const [shelterOptions, setShelterOptions] = useState(['Any']);
   const [filterValueMap, setFilterValueMap] = useState({
     status: {
@@ -50,7 +51,13 @@ const SideBarFilter = ({ updateFilters }) => {
       labrador: '2',
       parrot: '3',
     },
-    shelter: {}
+    shelter: {},
+    species: {
+      unknown: 0,
+      dog : 1,
+      cat : 2, 
+      bird : 3,
+    }
   });
 
   useEffect(() => {
@@ -58,14 +65,18 @@ const SideBarFilter = ({ updateFilters }) => {
       try {
         const response = await shelterAPI.getShelterList(1);
         if (response.success) {
-          const updatedShelterOptions = ['Any'];
           const shelterMap = {};
+          
+          const addShelterOptions = [];
 
           response.data.results.forEach((shelter) => {
-            updatedShelterOptions.push(shelter.shelter_name);
-            shelterMap[shelter.shelter_name.toLowerCase()] = shelter.id;
+            addShelterOptions.push(shelter.name);
+            shelterMap[shelter.name.toLowerCase()] = shelter.id;
           });
 
+          addShelterOptions.sort((x, y) => x > y)
+
+          const updatedShelterOptions = ['Any'].concat(addShelterOptions)
           setShelterOptions(updatedShelterOptions);
           setFilterValueMap((prevMap) => ({ ...prevMap, shelter: shelterMap }));
         }
@@ -103,7 +114,10 @@ const SideBarFilter = ({ updateFilters }) => {
         <form id="filterForm" onSubmit={handleFilterSubmit}>
           {/* Status filter */}
           <FilterRow name="Status" options={statusOptions} />
-          
+
+        {/* species filter */}
+          <FilterRow name="Species" options={speciesOptions} />
+
           {/* Breed filter */}
           <FilterRow name="Breed" options={breedOptions} />
 

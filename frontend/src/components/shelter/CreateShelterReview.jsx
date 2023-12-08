@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup"
 import '../../styles/createshelterreview.scoped.css'
+import { notificationAPIService } from '../../services/notificationAPIService';
 
 const shelterCommentSchema = yup
   .object({
@@ -17,9 +18,10 @@ const shelterCommentSchema = yup
   })
   .required()
 
-const CreateShelterReview = ({id}) => {
+const CreateShelterReview = ({id, account_id}) => {
 
     const API = shelterCommentAPIService()
+    const notificationAPI = notificationAPIService()
 
     const [validationError, setValidationError] = useState("")
 
@@ -29,6 +31,7 @@ const CreateShelterReview = ({id}) => {
             if (response.success) {
                 setValidationError("")
                 console.log(response.data)
+                notificationAPI.createNotification(account_id, id, 'shelter_comment', "A review has been created for your shelter!")
             } else {
                 setValidationError(response.message)
             }

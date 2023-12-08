@@ -24,7 +24,7 @@ function ProfileShelter() {
             .then(res => {
                 if (res.success) {
                     setShelterDetails({
-                        shelterName: res.data.shelter_name,
+                        shelterName: res.data.name,
                         email: res.data.email,
                         location: res.data.location,
                         mission: res.data.mission,
