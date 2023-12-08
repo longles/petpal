@@ -19,7 +19,7 @@ const NotificationModal = ({showModal, setShowModal}) => {
         console.log(ret.message)
         if (ret.message.toLowerCase() === 'not authorized') {
           localStorage.clear()
-          navigate("/login")
+          navigate("/accounts/login")
         }
       }
     }).catch(e => console.log(e.message))
