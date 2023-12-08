@@ -25,7 +25,7 @@ const ApplicationModal = ({ closeModal, show, petId, formId }) => {
         
     }, [formId]);
 
-    const { register, control, handleSubmit, reset, trigger, setError } = useForm({
+    const { register, control, handleSubmit, formState: {isSubmitted, isValid} } = useForm({
 
     });
     const { fields, replace } = useFieldArray({
@@ -60,10 +60,11 @@ const ApplicationModal = ({ closeModal, show, petId, formId }) => {
                 )};
 
             case 3: // Radio
-                return (field) => {return (
+                return (field) => {
+                    return (
                     <div>
                         {prompt.map((option, index) => (
-                            <input
+                            <Form.Check
                                 key={index}
                                 type="radio"
                                 value={option}
@@ -81,6 +82,7 @@ const ApplicationModal = ({ closeModal, show, petId, formId }) => {
                             <Form.Check
                                 key={index}
                                 type="checkbox"
+                                value={option}
                                 label={option}
                                 {...field}
                             />
@@ -131,18 +133,20 @@ const ApplicationModal = ({ closeModal, show, petId, formId }) => {
                 <h3 className="modal-title">Your Application</h3>
             </Modal.Header>
             <Modal.Body>
+                {isSubmitted && !isValid && <div className="error-notif mb-2 text-center">You must fill out all questions to submit an application!</div>}
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     {fields.map((field, index) => {
                         const question = questions[index]
                         return (
                             <Form.Group as={Row} controlId={question.id} key={field.id}>
                                 <Form.Label column mb="3">{question.title}</Form.Label>
-                                <Col sm="9">
-                                <Controller
+                                <Col sm="9" className="mb-2">
+                                {renderInputForm(question)({...register(`response.${index}.response`, { required: true })})}
+                                {/* <Controller
                                     render={({ field }) => {return renderInputForm(question)(field)}}
                                     name={`response.${index}.response`}
                                     control={control}
-                                />
+                                /> */}
                                 {/* <button type="button" onClick={() => remove(index)}>Delete</button> */}
                                 </Col>
                             </Form.Group>
