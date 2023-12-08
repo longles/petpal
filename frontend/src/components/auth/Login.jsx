@@ -8,6 +8,7 @@ import { authAPIService } from "../../services/authAPIService.js"
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { ErrorMessage } from "@hookform/error-message"
+import { Link } from 'react-router-dom';
 
 const loginSchema = yup
   .object({
@@ -61,7 +62,7 @@ function Login() {
               </div>
               <input type="submit" className="btn btn-dark submit-btn" value="Login"/>
               <p>
-                Not a member? <a href="/accounts" className="text-link">Register now!</a>
+                Not a member? <Link to="/accounts/" className="text-link">Register now!</Link>
               </p>
             </form>
           </div>

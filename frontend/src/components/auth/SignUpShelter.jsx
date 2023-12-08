@@ -88,7 +88,7 @@ function SignUpShelter() {
                 </div>
                 <input type="submit" value="Sign Up" className="btn btn-dark submit-btn"/>
                 <p>
-                    Have an account with us? <a href="login/" className="text-link">Login now!</a>
+                    Have an account with us? <Link to="/accounts/login/" className="text-link">Login now!</Link>
                 </p>
             </form>
         </div>
