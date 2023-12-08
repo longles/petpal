@@ -5,10 +5,15 @@ export const authAPIService = () => {
     const apiService = APIService();
 
     const register = async (email, password, username, user_object) => {
+        console.log(email);
+        console.log(password);
+        console.log(username);
+        console.log(user_object);
         const response = await apiService.makeAPICall(`${API_PATH}`, 'POST', {
+            user_object: user_object,
             email: email,
             password: password,
-            user_object: user_object
+            username: username
         });
 
         if (!response.success) {
