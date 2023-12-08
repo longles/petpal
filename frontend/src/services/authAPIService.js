@@ -8,7 +8,6 @@ export const authAPIService = () => {
         const response = await apiService.makeAPICall(`${API_PATH}`, 'POST', {
             email: email,
             password: password,
-            username: username,
             user_object: user_object
         });
 

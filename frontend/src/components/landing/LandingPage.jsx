@@ -35,7 +35,7 @@ const LandingPage = () => {
           <div className="search-help">
             <h2>Sign up as a shelter?</h2>
             {/* change to signup as shelter later */}
-            <h3>Register <a href="/signup/">here</a></h3>
+            <h3>Register <a href="/accounts/">here</a></h3>
           </div>
         </div>
   

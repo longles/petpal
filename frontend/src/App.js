@@ -6,7 +6,7 @@ import './styles/layout.css';
 import NavBar from './components/shared/NavBar.jsx';
 import ShelterDetail from './components/shelter/ShelterDetail.jsx';
 import Login from './components/auth/Login.jsx';
-import Signup from './components/auth/Signup.jsx'
+import Signup from './components/auth/SignUpSeeker.jsx'
 import LandingPage from './components/landing/LandingPage.jsx';
 import PetListingsPage from './components/listing/listings.jsx';
 import Applications from './components/application/Application.jsx';
@@ -49,7 +49,7 @@ function App() {
                 element: <ShelterManagement />,
             },
             {
-                path: "login/",
+                path: "accounts/login/",
                 element: <Login />
             },
             {
