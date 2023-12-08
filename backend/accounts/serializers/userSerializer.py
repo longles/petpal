@@ -47,18 +47,27 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
+class UserAccountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'username', 'password')
+        read_only_fields = ('id', )
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
+
 class PetSeekerSerializer(serializers.ModelSerializer):
-    account_id = PrimaryKeyRelatedField(read_only=True)
+    account = UserAccountSerializer()
 
     class Meta:
         model = PetSeeker
-        fields = ('id', 'bio', 'phone_num', 'profile_pic', 'name', 'account_id')
+        fields = ('id', 'bio', 'phone_num', 'profile_pic', 'name', 'account')
         read_only_fields = ('id', )
 
 
 class PetShelterSerializer(serializers.ModelSerializer):
-    account_id = PrimaryKeyRelatedField(read_only=True)
+    account = UserAccountSerializer()
     class Meta:
         model = PetShelter
-        fields = ('id', 'name', 'mission', 'about_us', 'location', 'phone_num', 'profile_pic', 'contact_email', 'account_id')
+        fields = ('id', 'name', 'mission', 'about_us', 'location', 'phone_num', 'profile_pic', 'contact_email', 'account')
         read_only_fields = ('id', )
