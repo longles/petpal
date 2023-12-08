@@ -4,6 +4,7 @@ import PetDetailsModal from './PetDetailsModal';
 import ApplicationModal from './ApplicationModal';
 import PetUpdateModal, {getUpdateModalId} from './PetUpdateModal';
 
+// set manageflag = false after testing
 const PetCard = ({ manageFlag = false, petId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
