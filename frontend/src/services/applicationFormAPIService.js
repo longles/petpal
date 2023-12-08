@@ -4,10 +4,15 @@ export const applicationFormAPIService = () => {
     const API_PATH = 'pets/applications/form/';
     const apiService = APIService();
 
-    const createApplication = async (questions_arr) => {
-        const response = await apiService.makePrivateAPICall(`${API_PATH}`, 'POST', {
+    const createUpdateApplicationForm = async (name, description, questions_arr, updateFlag, form_id) => {
+        let request = {
+            name: name,
+            description: description,
             questions: questions_arr,
-        });
+        }
+        console.log(request)
+        const path = updateFlag ? `${API_PATH}${form_id}/` : `${API_PATH}`
+        const response = await apiService.makePrivateAPICall(path, updateFlag ? 'PUT' : 'POST', request);
 
         if (!response.success) {
             return {
@@ -70,7 +75,7 @@ export const applicationFormAPIService = () => {
     }
 
     return {
-        createApplication,
+        createUpdateApplicationForm,
         getApplicationFormDetail,
         getApplicationFormList,
         deleteApplicationForm,
