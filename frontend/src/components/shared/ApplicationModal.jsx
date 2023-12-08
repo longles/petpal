@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import { applicationFormAPIService } from '../../services/applicationFormAPIService';
 import { applicationAPIService } from '../../services/applicationAPIService';
+import { useForm, useFieldArray, Controller } from 'react-hook-form';
 
 const ApplicationModal = ({ closeModal, show, petId, formId }) => {
     const [questions, setQuestions] = useState([]);
@@ -14,40 +15,24 @@ const ApplicationModal = ({ closeModal, show, petId, formId }) => {
             const response = await applicationFormService.getApplicationFormDetail(formId);
             if (response.success) {
                 setQuestions(response.data.questions);
+                replace(response.data.questions.map(x => {return {type: x.question_object.type, response: ""}}))
             } else {
                 console.error('Error fetching application form:', response.message);
             }
         };
 
         fetchQuestions();
+        
     }, [formId]);
 
-    // Doesn't really work...
+    const { register, control, handleSubmit, reset, trigger, setError } = useForm({
 
-    const handleChange = (questionId, type) => (e) => {
-        if (type === 4) {
-            // Handling checkboxes
-            const updatedResponses = responses[questionId] ? [...responses[questionId].response] : [];
-            if (e.target.checked) {
-                updatedResponses.push(e.target.value);
-            } else {
-                const index = updatedResponses.indexOf(e.target.value);
-                if (index > -1) {
-                    updatedResponses.splice(index, 1);
-                }
-            }
-            setResponses(prevResponses => ({
-                ...prevResponses,
-                [questionId]: { type, response: updatedResponses }
-            }));
-        } else {
-            // Handling other input types
-            setResponses(prevResponses => ({
-                ...prevResponses,
-                [questionId]: { type, response: e.target.value }
-            }));
-        }
-    };
+    });
+    const { fields, replace } = useFieldArray({
+    control,
+    name: "response"
+    });
+    
 
     // Rendering works, but looks ugly
 
@@ -56,74 +41,71 @@ const ApplicationModal = ({ closeModal, show, petId, formId }) => {
 
         switch (type) {
             case 1: // Textarea
-                return (
+                return (field) => {
+                    return (
                     <Form.Control
                         as="textarea"
                         rows={4}
-                        onChange={handleChange(id, type)}
-                        required
+                        {...field}
                     />
-                );
+                )};
 
             case 2: // Dropdown
-                return (
-                    <Form.Select onChange={handleChange(id, type)} required>
+                return (field) => {return (
+                    <Form.Select {...field}>
                         {prompt.map((option, index) => (
                             <option key={index} value={option}>{option}</option>
                         ))}
                     </Form.Select>
-                );
+                )};
 
             case 3: // Radio
-                return (
+                return (field) => {return (
                     <div>
                         {prompt.map((option, index) => (
-                            <Form.Check
+                            <input
                                 key={index}
                                 type="radio"
+                                value={option}
                                 label={option}
-                                name={id}
-                                id={`${id}-${index}`}
-                                onChange={handleChange(id, type)}
+                                {...field}
                             />
                         ))}
                     </div>
-                );
+                )};
 
             case 4: // Checkbox
-                return (
+                return (field) => {return (
                     <div>
                         {prompt.map((option, index) => (
                             <Form.Check
                                 key={index}
                                 type="checkbox"
                                 label={option}
-                                name={id}
-                                id={`${id}-${index}`}
-                                value={option}
-                                onChange={handleChange(id, type)}
+                                {...field}
                             />
                         ))}
                     </div>
-                );
+                )};
 
             case 5: // File
-                return (
+                return (field) => {return (
                     <Form.Control
                         type="file"
-                        onChange={handleChange(id, type)}
+                        {...field}
                     />
-                );
+                )};
 
             default:
                 return null;
         }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const onSubmit = async (data) => {
         // Formatting responses for submission
-        const formattedResponses = Object.entries(responses).map(([questionId, responseObj]) => ({
+        console.log(data)
+
+        const formattedResponses = Object.entries(fields).map(([questionId, responseObj]) => ({
             question: parseInt(questionId),
             response_object: responseObj
         }));
@@ -149,15 +131,23 @@ const ApplicationModal = ({ closeModal, show, petId, formId }) => {
                 <h3 className="modal-title">Your Application</h3>
             </Modal.Header>
             <Modal.Body>
-                <Form onSubmit={handleSubmit}>
-                    {questions.map((question) => (
-                        <Form.Group as={Row} controlId={question.id} key={question.id}>
-                            <Form.Label column mb="3">{question.title}</Form.Label>
-                            <Col sm="9">
-                                {renderInputForm(question)}
-                            </Col>
-                        </Form.Group>
-                    ))}
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                    {fields.map((field, index) => {
+                        const question = questions[index]
+                        return (
+                            <Form.Group as={Row} controlId={question.id} key={field.id}>
+                                <Form.Label column mb="3">{question.title}</Form.Label>
+                                <Col sm="9">
+                                <Controller
+                                    render={({ field }) => {return renderInputForm(question)(field)}}
+                                    name={`response.${index}.response`}
+                                    control={control}
+                                />
+                                {/* <button type="button" onClick={() => remove(index)}>Delete</button> */}
+                                </Col>
+                            </Form.Group>
+                        )
+                    })}
                     <Button type="submit" variant="primary">Submit</Button>
                 </Form>
             </Modal.Body>
