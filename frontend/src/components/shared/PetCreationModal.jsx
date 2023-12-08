@@ -4,7 +4,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Modal, Button } from 'react-bootstrap';
 import { petAPIService } from '../../services/petAPIService';
+import { applicationFormAPIService } from '../../services/applicationFormAPIService';
 import ColourOptions from './ColorOptions';
+import { useState, useEffect } from 'react';
 
 const petCreationSchema = yup.object({
   name: yup.string().required('Name is required'),
@@ -23,10 +25,27 @@ const petCreationSchema = yup.object({
 }).required();
 
 function PetCreationModal({ closeModal }) {
+  const [applicationForms, setApplicationForms] = useState([]);
+  const appFormAPI = applicationFormAPIService();
   const petAPI = petAPIService();
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(petCreationSchema)
   });
+
+  useEffect(() => {
+    const fetchApplicationForms = async () => {
+      const response = await appFormAPI.getApplicationFormList(1); // assuming page 1 for demo
+      if (response.success) {
+        setApplicationForms(response.data);
+        console.log(response.data);
+      } else {
+        // Handle error
+        console.error('Failed to fetch application forms:', response.message);
+      }
+    };
+
+    fetchApplicationForms();
+  }, []);
 
   const onSubmit = async(data) => {
     const formattedData = {
