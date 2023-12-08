@@ -3,32 +3,39 @@ import { applicationAPIService } from '../../services/applicationAPIService';
 import PetCard from './ApplicationTile';
 import { useLocation } from 'react-router-dom';
 
-
+const PAGE_SIZE = 5; // Number of items per page
 
 const Applications = () => {
     const [applications, setApplications] = useState([]);
-    const [statusOption, setStatusOption] = useState(1); // Assuming 1-4 represent different sort options
+    const [statusOption, setStatusOption] = useState("0");
     const [dateOption, setDateOption] = useState('last_updated_asc');
     const [petNameFilter, setPetNameFilter] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const applicationService = applicationAPIService();
     const {state} = useLocation()
     console.log(state)
     var defaultFilters = state?.defaultFilters || {}
-    const fetchApplications = async () => {
+    const fetchApplications = async (page) => {
         const response = await applicationService.getApplicationList({
-            status: statusOption,
             date_sort: dateOption,
             pet_name: petNameFilter,
-            ...defaultFilters
-        }, 1);
-        defaultFilters = {}
+            ...defaultFilters,
+            ...(statusOption !== '0' && { status: statusOption })
+        }, page);
+
         if (!response.success) {
             console.error('Error fetching applications:', response.message);
             return;
         }
 
-        setApplications(response.data.results); // Assuming the API returns an array of applications
+        setApplications(response.data.results);
+        setTotalPages(Math.ceil(response.data.count / PAGE_SIZE));
     };
+
+    useEffect(() => {
+        fetchApplications(currentPage);
+    }, [statusOption, dateOption, petNameFilter, currentPage]);
 
     const handleStatusChange = (e) => {
         setStatusOption(e.target.value);
@@ -42,22 +49,31 @@ const Applications = () => {
         setPetNameFilter(e.target.value);
     };
 
-    useEffect(() => {
-        fetchApplications();
-    }, [dateOption]);
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
 
     const applyFilters = (e) => {
         e.preventDefault();
-        fetchApplications({
-            status: statusOption,
-            date_sort: dateOption,
-            pet_name: petNameFilter
-        });
+        setCurrentPage(1);
+        fetchApplications(1); // Fetch the first page after applying filters
     };
 
     return (
         <div className="container main-content">
-            <h2 className="mb-4">{localStorage.getItem('user_type') === 'petshelter' ? 'Applications' : 'My Applications'}</h2>
+            <h2 className="mb-4">
+                {localStorage.getItem('user_type') === 'petshelter'
+                    ? 'Applications'
+                    : 'My Applications'}
+            </h2>
             <div className="row">
                 <div className="col-md-3">
                     <div className="card mb-4">
@@ -78,6 +94,7 @@ const Applications = () => {
                             <h5 className="card-title">Filter By</h5>
                             <div className="mb-3">
                                 <select className="form-select" value={statusOption} onChange={handleStatusChange}>
+                                    <option value="0">All</option>
                                     <option value="1">Pending</option>
                                     <option value="2">Approved</option>
                                     <option value="3">Denied</option>
@@ -93,7 +110,9 @@ const Applications = () => {
                                     onChange={handlePetNameFilterChange}
                                 />
                             </div>
-                            <button type="submit" className="btn btn-primary" onClick={applyFilters}>Apply Filters</button>
+                            <button type="submit" className="btn btn-primary" onClick={applyFilters}>
+                                Apply Filters
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -110,6 +129,28 @@ const Applications = () => {
                             responses={application.responses}
                         />
                     ))}
+
+                    {totalPages > 1 && (
+                        <div className="pagination text-center" style={{ marginBottom: "1rem" }}>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handlePrevPage}
+                                disabled={currentPage === 1}
+                            >
+                                Previous
+                            </button>
+                            <span className="page-info" style={{ margin: "0 10px" }}>
+                                Page {currentPage} of {totalPages}
+                            </span>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleNextPage}
+                                disabled={currentPage === totalPages}
+                            >
+                                Next
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
