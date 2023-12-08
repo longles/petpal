@@ -6,7 +6,6 @@ import { useForm, useFieldArray, Controller } from 'react-hook-form';
 
 const ApplicationModal = ({ closeModal, show, petId, formId }) => {
     const [questions, setQuestions] = useState([]);
-    const [responses, setResponses] = useState({});
     const applicationFormService = applicationFormAPIService();
     const applicationService = applicationAPIService();
 
@@ -22,7 +21,7 @@ const ApplicationModal = ({ closeModal, show, petId, formId }) => {
         };
 
         fetchQuestions();
-        
+
     }, [formId]);
 
     const { register, control, handleSubmit, formState: {isSubmitted, isValid} } = useForm({
@@ -32,7 +31,7 @@ const ApplicationModal = ({ closeModal, show, petId, formId }) => {
     control,
     name: "response"
     });
-    
+
 
     // Rendering works, but looks ugly
 
@@ -112,15 +111,7 @@ const ApplicationModal = ({ closeModal, show, petId, formId }) => {
             response_object: responseObj
         }));
 
-        console.log(formattedResponses)
-
-        const requestBody = {
-            pet: petId,
-            form: formId,
-            responses: formattedResponses
-        };
-
-        const response = await applicationService.createApplication(requestBody);
+        const response = await applicationService.createApplication(petId, formId, formattedResponses);
 
         if (response.success) {
             closeModal();
@@ -144,12 +135,6 @@ const ApplicationModal = ({ closeModal, show, petId, formId }) => {
                                 <Form.Label column mb="3">{question.title}</Form.Label>
                                 <Col sm="9" className="mb-2">
                                 {renderInputForm(question)({...register(`response.${index}.response`, { required: true })})}
-                                {/* <Controller
-                                    render={({ field }) => {return renderInputForm(question)(field)}}
-                                    name={`response.${index}.response`}
-                                    control={control}
-                                /> */}
-                                {/* <button type="button" onClick={() => remove(index)}>Delete</button> */}
                                 </Col>
                             </Form.Group>
                         )
