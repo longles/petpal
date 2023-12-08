@@ -17,7 +17,7 @@ const loginSchema = yup
   .required()
 
 function Login() {
-    const loginAPI = authAPIService()
+    const loginAPI = authAPIService();
     let navigate = useNavigate(); 
     const [validationError, setValidationError] = useState("")
     const onLogin = (data) => {
@@ -34,7 +34,7 @@ function Login() {
         }).catch(e => {console.error(e)})
     };
 
-  const {register, handleSubmit, formState: {errors} } = useForm({resolver: yupResolver(loginSchema)})
+  const {register, handleSubmit, formState: {errors} } = useForm({resolver: yupResolver(loginSchema)});
 
   return (
     <div>
@@ -61,7 +61,7 @@ function Login() {
               </div>
               <input type="submit" className="btn btn-dark submit-btn" value="Login"/>
               <p>
-                Not a member? <a href="signup-seeker.html" className="text-link">Register now!</a>
+                Not a member? <a href="/accounts" className="text-link">Register now!</a>
               </p>
             </form>
           </div>

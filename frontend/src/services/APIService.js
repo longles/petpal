@@ -58,23 +58,29 @@ export const APIService = () => {
             headers.set('Authorization', `Bearer ${token}`);
         }
 
-        const response = await fetch(`${API_URL}${path}`, {
+        return fetch(`${API_URL}${path}`, {
             method: method,
             headers: headers,
             body: requestData,
-        });
+        }).then(async (response) => {
+            if (response.ok) {
+                result.success = true;
+            }
 
-        if (response.ok) {
-            result.success = true;
-        }
-
-        if (method === "DELETE") {
+            if (response.status === 401) {
+                result.success = false
+                result.data = {"detail": "Not authorized"}
+                return result;
+            }
+    
+            if (method === "DELETE") {
+                return result;
+            } else {
+                result.data = await response.json();
+            }
+    
             return result;
-        } else {
-            result.data = await response.json();
-        }
-
-        return result;
+        })
     }
 
     return {
