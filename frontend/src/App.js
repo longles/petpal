@@ -17,75 +17,75 @@ import ApplicationFormUpdateModal from './components/application/ApplicationForm
 import PetUpdateModal from './components/shared/PetUpdateModal.jsx';
 
 const RootLayout = () => {
-  return (<div id="body">
-    <div id="content-wrap">
-      <NavBar />
-      <Outlet/>
-    </div>
-    <footer className="footer">
-      <div className="container">
-          <p>Copyright &copy; 2023 | Pet Pal </p>
-      </div>
-    </footer>
-  </div>)
+    return (<div id="body">
+        <div id="content-wrap">
+            <NavBar />
+            <Outlet />
+        </div>
+        <footer className="footer">
+            <div className="container">
+                <p>Copyright &copy; 2023 | Pet Pal </p>
+            </div>
+        </footer>
+    </div>)
 }
 
 function App() {
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <RootLayout/>,
-      children: [{
-        path: "",
-        element: <LandingPage/>,
-      },
-      {
-        path: "shelterdetail/:shelterId/",
-        element: <ShelterDetail/>,
-      },
-      {
-        path: "pets/manage/",
-        element: <ShelterManagement/>,
-      },
-      {
-        path: "login/",
-        element: <Login/>
-      },
-      {
-        path: "accounts/",
-        element: <Signup/>
-      },
-      {
-        path: "accounts/seekers/",
-        element: <ProfileSeeker/>
-      },
-      {
-        path: "accounts/shelters/",
-        element: <ProfileShelter/>
-      },
-      {
-        path: "pets/",
-        element: <PetListingsPage />,
-      },
-      {
-          path: "applications/",
-          element: <Applications/>
-      },
-      {
-          path: "testcreate/",
-          element: <PetUpdateModal/>
-      },
-      {
-          path: "test/",
-          element: <ApplicationFormUpdateModal/>
-      }]
-    }
-  ]);
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <RootLayout />,
+            children: [{
+                path: "",
+                element: <LandingPage />,
+            },
+            {
+                path: "shelterdetail/:shelterId/",
+                element: <ShelterDetail />,
+            },
+            {
+                path: "pets/manage/",
+                element: <ShelterManagement />,
+            },
+            {
+                path: "login/",
+                element: <Login />
+            },
+            {
+                path: "accounts/",
+                element: <Signup />
+            },
+            {
+                path: "accounts/seekers/",
+                element: <ProfileSeeker />
+            },
+            {
+                path: "accounts/shelters/",
+                element: <ProfileShelter />
+            },
+            {
+                path: "pets/",
+                element: <PetListingsPage />,
+            },
+            {
+                path: "applications/",
+                element: <Applications />
+            },
+            {
+                path: "appform/",
+                element: <ApplicationForms />
+            },
+            {
+                path: "test/",
+                element: <ApplicationFormUpdateModal />
+            }]
+        }
+    ]);
 
-  return (
-    <RouterProvider router={router} />
-  );
+    return (
+        <RouterProvider router={router} />
+    );
 }
 
 export default App;

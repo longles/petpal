@@ -5,4 +5,5 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
         data.update({'user_id': str(self.user.id)})
         data.update({'user_type': self.user.user_type.model})
+        data.update({'user_object_id': str(self.user.user_id)})
         return data

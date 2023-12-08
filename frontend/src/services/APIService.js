@@ -1,6 +1,5 @@
 import { API_URL } from "./config/config.js"
 import fetch from 'node-fetch';
-const { Headers } = fetch;
 
 export const APIService = () => {
 
@@ -25,10 +24,14 @@ export const APIService = () => {
             body: requestData,
         });
 
-        result.data = await response.json();
-
         if (response.ok) {
             result.success = true;
+        }
+
+        if (method === "DELETE") {
+            return result;
+        } else {
+            result.data = await response.json();
         }
 
         return result;
@@ -55,19 +58,29 @@ export const APIService = () => {
             headers.set('Authorization', `Bearer ${token}`);
         }
 
-        const response = await fetch(`${API_URL}${path}`, {
+        return fetch(`${API_URL}${path}`, {
             method: method,
             headers: headers,
             body: requestData,
-        });
+        }).then(async (response) => {
+            if (response.ok) {
+                result.success = true;
+            }
 
-        result.data = await response.json();
-
-        if (response.ok) {
-            result.success = true;
-        }
-
-        return result;
+            if (response.status === 401) {
+                result.success = false
+                result.data = {"detail": "Not authorized"}
+                return result;
+            }
+    
+            if (method === "DELETE") {
+                return result;
+            } else {
+                result.data = await response.json();
+            }
+    
+            return result;
+        })
     }
 
     return {

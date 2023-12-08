@@ -11,11 +11,20 @@ from accounts.permission import IsShelter, IsPetSeeker
 from ..utils import method_permission_classes
 
 
-class ApplicationFormCreateListView(APIView, PageNumberPagination):
+class ApplicationFormPagination(PageNumberPagination):
+    page_size = 12
+
+
+class ApplicationFormCreateListView(APIView, ApplicationFormPagination):
     permission_classes = [IsAuthenticated, IsShelter]
 
     def post(self, request):
-        data = {'shelter': request.user.user_object.pk, 'questions': request.data.get('questions')}
+        data = {
+            'shelter': request.user.user_object.pk,
+            'questions': request.data.get('questions'),
+            'name': request.data.get('name'),
+            'description': request.data.get('description')
+        }
         serializer = ApplicationFormSerializer(data=data)
 
         if serializer.is_valid():
@@ -52,7 +61,7 @@ class ApplicationFormRUD(APIView):
             serializer.save()
             return Response(serializer.data)
 
-        return Response({serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'detail': "Could not seriaize the request"}, status=status.HTTP_400_BAD_REQUEST)
 
 
     def get(self, request, pk):
