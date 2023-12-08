@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { petAPIService } from '../../services/petAPIService';
 import { shelterAPIService } from '../../services/userAPIService';
+import ColourOptions from './ColorOptions';
 
 export function getUpdateModalId(petId) {
   return `petUpdateModal${petId}`;
@@ -104,11 +105,17 @@ function PetUpdateModal({ petId }) {
                 </div>
                 <div className="my-1">
                     <label className="form-label" htmlFor="size">Size</label>
-                    <input className="form-control" id="size" {...register('size')} />
+                    <select className="form-select" id="size" {...register('size')} >
+                      <option value="1">Large</option>
+                      <option value="2">Medium</option>
+                      <option value="3">Small</option>
+                    </select>
                 </div>
                 <div className="my-1">
                     <label className="form-label" htmlFor="color">Color</label>
-                    <input className="form-control" id="color" {...register('colour')} />
+                    <select className="form-select" id="color" {...register('colour')} >
+                      <ColourOptions/>
+                    </select>
                 </div>
                 <div className="my-2">
                     <label htmlFor="weight">Weight</label>
