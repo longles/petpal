@@ -15,6 +15,7 @@ import ProfileShelter from "./components/profile/ProfileShelter.jsx";
 import ShelterManagement from './components/shelter/ShelterManagement.jsx';
 import ApplicationFormUpdateModal from './components/application/ApplicationFormUpdateModal.jsx';
 import PetUpdateModal from './components/shared/PetUpdateModal.jsx';
+import ApplicationForms from './components/application/ApplicationForm.jsx';
 
 const RootLayout = () => {
     return (<div id="body">

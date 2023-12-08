@@ -11,6 +11,7 @@ const SideBarFilter = ({ updateFilters }) => {
   const sizeOptions = ['Any', 'Small', 'Medium', 'Large'];
   const colourOptions = ['Any', 'Yellow', 'Black', 'White', 'Brown', 'Grey', 'Red', 'Blue', 'Green'];
   const sexOptions = ['Any', 'Male', 'Female'];
+  const speciesOptions = ['Any', 'Dog', 'Cat', 'Bird'];
   const [shelterOptions, setShelterOptions] = useState(['Any']);
   const [filterValueMap, setFilterValueMap] = useState({
     status: {
@@ -50,7 +51,13 @@ const SideBarFilter = ({ updateFilters }) => {
       labrador: '2',
       parrot: '3',
     },
-    shelter: {}
+    shelter: {},
+    species: {
+      unknown: 0,
+      dog : 1,
+      cat : 2, 
+      bird : 3,
+    }
   });
 
   useEffect(() => {
@@ -104,6 +111,9 @@ const SideBarFilter = ({ updateFilters }) => {
           {/* Status filter */}
           <FilterRow name="Status" options={statusOptions} />
           
+        {/* species filter */}
+          <FilterRow name="Species" options={speciesOptions} />
+
           {/* Breed filter */}
           <FilterRow name="Breed" options={breedOptions} />
 

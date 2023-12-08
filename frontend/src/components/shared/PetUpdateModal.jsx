@@ -111,6 +111,10 @@ function PetUpdateModal({ petId }) {
                     <input className="form-control" id="color" {...register('colour')} />
                 </div>
                 <div className="my-2">
+                    <label htmlFor="weight">Weight</label>
+                    <textarea className="form-control" id="weight" {...register('weight')}></textarea>
+                </div>
+                <div className="my-2">
                     <label htmlFor="location">Location</label>
                     <input className="form-control" id="location" {...register('location')} />
                 </div>
