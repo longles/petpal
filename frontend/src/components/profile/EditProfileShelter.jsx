@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import '../../styles/layout.css';
 import '../../styles/profile.css';
-import {shelterAPIService} from '../../services/userAPIService'
+import {seekerAPIService, shelterAPIService} from '../../services/userAPIService'
 
 const EditProfileShelter = ({id}) => {
     const [profileData, setProfileData] = useState({
@@ -44,10 +44,29 @@ const EditProfileShelter = ({id}) => {
         })
     }
 
+    const handleProfileSubmit = (event) => {
+        event.preventDefault();
+        seekerAPIService().updateShelter(id, profileData).then(response => {
+            if (response.success) {
+                setValidationError("");
+                setSuccessMessage("Profile updated successfully!");
+                console.log(response.data);
+            } else {
+                setSuccessMessage("");
+                setValidationError("Some of the fields are incorrect!");
+            }
+        });
+    };
+
+    const handleSecuritySubmit = (event) => {
+        event.preventDefault();
+        console.log(event);
+    };
+
     return (
         <div className="container my-5">
             <h2>Edit Shelter Information</h2>
-            <form>
+            <form onSubmit={handleProfileSubmit}>
                 <div className="form-group">
                     <label htmlFor="username">Shelter Name</label>
                     <input type="text" className="form-control" id="username" placeholder="Username"
@@ -60,37 +79,41 @@ const EditProfileShelter = ({id}) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="mission">Mission Statement</label>
-                    <textarea className="form-control" id="mission" rows="3">It's our mission to improve and save animal lives</textarea>
+                    <textarea className="form-control" id="mission" rows="3">{profileData.missionStatement}</textarea>
                 </div>
                 <div className="form-group">
                     <label htmlFor="aboutUsProfile">About Us</label>
-                    <textarea className="form-control" id="aboutUsProfile" rows="3">Since our founding in 1982, we have saved thousands of pets and given them forever homes.</textarea>
+                    <textarea className="form-control" id="aboutUsProfile" rows="3">
+                        {profileData.aboutUs}
+                    </textarea>
                 </div>
                 <div className="form-group">
                     <label htmlFor="email" aria-describedby="emailHelp">Email</label>
                     <input type="text" className="form-control" id="email" placeholder="email"
-                           value="imrich@mail.utoronto.ca"/>
+                           value={profileData.email}/>
                     <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone
                         else.</small>
                 </div>
                 <div className="form-group">
                     <label htmlFor="mobile">Mobile</label>
-                    <input type="text" className="form-control" id="mobile" placeholder="(xxx) xxx-xxxx"/>
+                    <input type="text" className="form-control" id="mobile" placeholder="xxx-xxx-xxxx"
+                           value={profileData.mobile}
+                    />
                     <small className="form-text text-muted">We'll never share your phone number with anyone
                         else.</small>
                 </div>
                 <div className="form-group">
                     <label htmlFor="profilePic">Change Shelter Pic</label>
-                    <input type="file" className="form-control" id="profilePic"/>
+                    <input type="file" className="form-control" id="profilePic" value={profileData.profilePic}/>
                 </div>
                 <Link to="#" className="btn btn-primary" id="showAlert">Save</Link>
                 <Link to="/profile_shelter" id="cancel" className="btn btn-dark">Discard Changes</Link>
-                <a href="#" className="btn btn-primary" id="showAlert">Save</a>
-                <a href="profile_shelter.html" id="cancel" className="btn btn-dark">Discard Changes</a>
+                {/*<a href="#" className="btn btn-primary" id="showAlert">Save</a>*/}
+                {/*<a href="profile_shelter.html" id="cancel" className="btn btn-dark">Discard Changes</a>*/}
             </form>
 
             <h2>Security and Privacy</h2>
-            <form>
+            <form onSubmit={handleSecuritySubmit}>
                 <div className="form-group">
                     <label htmlFor="oldPassword">Old Password</label>
                     <input type="password" className="form-control" id="oldPassword" value="Type your old password"/>
