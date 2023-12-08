@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import NotificationModal from './NotificationModal';
 import { authAPIService } from '../../services/authAPIService';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   // Retrieve userType from localStorage
@@ -17,17 +18,26 @@ const NavBar = () => {
 
   const renderNoneNavbar = () => (
     <>
-
+      <li className="nav-item">
+        <Link className="nav-link active" to="/pets/">Pets</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link active" to="/shelters/">Shelters</Link>
+      </li>
+      
     </>
   )
 
   const renderShelterNavbar = () => (
     <>
         <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href="/pets/manage/">Manage Pets</a>
+            <Link className="nav-link active" to="/pets/manage/">Manage Pets</Link>
         </li>
         <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href={`/shelterdetail/${localStorage.user_object_id}`}>Manage Shelter</a>
+            <Link className="nav-link active" to={`/shelterdetail/${localStorage.user_object_id}`}>View Shelter</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link active" to="/applications/">Applications</Link>
         </li>
     </>
 
@@ -36,7 +46,16 @@ const NavBar = () => {
   const renderSeekerNavbar = () => (
     <>
         <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href="/pets/">Adopt a Pet</a>
+            <Link className="nav-link active" aria-current="page" to="/pets/">Pets</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link active" to="/shelters/">Shelters</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link active" to="/applications/">Applications</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link active" to="/appform/">Application Forms</Link>
         </li>
     </>
   );
@@ -45,7 +64,7 @@ const NavBar = () => {
   const renderLogin = () => (
     <>
       <li className="nav-item dropdown">
-        <a className="nav-link" href="/login">Login</a>
+        <Link className="nav-link" to="/login">Login</Link>
       </li>
     </>
   )
@@ -60,8 +79,8 @@ const NavBar = () => {
           Profile
         </button>
         <ul className="dropdown-menu" aria-labelledby="profileDropdown">
-          <li><a className="dropdown-item" href="/profile">View Profile</a></li>
-          <li><a className="dropdown-item" href="/profile/edit">Update Profile</a></li>
+          <li><Link className="dropdown-item" to="/profile">View Profile</Link></li>
+          <li><Link className="dropdown-item" to="/profile/edit">Update Profile</Link></li>
           <li><button className="dropdown-item btn" onClick={() => {setShowNotifications(true)}}>Notifications</button></li>
           <li><button className="dropdown-item btn" onClick={logoutFunc}>Logout</button></li>
         </ul>
@@ -73,7 +92,7 @@ const NavBar = () => {
     <>
       <nav className="navbar navbar-expand-lg navbar-dark">
         <div className="container">
-          <a className="navbar-brand" href="/">Pet Pal</a>
+          <Link className="navbar-brand" to="/">Pet Pal</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" style={{ backgroundColor: '#ff6600' }}></span>
           </button>

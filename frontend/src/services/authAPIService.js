@@ -41,6 +41,7 @@ export const authAPIService = () => {
         localStorage.setItem('token', response.data.access); // Store token in local storage
         localStorage.setItem('refresh', response.data.refresh);
         localStorage.setItem('user_id', response.data.user_id);
+        localStorage.setItem('user_object_id', response.data.user_object_id)
         localStorage.setItem('user_type', response.data.user_type);
 
         return {
