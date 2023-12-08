@@ -3,8 +3,33 @@ import { Modal, Button } from 'react-bootstrap';
 import FormQuestionEdit from './FormQuestionEdit';
 import { applicationAPIService } from '../../services/applicationAPIService';
 import { applicationFormAPIService } from '../../services/applicationFormAPIService';
+import * as yup from "yup"
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-const ApplicationFormUpdateModal = ({updateFlag, initialQuestions = [], showModal, setShowModal}) => {
+const applicationFormSchema = yup
+  .object({
+    name: yup.string().required("Form name is required"),
+    description: yup.string().required("Form description is required")
+  })
+  .required()
+
+const ApplicationFormUpdateModal = ({updateFlag, initialValues, showModal, setShowModal}) => {
+    
+    console.log(initialValues)
+    const initialQuestions = initialValues.questions || []
+    const initialName = initialValues.name || ""
+    const initialDescription = initialValues.description || ""
+
+    const {register, handleSubmit, formState: {errors} } = useForm({
+        resolver: yupResolver(applicationFormSchema),
+        defaultValues: {
+            name: initialName,
+            description: initialDescription
+        }
+    })
+    const [validationError, setValidationError] = useState("")
+
     const questionReducer = (questions, action) => {
         console.log(action)
         const {type, idx, question} = action
@@ -36,24 +61,40 @@ const ApplicationFormUpdateModal = ({updateFlag, initialQuestions = [], showModa
         return () => {dispatch({type: "delete", idx: idx})}
     }, [])
 
-    const saveApplicationForm = () => {
+    const saveApplicationForm = ({name, description}) => {
         const API = applicationFormAPIService()
-        API.createApplication(questions).then(response => {
+        API.createUpdateApplicationForm(name, description, questions, updateFlag, initialValues.id).then(response => {
             if (response.success) {
                 console.log(response.data)
+                setValidationError("")
+                setShowModal(false)
             } else {
                 console.error(response.message)
+                setValidationError(response.message)
             }
-        })
+        }).catch(e => setValidationError(e.message))
     }
 
-    console.log(questions)
     return (
         <Modal show={showModal} onHide={() => {setShowModal(false)}} size="lg">
             <Modal.Header closeButton>
                 <Modal.Title>{updateFlag ? "Update" : "Create"} Application Form</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+                <div className="d-flex flex-column align-items-center">
+                    {validationError !== "" && <div className="error-notif">{validationError}</div>}
+                    {errors.name && <div className="error-notif">{errors.name.message}</div>}
+                    {errors.description && <div className="error-notif">{errors.description.message}</div>}
+                </div>
+                <div className="d-flex align-items-center my-2">
+                    <label className="me-2 font-weight-bold">Name: </label>
+                    <input id="form-name" className="form-control" {...register('name')}></input>
+                </div>
+                <div className="d-flex align-items-top mb-2">
+                    <label className="me-2 font-weight-bold mt-2">Description: </label>
+                    <textarea id="form-desc" className="form-control" {...register('description')}></textarea>
+                </div>
+                <h2 className="text-center">Questions</h2>
                 {questions.map((x, i) => <FormQuestionEdit key={i} edit={true} title={x.title} question={x.question_object} editFunc={editQuestionByIndex(i)} deleteFunc={deleteQuestionByIndex(i)}/>)}
             </Modal.Body>
             <div className="d-flex justify-content-center mb-2">
@@ -61,7 +102,7 @@ const ApplicationFormUpdateModal = ({updateFlag, initialQuestions = [], showModa
             </div>
             <Modal.Footer>
                 {/* <button className='btn btn-primary'>Preview</button> */}
-                <button className='btn btn-primary' onClick={saveApplicationForm}>Save</button>
+                <button className='btn btn-primary' onClick={handleSubmit(saveApplicationForm)}>Save</button>
             </Modal.Footer>
         </Modal>
 

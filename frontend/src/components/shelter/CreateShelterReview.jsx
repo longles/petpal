@@ -27,6 +27,7 @@ const CreateShelterReview = ({id}) => {
         console.log(data)
         API.createShelterComment(id, data).then(response => {
             if (response.success) {
+                setValidationError("")
                 console.log(response.data)
             } else {
                 setValidationError(response.message)
