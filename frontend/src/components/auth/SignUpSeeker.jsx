@@ -52,33 +52,33 @@ function SignUpSeeker() {
     return (
         <div>
             <div className="mb-3" id="alertContainer">
-                {validationError !== "" && <div className="error-notif">{validationError}</div>}
+                {/*{validationError !== "" && <div className="error-notif">{validationError}</div>}*/}
                 {errors.name && <div className="error-notif">{errors.name.message}</div>}
                 {errors.email && <div className="error-notif">{errors.email.message}</div>}
                 {errors.username && <div className="error-notif">{errors.username.message}</div>}
                 {errors.password1 && <div className="error-notif">{errors.password1.message}</div>}
                 {errors.password2 && <div className="error-notif">{errors.password2.message}</div>}
             </div>
-            <form>
+            <form onSubmit={handleSubmit(onSignUpSeeker)}>
                 <div className="form-group">
                     <input type="text" className="form-control" placeholder="Enter Your Real Name"
-                           name="name" required/>
+                           name="name" {...register('name')} required/>
                 </div>
                 <div className="form-group">
                     <input type="text" className="form-control" placeholder="Enter Username"
-                           name="username" required/>
+                           name="username" {...register('username')} required/>
                 </div>
                 <div className="form-group">
                     <input type="email" className="form-control" placeholder="Enter Email Address"
-                           name="email" required/>
+                           name="email" {...register('email')} required/>
                 </div>
                 <div className="form-group">
                     <input type="password" className="form-control" placeholder="Enter Password"
-                           name="password1" required/>
+                           name="password1" {...register('password1')} required/>
                 </div>
                 <div className="form-group">
                     <input type="password" className="form-control" placeholder="Confirm Password"
-                           name="password2" required/>
+                           name="password2" {...register('password2')} required/>
                 </div>
                 <input type="submit" value="Sign Up" className="btn btn-dark submit-btn"/>
                 <p>
