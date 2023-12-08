@@ -77,7 +77,7 @@ function ShelterDetail() {
             </div>
             <div className="border rounded-bottom py-2">
               <h2 className="text-center">Reviews</h2>
-              <ShelterReviews id={shelterId}/>
+              <ShelterReviews id={shelterId} account_id={data.account_id}/>
             </div>
           </div>
         </div>
