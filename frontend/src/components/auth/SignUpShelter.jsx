@@ -32,7 +32,7 @@ function SignUpShelter() {
                 location: event.location
             }
         }
-        signUpAPI.register(event.email, event.username, event.password, userObject).then(res => {
+        signUpAPI.register(event.email, event.password1, event.username, userObject).then(res => {
             console.log(res)
             if (res.success) {
                 navigate("login/")
@@ -64,27 +64,27 @@ function SignUpShelter() {
             <form>
                 <div className="form-group">
                     <input type="text" className="form-control" placeholder="Enter name of your organization"
-                           name="name" required/>
+                           name="name" {...register('name')} required/>
                 </div>
                 <div className="form-group">
                     <input type="text" className="form-control" placeholder="Enter Username"
-                           name="username" required/>
+                           name="username" {...register('username')} required/>
                 </div>
                 <div className="form-group">
                     <input type="text" className="form-control" placeholder="Enter Location"
-                           name="username" required/>
+                           name="location" {...register('location')} required/>
                 </div>
                 <div className="form-group">
                     <input type="email" className="form-control" placeholder="Enter Email Address"
-                           name="email" required/>
+                           name="email" {...register('email')} required/>
                 </div>
                 <div className="form-group">
                     <input type="password" className="form-control" placeholder="Enter Password"
-                           name="password1" required/>
+                           name="password1" {...register('password1')} required/>
                 </div>
                 <div className="form-group">
                     <input type="password" className="form-control" placeholder="Confirm Password"
-                           name="password2" required/>
+                           name="password2" {...register('password2')} required/>
                 </div>
                 <input type="submit" value="Sign Up" className="btn btn-dark submit-btn"/>
                 <p>
