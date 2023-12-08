@@ -68,7 +68,7 @@ function ShelterDetail() {
           <div className="col-12 col-lg-8 col-xl-5 col-xxl-4 mb-2">
             <div className="border rounded-top py-2">
               <h2 className="text-center">Contact Information</h2>
-              <p className="text-center mb-0"><span style={{ fontWeight: 'bold' }}>Email: </span>{data.email}</p>
+              <p className="text-center mb-0"><span style={{ fontWeight: 'bold' }}>Email: </span>{data.account.email}</p>
               <p className="text-center mb-0"><span style={{ fontWeight: 'bold' }}>Phone: </span>{data.phone_num}</p>
             </div>
             <div className="border py-2">
@@ -78,7 +78,7 @@ function ShelterDetail() {
             </div>
             <div className="border rounded-bottom py-2">
               <h2 className="text-center">Reviews</h2>
-              <ShelterReviews id={shelterId} account_id={data.account_id}/>
+              <ShelterReviews id={shelterId} account_id={data.account.id}/>
             </div>
           </div>
         </div>
