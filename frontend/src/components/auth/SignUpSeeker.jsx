@@ -13,7 +13,7 @@ const signUpSeekerSchema = yup
         username: yup.string().required("Username is required"),
         email: yup.string().required("Email is required"),
         password1: yup.string().required("Password is required"),
-        password2: yup.string().required("Need to confirm your password")
+        password2: yup.string().oneOf([yup.ref('password1'), null], 'Passwords must match')
     })
     .required()
 
@@ -28,10 +28,11 @@ function SignUpSeeker() {
             type: "petseeker",
             user: {
                 name: event.name,
-                bio: ""
+                bio: "Put your bio here!"
             }
         }
-        signUpAPI.register(event.email, event.username, event.password, userObject).then(res => {
+
+        signUpAPI.register(event.email, event.password1, event.username, userObject).then(res => {
             console.log(res)
             if (res.success) {
                 navigate("login/")
@@ -52,7 +53,7 @@ function SignUpSeeker() {
     return (
         <div>
             <div className="mb-3" id="alertContainer">
-                {/*{validationError !== "" && <div className="error-notif">{validationError}</div>}*/}
+                {validationError !== "" && <div className="error-notif">{validationError}</div>}
                 {errors.name && <div className="error-notif">{errors.name.message}</div>}
                 {errors.email && <div className="error-notif">{errors.email.message}</div>}
                 {errors.username && <div className="error-notif">{errors.username.message}</div>}
