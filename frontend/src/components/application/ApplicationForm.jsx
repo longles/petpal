@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { applicationFormAPIService } from '../../services/applicationFormAPIService';
 
+const PAGE_SIZE = 10; // Number of items per page
 
 const ApplicationForms = () => {
     const [applicationTemplates, setApplicationTemplates] = useState([]);
     const [deletedTemplateId, setDeletedTemplateId] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+
     const applicationFormService = applicationFormAPIService();
 
-    const fetchApplicationTemplates = async () => {
-        const page = 1;
+    const fetchApplicationTemplates = async (page) => {
         const response = await applicationFormService.getApplicationFormList(page);
 
         if (!response.success) {
@@ -17,6 +20,7 @@ const ApplicationForms = () => {
         }
 
         setApplicationTemplates(response.data.results);
+        setTotalPages(Math.ceil(response.data.count / PAGE_SIZE));
     };
 
     const handleDeleteTemplate = async (templateId) => {
@@ -29,9 +33,21 @@ const ApplicationForms = () => {
         }
     };
 
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
     useEffect(() => {
-        fetchApplicationTemplates();
-    }, [deletedTemplateId]);
+        fetchApplicationTemplates(currentPage);
+    }, [deletedTemplateId, currentPage]);
 
     return (
         <div className="container main-content">
@@ -67,6 +83,27 @@ const ApplicationForms = () => {
                             </div>
                         ))}
                     </div>
+                    {totalPages > 1 && (
+                        <div className="pagination text-center" style={{ marginTop: "1rem" }}>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handlePrevPage}
+                                disabled={currentPage === 1}
+                            >
+                                Previous
+                            </button>
+                            <span className="page-info" style={{ margin: "0 10px" }}>
+                                Page {currentPage} of {totalPages}
+                            </span>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleNextPage}
+                                disabled={currentPage === totalPages}
+                            >
+                                Next
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
