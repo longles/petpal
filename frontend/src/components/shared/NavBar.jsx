@@ -23,10 +23,10 @@ const NavBar = () => {
   const renderShelterNavbar = () => (
     <>
         <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href="/managepets">Manage Pets</a>
+            <a className="nav-link active" aria-current="page" href="/pets/manage/">Manage Pets</a>
         </li>
         <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href="/shelterdetail">Manage Shelter</a>
+            <a className="nav-link active" aria-current="page" href={`/shelterdetail/${localStorage.user_object_id}`}>Manage Shelter</a>
         </li>
     </>
 
@@ -35,7 +35,7 @@ const NavBar = () => {
   const renderSeekerNavbar = () => (
     <>
         <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href="/listings">Adopt a Pet</a>
+            <a className="nav-link active" aria-current="page" href="/pets/">Adopt a Pet</a>
         </li>
     </>
   );
