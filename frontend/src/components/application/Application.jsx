@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { applicationAPIService } from '../../services/applicationAPIService';
 import PetCard from './ApplicationTile';
 
-const PAGE_SIZE = 10; // Number of items per page
+const PAGE_SIZE = 5; // Number of items per page
 
 const Applications = () => {
     const [applications, setApplications] = useState([]);
