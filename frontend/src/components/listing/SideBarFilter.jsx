@@ -65,13 +65,20 @@ const SideBarFilter = ({ updateFilters }) => {
       try {
         const response = await shelterAPI.getShelterList(1);
         if (response.success) {
-          const updatedShelterOptions = ['Any'];
+          
           const shelterMap = {};
+          
+          const addShelterOptions = [];
 
           response.data.results.forEach((shelter) => {
-            updatedShelterOptions.push(shelter.shelter_name);
-            shelterMap[shelter.shelter_name.toLowerCase()] = shelter.id;
+            addShelterOptions.push(shelter.name);
+            shelterMap[shelter.name.toLowerCase()] = shelter.id;
           });
+
+          addShelterOptions.sort((x, y) => x > y)
+
+          const updatedShelterOptions = ['Any'].concat(addShelterOptions)
+          
 
           setShelterOptions(updatedShelterOptions);
           setFilterValueMap((prevMap) => ({ ...prevMap, shelter: shelterMap }));
