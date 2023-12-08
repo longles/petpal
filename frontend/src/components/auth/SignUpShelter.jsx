@@ -6,6 +6,7 @@ import '../../styles/signup.scoped.css'
 import '../../styles/user.scoped.css'
 import {authAPIService} from "../../services/authAPIService.js";
 import {useNavigate} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const signUpShelterSchema = yup.object({
     name: yup.string().required("Shelter name is required"),
