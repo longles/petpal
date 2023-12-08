@@ -61,7 +61,7 @@ function SignUpShelter() {
                 {errors.password1 && <div className="error-notif">{errors.password1.message}</div>}
                 {errors.password2 && <div className="error-notif">{errors.password2.message}</div>}
             </div>
-            <form>
+            <form onSubmit={handleSubmit(onSignUpShelter)}>
                 <div className="form-group">
                     <input type="text" className="form-control" placeholder="Enter name of your organization"
                            name="name" {...register('name')} required/>
