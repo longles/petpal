@@ -19,7 +19,6 @@ const EditProfileSeeker = ({id}) => {
     );
 
     const [securityData, setSecurityData] = useState({
-        oldPassword: "",
         newPassword1: "",
         newPassword2: ""
     });
@@ -140,12 +139,6 @@ const EditProfileSeeker = ({id}) => {
 
                 <h2>Security and Privacy</h2>
                 <form onSubmit={handleSecuritySubmit}>
-                    <div className="form-group">
-                        <label htmlFor="oldPassword">Old Password</label>
-                        <input type="password" className="form-control" id="oldPassword" name="oldPassword"
-                               value={securityData.oldPassword}
-                               onClick={handleSecurityChange} required/>
-                    </div>
                     <div className="form-group">
                         <label htmlFor="newPassword1">New Password</label>
                         <input type="password" className="form-control" id="newPassword1" name="newPassword1"

@@ -17,7 +17,6 @@ const EditProfileShelter = ({id}) => {
     );
 
     const [securityData, setSecurityData] = useState({
-        oldPassword: "",
         newPassword1: "",
         newPassword2: ""
     });
@@ -115,12 +114,8 @@ const EditProfileShelter = ({id}) => {
             <h2>Security and Privacy</h2>
             <form onSubmit={handleSecuritySubmit}>
                 <div className="form-group">
-                    <label htmlFor="oldPassword">Old Password</label>
-                    <input type="password" className="form-control" id="oldPassword" value="Type your old password"/>
-                </div>
-                <div className="form-group">
                     <label htmlFor="newPassword">New Password</label>
-                    <input type="password" className="form-control" id="newPassword" value="NewPassword"/>
+                    <input type="password" className="form-control" id="newPassword1" value="NewPassword"/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="newPassword2">Confirm New Password</label>
