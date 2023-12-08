@@ -67,7 +67,7 @@ const PetCard = ({ manageFlag = false, petId }) => {
                 />
               )}
             </>}
-            {manageFlag=true && <>
+            {manageFlag && <>
               <button className="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target={"#"+getUpdateModalId(petId)}>Edit</button>
               <PetUpdateModal petId={petId}/>

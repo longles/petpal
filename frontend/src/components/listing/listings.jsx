@@ -31,7 +31,7 @@ const PetListingsPage = ({ manageFlag = false, defaultFilters = {} }) => {
     } catch (error) {
       console.error('Error fetching pet list:', error);
     }
-  }, [petAPI, currentPage, sortOrder]);
+  }, [petAPI, defaultFilters, currentPage, sortOrder]);
 
   useEffect(() => {
     fetchPetList(defaultFilters, currentPage, sortOrder);
