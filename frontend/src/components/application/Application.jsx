@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { applicationAPIService } from '../../services/applicationAPIService';
 import PetCard from './ApplicationTile';
+import { useLocation } from 'react-router-dom';
 
 const PAGE_SIZE = 5; // Number of items per page
 
@@ -12,11 +13,14 @@ const Applications = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const applicationService = applicationAPIService();
-
+    const {state} = useLocation()
+    console.log(state)
+    var defaultFilters = state?.defaultFilters || {}
     const fetchApplications = async (page) => {
         const response = await applicationService.getApplicationList({
             date_sort: dateOption,
             pet_name: petNameFilter,
+            ...defaultFilters,
             ...(statusOption !== '0' && { status: statusOption })
         }, page);
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NotificationModal from './NotificationModal';
 import { authAPIService } from '../../services/authAPIService';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ const NavBar = () => {
   const userType = localStorage.getItem('user_type') || 'none';
   const logoutAPI = authAPIService()
   const navigate = useNavigate()
+  const [showNotifications, setShowNotifications] = useState(false)
 
   const logoutFunc = () => {
     logoutAPI.logout()
@@ -61,7 +62,7 @@ const NavBar = () => {
         <ul className="dropdown-menu" aria-labelledby="profileDropdown">
           <li><a className="dropdown-item" href="/profile">View Profile</a></li>
           <li><a className="dropdown-item" href="/profile/edit">Update Profile</a></li>
-          <li><a className="dropdown-item btn" data-bs-toggle="modal" data-bs-target="#notificationModal">Notifications</a></li>
+          <li><button className="dropdown-item btn" onClick={() => {setShowNotifications(true)}}>Notifications</button></li>
           <li><button className="dropdown-item btn" onClick={logoutFunc}>Logout</button></li>
         </ul>
       </li>
@@ -89,7 +90,7 @@ const NavBar = () => {
           </div>
         </div>
       </nav>
-      {userType !== 'none' && <NotificationModal/>}
+      {userType !== 'none' && <NotificationModal showModal={showNotifications} setShowModal={setShowNotifications}/>}
     </>
     
     
