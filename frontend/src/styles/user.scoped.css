@@ -62,6 +62,9 @@ h3 {
 
 .text-link {
     color: #ff6600;
+    border: none;
+    background-color: #ffffff;
+    padding: 1px;
 }
 
 @media screen and (max-width: 600px) {
