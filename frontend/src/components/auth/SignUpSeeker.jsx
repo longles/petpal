@@ -39,7 +39,7 @@ function SignUpSeeker() {
             if (res.success) {
                 navigate("login/")
             } else {
-                setValidationError(res.message)
+                setValidationError("Some fields are incorrect!")
             }
         }).catch(e => {
             console.error(e)
