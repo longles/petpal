@@ -70,9 +70,10 @@ const PetListingsPage = ({ manageFlag = false, defaultFilters = {} }) => {
           {manageFlag && (<button className="btn btn-primary" onClick={openCreateModal}>
             New Pet
           </button>)}
-          {manageFlag && isCreateModalOpen && (
+          {manageFlag && (
             <PetCreationModal
-              closeModal={closeCreateModal}
+              showModal={isCreateModalOpen}
+              setShowModal={setIsCreateModalOpen}
             />
           )}
         </div>
