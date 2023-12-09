@@ -38,12 +38,6 @@ const Applications = () => {
     };
 
     useEffect(() => {
-        if (localStorage.user_type !== "petshelter") {
-            console.log("wrong usertype");
-            console.log("you are a");
-            console.log(localStorage.user_type);
-            navigate("/404");
-          }
         fetchApplications(currentPage);
     }, [statusOption, dateOption, petNameFilter, currentPage]);
 
@@ -132,7 +126,8 @@ const Applications = () => {
                         <PetCard
                             key={application.id}
                             applicantId={application.applicant}
-                            petId={application.pet}
+                            petId={application.pet.id}
+                            petPhoto={application.pet.photo}
                             status={application.status}
                             submissionDate={application.created_at.split('T')[0]}
                             applicationId={application.id}

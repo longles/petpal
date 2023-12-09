@@ -87,6 +87,9 @@ const PetListingsPage = ({ manageFlag = false, defaultFilters = {} }) => {
               {petIDs.map((petID) => (
                 <PetCard manageFlag={manageFlag} key={petID} petId={petID} />
               ))}
+              {petIDs.length === 0 && (
+                <h4>There are no pets that match these filters.</h4>
+              )}
             </div>
             <div className="d-flex justify-content-center mt-3">
               <Pagination>{paginationItems}</Pagination>

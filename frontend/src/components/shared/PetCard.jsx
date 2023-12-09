@@ -40,11 +40,13 @@ const PetCard = ({ manageFlag = false, petId, data }) => {
     };
 
     const openApplicationModal = () => {
+        setIsModalOpen(false);
         setIsApplicationModalOpen(true);
     };
 
     const closeApplicationModal = () => {
         setIsApplicationModalOpen(false);
+        setIsModalOpen(true);
     };
 
     const photo = petDetails.photo === null ? '/assets/images/select_image.png' : petDetails.photo;
