@@ -43,12 +43,25 @@ const EditProfileSeeker = (props) => {
         });
     }
 
+    // image uploading
+    const [image, setImage] = useState(null);
+
+    const handleImageChange = (event) => {
+        // Check if any file is selected
+        if (event.target.files && event.target.files[0]) {
+            setImage(event.target.files[0]);
+        }
+    };
+
     const handleProfileSubmit = (event) => {
         event.preventDefault();
         const allData = {
-            ...seekerDetails,
-            profilePic: event.target.files[0]
-        }
+            name: seekerDetails.name,
+            bio: seekerDetails.bio,
+            phone_num: seekerDetails.phoneNum,
+            profile_pic: image
+        };
+        console.log("allData: ");
         console.log(allData);
 
         let formData = new FormData();
@@ -60,22 +73,13 @@ const EditProfileSeeker = (props) => {
             if (response.success) {
                 setValidationError("");
                 console.log(response.data);
-                window.location.reload();
+                // window.location.reload();
             } else {
                 setValidationError(response.message);
             }
         });
     };
 
-    // image uploading
-    const [image, setImage] = useState(null);
-
-    const handleImageChange = (event) => {
-        // Check if any file is selected
-        if (event.target.files && event.target.files[0]) {
-            setImage(event.target.files[0]);
-        }
-    };
 
     // const handleSubmit = async (event) => {
     //     event.preventDefault();
