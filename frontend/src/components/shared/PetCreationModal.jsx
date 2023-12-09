@@ -28,7 +28,7 @@ const petCreationSchema = yup.object({
   form: yup.number().required('Form is required'),
 }).required();
 
-function PetCreationModal({ closeModal }) {
+function PetCreationModal({ showModal, setShowModal }) {
   const [showApplicationFormModal, setShowApplicationFormModal] = useState(false);
   const [selectedFormId, setSelectedFormId] = useState(null);
   const [selectedFormName, setSelectedFormName] = useState('');
@@ -36,6 +36,17 @@ function PetCreationModal({ closeModal }) {
   const appFormAPI = applicationFormAPIService();
   const petAPI = petAPIService();
   const [showSelectAppFormModal, setShowSelectAppFormModal] = useState(false);
+
+  const closeModal = () => {setShowModal(false)}
+
+  const openAppFormModal = () => {
+    setShowSelectAppFormModal(true)
+    closeModal()
+  }
+  const closeAppFormModal = () => {
+    setShowSelectAppFormModal(false)
+    setShowModal(true)
+  }
 
   const { register, handleSubmit, setValue, trigger, formState: { errors } } = useForm({
     resolver: yupResolver(petCreationSchema)
@@ -107,7 +118,7 @@ function PetCreationModal({ closeModal }) {
 
   return (
     <>
-    <Modal show={true} onHide={closeModal} size="lg">
+    <Modal show={showModal} onHide={closeModal} size="lg">
       <Modal.Header closeButton>
         <Modal.Title>Create New Pet</Modal.Title>
       </Modal.Header>
@@ -208,7 +219,7 @@ function PetCreationModal({ closeModal }) {
             {errors.comments && <div className="error-notif">{errors.comments.message}</div>}
 
           </div>
-          <Button variant="primary" onClick={() => setShowSelectAppFormModal(true)}>
+          <Button variant="primary" onClick={openAppFormModal}>
           Select Application Form
         </Button>
         {selectedFormName && <span> Selected Form: {selectedFormName}</span>}
@@ -222,7 +233,7 @@ function PetCreationModal({ closeModal }) {
     </Modal>
       <SelectApplicationFormModal
           show={showSelectAppFormModal}
-          onHide={() => setShowSelectAppFormModal(false)}
+          onHide={closeAppFormModal}
           forms={applicationForms}
           onSelectForm={handleSelectForm}
         />
