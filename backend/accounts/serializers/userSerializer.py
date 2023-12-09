@@ -57,6 +57,20 @@ class UserAccountSerializer(serializers.ModelSerializer):
         }
 
 class PetSeekerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = PetSeeker
+        fields = ('id', 'bio', 'phone_num', 'profile_pic', 'name')
+        read_only_fields = ('id', )
+
+
+class PetShelterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PetShelter
+        fields = ('id', 'name', 'mission', 'about_us', 'location', 'phone_num', 'profile_pic', 'contact_email')
+        read_only_fields = ('id', )
+
+class PetSeekerViewSerializer(serializers.ModelSerializer):
     account = UserAccountSerializer()
 
     class Meta:
@@ -65,7 +79,7 @@ class PetSeekerSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', )
 
 
-class PetShelterSerializer(serializers.ModelSerializer):
+class PetShelterViewSerializer(serializers.ModelSerializer):
     account = UserAccountSerializer()
     class Meta:
         model = PetShelter

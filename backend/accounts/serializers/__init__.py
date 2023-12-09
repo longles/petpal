@@ -1,4 +1,4 @@
 from .CommentSerializer import CommentSerializer, ShelterCommentSerializer
-from .userSerializer import UserSerializer, PetSeekerSerializer, PetShelterSerializer
+from .userSerializer import UserSerializer, PetSeekerSerializer, PetShelterSerializer, PetSeekerViewSerializer, PetShelterViewSerializer
 from .notificationSerializer import NotificationSerializer, NotificationUpdateSerializer
 from .TokenSerializer import CustomTokenObtainPairSerializer
