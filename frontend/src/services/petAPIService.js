@@ -55,7 +55,7 @@ export const petAPIService = () => {
     }
 
     const updatePet = async (id, to_update) => {
-        const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', to_update);
+        const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', to_update, 'multipart/form-data');
 
         if (!response.success) {
             return {

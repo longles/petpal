@@ -47,16 +47,19 @@ const PetCard = ({ manageFlag = false, petId, data }) => {
         setIsApplicationModalOpen(false);
     };
 
-    const photo = petDetails.photo === null ? '/assets/images/sample_pet_image_2.jpg' : petDetails.photo;
+    const photo = petDetails.photo === null ? '/assets/images/select_image.png' : petDetails.photo;
     return (
         <div className="col-md-4 mb-4 d-flex align-items-stretch">
-            <div className="card listing-box">
-                <img src={photo} className="card-img-top" alt={petDetails.name} />
-                <div className="card-body">
-                    <h4 className="card-title">{petDetails.name}</h4>
-                    <p className="card-text">{petDetails.comments}</p>
-                    <div>
-                        {!manageFlag && <>
+          <div className="card listing-box" style={{ width: '100%' }}>
+            <div className="img-container" style={{ height: '200px', overflow: 'hidden' }}>
+              <img src={photo} className="card-img-top" alt={petDetails.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </div>
+            <div className="card-body">
+              <h4 className="card-title">{petDetails.name}</h4>
+              <p className="card-text">{petDetails.comments}</p>
+                <div className="mt-auto">
+                    {!manageFlag && (
+                        <>
                             <button className="btn btn-primary" onClick={openModal}>
                                 Details
                             </button>
@@ -67,25 +70,28 @@ const PetCard = ({ manageFlag = false, petId, data }) => {
                                     openApplicationModal={openApplicationModal}
                                 />
                             )}
-                        </>}
-                        {manageFlag && <>
+                        </>
+                    )}
+                    {manageFlag && (
+                        <>
                             <button className="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target={"#" + getUpdateModalId(petId)}>Edit</button>
                             <PetUpdateModal petId={petId} />
-                        </>}
-                    </div>
+                        </>
+                    )}
                 </div>
             </div>
-            {isApplicationModalOpen && (
-                <ApplicationModal
-                    show={isApplicationModalOpen}
-                    closeModal={closeApplicationModal}
-                    petId={petId}
-                    formId={petDetails.form}
-                    shelterId={petDetails.shelter}
-                />
-            )}
         </div>
+        {isApplicationModalOpen && (
+            <ApplicationModal
+                show={isApplicationModalOpen}
+                closeModal={closeApplicationModal}
+                petId={petId}
+                formId={petDetails.form}
+                shelterId={petDetails.shelter}
+            />
+        )}
+    </div>
     );
 };
 

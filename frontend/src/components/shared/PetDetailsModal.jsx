@@ -118,7 +118,7 @@ function calculateAge(birthDateString) {
   let size = mapSize(petDetails.size);
 
   // set the default pic to sample pet image2 
-  let photo = petDetails.photo === null ? '/assets/images/sample_pet_image_2.jpg' : petDetails.photo;
+  let photo = petDetails.photo === null ? '/assets/images/select_image.png' : petDetails.photo;
   let age = calculateAge(petDetails.birth_date)
   let gender = petDetails.sex === 0 ? "Unknown" : petDetails.sex === 1 ? "Male" : "Female"
   let description = petDetails.comments
