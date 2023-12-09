@@ -80,10 +80,10 @@ const NavBar = () => {
                 </button>
                 <ul className="dropdown-menu" aria-labelledby="profileDropdown">
                     <li>
-                        <Link className="dropdown-item" to={`/accounts/${userType.slice(3)}s/${userId}/`}>View Profile
+                        <Link className="dropdown-item" to={`/accounts/${userType.slice(3)}s/`}>View Profile
                         </Link></li>
                     <li>
-                        <Link className="dropdown-item" to={`/accounts/${userId}`}>Settings</Link>
+                        <Link className="dropdown-item" to={`/accounts/settings`}>Settings</Link>
                     </li>
                     {/*<li><Link className="dropdown-item" to="/profile/edit">Update Profile</Link></li>*/}
                     <li>
