@@ -4,8 +4,16 @@ import '../../styles/layout.css'
 import '../../styles/profile.scoped.css'
 import {Link} from 'react-router-dom'
 import {seekerAPIService} from "../../services/userAPIService.js";
+import { useNavigate } from 'react-router-dom';
 
 function ProfileSeeker() {
+    const navigate = useNavigate();
+
+    if (localStorage.user_type !== "petseeker") {
+        console.log("usertype wrong")
+      navigate("/404")
+    }
+
     const {seekerId} = useParams(); // Make sure to destructure seekerId from useParams
     const [seekerDetails, setSeekerDetails] = useState({
         username: '',
@@ -18,6 +26,10 @@ function ProfileSeeker() {
     const [validationError, setValidationError] = useState("")
 
     useEffect(() => {
+        if (localStorage.user_type !== "petseeker") {
+            console.log("usertype wrong");
+            navigate("/404");
+        }
         const seekerProfileAPI = seekerAPIService();
         seekerProfileAPI.getSeekerDetail(seekerId)
             .then(res => {
