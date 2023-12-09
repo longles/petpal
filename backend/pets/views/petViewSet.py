@@ -16,7 +16,7 @@ from datetime import datetime
 class PetViewSet(viewsets.ModelViewSet):
     serializer_class = PetSerializer
     search_fields = ['shelter', 'status', 'breed', 'size', 'colour', 'sex', 'species']  # filter fields
-    ordering_fields = ['name', 'size', 'birth_date']  # sorting fields
+    ordering_fields = ['name', 'size', 'birth_date','weight']  # sorting fields
     filter_backends = [OrderingFilter, SearchFilter]
     ordering = ['-birth_date']
 
