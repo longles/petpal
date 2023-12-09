@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouterProvider, createBrowserRouter, Outlet } from 'react-router-dom';
+import {RouterProvider, createBrowserRouter, Outlet, Route} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import './styles/layout.css';
@@ -18,6 +18,7 @@ import PetUpdateModal from './components/shared/PetUpdateModal.jsx';
 import ApplicationForms from './components/application/ApplicationForm.jsx';
 import UserSettings from "./components/profile/UserSettings.jsx";
 import ShelterListing from './components/listing/shelterlistings.jsx';
+import NotFoundPage from "./notFoundPage.js";
 
 const RootLayout = () => {
     return (<div id="body">
@@ -94,7 +95,12 @@ function App() {
             {
                 path: "shelters/",
                 element: <ShelterListing/>
-            }]
+            },
+            {
+                    path: "*", // This will catch all unmatched routes
+                    element: <NotFoundPage />
+            }
+            ]
         }
     ]);
 
