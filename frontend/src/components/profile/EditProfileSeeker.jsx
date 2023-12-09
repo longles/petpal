@@ -108,7 +108,7 @@ const EditProfileSeeker = (props) => {
                         <label htmlFor="name">Your Name</label>
                         <input type="text" className="form-control" id="firstName" placeholder="Actual name"
                                name="name"
-                               value={seekerDetails.firstName}
+                               value={seekerDetails.name}
                                onChange={handleProfileChange}
                         />
                     </div>

@@ -55,7 +55,7 @@ function ViewProfileSeeker(props) {
                         <hr/>
                         <div className="row">
                             <div className="col-sm-3">
-                                <h6 className="mb-0">Your Real Name</h6>
+                                <h6 className="mb-0">My Real Name</h6>
                             </div>
                             <div className="col-sm-9 text-secondary">
                                 {seekerDetails.name}
