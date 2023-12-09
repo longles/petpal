@@ -63,3 +63,4 @@ class Pet(models.Model):
     weight = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
 
     shelter = models.ForeignKey("accounts.PetShelter", on_delete=models.CASCADE)
+    form = models.ForeignKey("pets.ApplicationForm", on_delete=models.SET_NULL, null=True, blank=True)

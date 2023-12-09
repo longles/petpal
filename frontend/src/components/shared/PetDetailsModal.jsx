@@ -3,6 +3,7 @@ import { Modal, Button, Nav } from 'react-bootstrap';
 import '../../styles/listings.scoped.css';
 import { petAPIService } from '../../services/petAPIService';
 import { shelterAPIService } from '../../services/userAPIService';
+import { Link } from 'react-router-dom';
 
 // pet detail should get a pet id and fetch info from server
 const PetDetailsModal = ({ petId, closeModal, openApplicationModal }) => {
@@ -61,18 +62,7 @@ const PetDetailsModal = ({ petId, closeModal, openApplicationModal }) => {
   const handleAdoptClick = () => {
     openApplicationModal();
   };
-//test data
-  // let breed = 'Golden Retriever'
-  // let photo = "../../assets/images/sample_pet_image_1.jpg"
-  // let age = '2'
-  // let description = "Buddy is a friendly Golden Retriever looking for a loving home."
-  // let shelterName = "Doggycares Inc."
-  // let shelterAddress = "1234 Shelter Ave, Toronto ON"
-  // let medicalHistory = "Up-to-date vaccinations, including rabies, distemper, and parvovirus. Recent heartworm test and prevention history."
-  // let neuterStatus = "No"
-  // let specialRequirements = "Applicant must have a secure fenced yard with a minimum height of 6-foot."
 
-//real shelter data
 function calculateAge(birthDateString) {
   const birthDate = new Date(birthDateString);
   const currentDate = new Date();
@@ -92,14 +82,16 @@ function calculateAge(birthDateString) {
   // set the default pic to sample pet image2 
   let photo = petDetails.photo === null ? '/assets/images/sample_pet_image_2.jpg' : petDetails.photo;
   let age = calculateAge(petDetails.birth_date)
+  let gender = petDetails.sex === 0 ? "Unknown" : petDetails.sex === 1 ? "Male" : "Female"
   let description = petDetails.comments
 
   let medicalHistory = petDetails.medical_history
   let specialRequirements = petDetails.special_needs
 
   //shelter info
+  let shelterId = shelterDetails.id
   let shelterName = shelterDetails.name
-  let shelterAddress = shelterDetails.name
+  let shelterAddress = shelterDetails.location
 
   return (
     <Modal show={true} onHide={closeModal} size="lg">
@@ -132,9 +124,10 @@ function calculateAge(birthDateString) {
           <div className={`tab-pane ${activeTab === 'tab1' ? 'active' : ''}`} id="tab1">
             <p>Breed: {breed}</p>
             <p>Age: {age} years</p>
+            <p>Gender: {gender}</p>
             <p>{description}</p>
             <hr />
-            <h5><a href="shelterdetail.html">{shelterName}</a></h5>
+            <h5><Link to={`/shelterdetail/${shelterId}`}>{shelterName}</Link></h5>
             <p>{shelterAddress}</p>
           </div>
           {/* tab2 */}
