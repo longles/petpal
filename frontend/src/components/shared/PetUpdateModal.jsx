@@ -7,6 +7,7 @@ import { applicationFormAPIService } from '../../services/applicationFormAPIServ
 import {Button} from 'react-bootstrap'
 import SelectApplicationFormModal from './SelectApplicationFormModal';
 import ApplicationModal from './ApplicationModal';
+import BreedsOptions from './BreedsOptions';
 
 export function getUpdateModalId(petId) {
   return `petUpdateModal${petId}`;
@@ -130,7 +131,9 @@ function PetUpdateModal({ petId }) {
                 </div>
                 <div className="my-1">
                     <label className="form-label" htmlFor="breed">Breed</label>
-                    <input className="form-control" id="breed" {...register('breed')} />
+                    <select className="form-select" id="breed" {...register('breed')} >
+                      <BreedsOptions/>
+                    </select>
                 </div>
                 <div className="my-1">
                     <label className="form-label" htmlFor="sex">Gender</label>

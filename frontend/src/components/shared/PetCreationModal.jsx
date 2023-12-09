@@ -9,6 +9,7 @@ import ColourOptions from './ColorOptions';
 import { useState, useEffect } from 'react';
 import SelectApplicationFormModal from './SelectApplicationFormModal';
 import ApplicationModal from './ApplicationModal';
+import BreedsOptions from './BreedsOptions';
 
 const petCreationSchema = yup.object({
   name: yup.string().required('Name is required'),
@@ -120,11 +121,7 @@ function PetCreationModal({ closeModal }) {
           <div className="mb-3">
             <label htmlFor="breed" className="form-label">Breed</label>
             <select className="form-select" id="breed" {...register('breed')} >
-              <option value="0">Select...</option>
-              <option value="1">Ragdoll</option>
-              <option value="2">Labrador</option>
-              <option value="3">Parrot</option>
-
+              <BreedsOptions/>
               </select>
               {errors.breed && <div className="error-notif">{errors.breed.message}</div>}
           </div>
