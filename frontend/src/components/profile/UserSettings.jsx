@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import {Link, useNavigate} from "react-router-dom";
-import {useForm} from 'react-hook-form'
-import {yupResolver} from "@hookform/resolvers/yup"
-import * as yup from "yup"
 import '../../styles/layout.css';
 import '../../styles/profile.scoped.css'
 import {accountAPIService} from "../../services/userAPIService.js";
@@ -10,16 +7,20 @@ import {seekerAPIService} from "../../services/userAPIService.js";
 import {shelterAPIService} from "../../services/userAPIService.js";
 
 function UserSettings() {
+    const navigate = useNavigate();
     const userId = localStorage.getItem('user_id');
     const userType = localStorage.getItem('user_type');
-    const profileAPI = userType === 'petseeker' ? seekerAPIService() : shelterAPIService();
+    const getUserDetail = userType === 'petseeker' ?
+        seekerAPIService().getSeekerDetail : shelterAPIService().getShelterDetail;
+    const deleteUser = userType === 'petseeker' ?
+        seekerAPIService().deleteSeeker : shelterAPIService().deleteShelter;
     const [userData, setUserData] = useState({
         username: '',
         email: '',
     });
 
     useEffect(() => {
-        profileAPI.getSeekerDetail(userId)
+        getUserDetail(userId)
             .then(res => {
                 if (res.success) {
                     setUserData({
@@ -92,6 +93,19 @@ function UserSettings() {
         }
     };
 
+    const [deleteError, setDeleteError] = useState("");
+
+    const deleteAccount = () => {
+        deleteUser(userId).then(response => {
+            if (response.success) {
+                setDeleteError("");
+                console.log(response.data);
+                navigate("/");
+            } else {
+                setDeleteError("Something went wrong. Account cannot be deleted!");
+            }
+        })
+    }
 
     return (
         <div className="container my-5">
@@ -137,9 +151,10 @@ function UserSettings() {
                 </div>
                 <button className="btn btn-primary">Submit</button>
             </form>
-            <div>
-                <Link to="/" className="btn btn-dark back-btn">Back</Link>
-            </div>
+            <h2>Delete Account</h2>
+            {deleteError !== "" && <div className="alert alert-danger alert-dismissible fade show">{deleteError}</div>}
+            <Link to="/accounts/login" className="btn btn-danger" onClick={deleteAccount}>Delete</Link>
+            <Link to="/" className="btn btn-dark">Back</Link>
         </div>
     )
 }

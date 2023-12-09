@@ -7,8 +7,6 @@ import {Link} from "react-router-dom";
 const EditProfileSeeker = (props) => {
     const seekerId = props.id;
     const [seekerDetails, setSeekerDetails] = useState({
-        username: '',
-        email: '',
         name: '',
         bio: '',
         profilePic: '',
@@ -21,8 +19,6 @@ const EditProfileSeeker = (props) => {
             .then(res => {
                 if (res.success) {
                     setSeekerDetails({
-                        username: res.data.account.username,
-                        email: res.data.account.email,
                         name: res.data.name,
                         bio: res.data.bio,
                         profilePic: res.data.profile_pic,
@@ -34,11 +30,6 @@ const EditProfileSeeker = (props) => {
             })
             .catch(err => console.error('Error when fetching seeker details:', err));
     }, [seekerId]);
-
-    const [securityData, setSecurityData] = useState({
-        newPassword1: "",
-        newPassword2: ""
-    });
 
     const [successMessage, setSuccessMessage] = useState("");
     const [validationError, setValidationError] = useState("");
@@ -54,14 +45,6 @@ const EditProfileSeeker = (props) => {
         });
     }
 
-    function handleSecurityChange(event) {
-        setSecurityData(prevState => {
-            return {
-                ...prevState,
-                [event.target.name]: event.target.value
-            }
-        })
-    }
 
     const handleProfileSubmit = (event) => {
         event.preventDefault();
@@ -77,10 +60,6 @@ const EditProfileSeeker = (props) => {
         });
     };
 
-    const handleSecuritySubmit = (event) => {
-        event.preventDefault();
-        // console.log(event);
-    };
 
     const deleteAccount = () => {
         seekerAPIService().deleteSeeker(seekerId).then(response => {
@@ -104,10 +83,10 @@ const EditProfileSeeker = (props) => {
                 <form onSubmit={handleProfileSubmit}>
                     {/* Username */}
                     <div className="form-group">
-                        <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control" id="username" placeholder="Username"
-                               name="username"
-                               value={seekerDetails.username}
+                        <label htmlFor="name">Your Name</label>
+                        <input type="text" className="form-control" id="firstName" placeholder="Actual name"
+                               name="name"
+                               value={seekerDetails.name}
                                onChange={handleProfileChange}
                         />
                     </div>
@@ -118,24 +97,6 @@ const EditProfileSeeker = (props) => {
                                   value={seekerDetails.bio}
                                   onChange={handleProfileChange}
                         />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="name">Your Name</label>
-                        <input type="text" className="form-control" id="firstName" placeholder="Actual name"
-                               name="name"
-                               value={seekerDetails.name}
-                               onChange={handleProfileChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="email" aria-describedby="emailHelp">Email</label>
-                        <input type="text" className="form-control" id="email" placeholder="email"
-                               name="email"
-                               value={seekerDetails.email}
-                               onChange={handleProfileChange}
-                        />
-                        <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone
-                            else.</small>
                     </div>
                     <div className="form-group">
                         <label htmlFor="phoneNum">Mobile</label>
@@ -159,23 +120,6 @@ const EditProfileSeeker = (props) => {
                     {/*<button className="btn btn-dark" onClick={props.returnHandler}>Back</button>*/}
                 </form>
 
-                <h2>Security and Privacy</h2>
-                <form onSubmit={handleSecuritySubmit}>
-                    <div className="form-group">
-                        <label htmlFor="newPassword1">New Password</label>
-                        <input type="password" className="form-control" id="newPassword1" name="newPassword1"
-                               value={securityData.newPassword1}
-                               onChange={handleSecurityChange} required/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="newPassword2">Confirm New Password</label>
-                        <input type="password" className="form-control" id="newPassword2" name="newPassword2"
-                               value={securityData.newPassword2}
-                               onChange={handleSecurityChange} required/>
-                    </div>
-                    <button className="btn btn-primary">Submit</button>
-                    {/*<button className="btn btn-dark" onClick={props.returnHandler}>Back</button>*/}
-                </form>
                 <h2>Delete Account</h2>
                 <Link to="/accounts/login" className="btn btn-danger" onClick={deleteAccount}>Delete</Link>
                 <div>
