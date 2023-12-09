@@ -2,12 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { petAPIService } from '../../services/petAPIService';
 import { shelterAPIService } from '../../services/userAPIService';
+import ColourOptions from './ColorOptions';
+import { applicationFormAPIService } from '../../services/applicationFormAPIService';
+import {Button} from 'react-bootstrap'
+import SelectApplicationFormModal from './SelectApplicationFormModal';
+import ApplicationModal from './ApplicationModal';
 
 export function getUpdateModalId(petId) {
   return `petUpdateModal${petId}`;
 }
 
 function PetUpdateModal({ petId }) {
+  const [currentFormName, setCurrentFormName] = useState('None');
+  const [selectedFormId, setSelectedFormId] = useState(null);
+  const [selectedFormName, setSelectedFormName] = useState('');
+  const [applicationForms, setApplicationForms] = useState([]);
+  const [showSelectAppFormModal, setShowSelectAppFormModal] = useState(false);
+  const [showApplicationFormModal, setShowApplicationFormModal] = useState(false);
+  const appFormAPI = applicationFormAPIService(); // New API call
+
   const petAPI = petAPIService();
   const shelterAPI = shelterAPIService();
   const [petDetails, setPetDetails] = useState(null);
@@ -22,6 +35,13 @@ function PetUpdateModal({ petId }) {
       const response = await petAPI.getPetDetail(petId);
       if (response.success) {
         setPetDetails(response.data);
+        
+        // Check if the pet has an associated form and update state
+        if (response.data.form) {
+          setCurrentFormName(response.data.form.name); // Assuming 'form' object has a 'name' property
+          setSelectedFormId(response.data.form.id); // Assuming 'form' object has an 'id' property
+        }
+        
         return response.data.shelter;
       }
     } catch (error) {
@@ -38,6 +58,26 @@ function PetUpdateModal({ petId }) {
     } catch (error) {
       console.error(`Error fetching shelter detail for ID ${shelterId}:`, error);
     }
+  };
+
+  useEffect(() => {
+    const fetchApplicationForms = async () => {
+      const response = await appFormAPI.getApplicationFormList(1); // assuming page 1 for demo
+      if (response.success) {
+        setApplicationForms(response.data.results);
+      } else {
+        console.error('Failed to fetch application forms:', response.message);
+      }
+    };
+
+    fetchApplicationForms();
+  }, []);
+
+  const handleSelectForm = (formId, formName) => {
+    setSelectedFormId(formId);
+    setSelectedFormName(formName);
+    setShowApplicationFormModal(true);
+    setShowSelectAppFormModal(false); 
   };
 
   useEffect(() => {
@@ -60,6 +100,8 @@ function PetUpdateModal({ petId }) {
 
   const onSubmit = async (data) => {
     console.log(data);
+    const updatedData = { ...data, form: selectedFormId };
+    console.log(updatedData);
     const response = await petAPI.updatePet(petId, data);
     if (response.success) {
       console.log('Update successful');
@@ -91,11 +133,11 @@ function PetUpdateModal({ petId }) {
                     <input className="form-control" id="breed" {...register('breed')} />
                 </div>
                 <div className="my-1">
-                    <label className="form-label" htmlFor="gender">Gender</label>
-                    <select className="form-select" id="gender" {...register('gender')}>
-                    <option value="">Select...</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
+                    <label className="form-label" htmlFor="sex">Gender</label>
+                    <select className="form-select" id="sex" {...register('sex')}>
+                    <option value="0">Unknown</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
                     </select>
                 </div>
                 <div className="my-1">
@@ -104,11 +146,17 @@ function PetUpdateModal({ petId }) {
                 </div>
                 <div className="my-1">
                     <label className="form-label" htmlFor="size">Size</label>
-                    <input className="form-control" id="size" {...register('size')} />
+                    <select className="form-select" id="size" {...register('size')} >
+                      <option value="1">Large</option>
+                      <option value="2">Medium</option>
+                      <option value="3">Small</option>
+                    </select>
                 </div>
                 <div className="my-1">
                     <label className="form-label" htmlFor="color">Color</label>
-                    <input className="form-control" id="color" {...register('colour')} />
+                    <select className="form-select" id="color" {...register('colour')} >
+                      <ColourOptions/>
+                    </select>
                 </div>
                 <div className="my-2">
                     <label htmlFor="weight">Weight</label>
@@ -134,13 +182,27 @@ function PetUpdateModal({ petId }) {
                     <label htmlFor="comments">Comments</label>
                     <textarea className="form-control" id="comments" {...register('comments')}></textarea>
                 </div>
-                <div className="my-2 d-flex justify-content-center">
-                    <div className="col-3">
-                    <button type="submit" className="form-control btn btn-primary">Update</button>
-                    </div>
+                <div className="my-2 d-flex justify-content-between">
+                    <div className="col-3"></div>
+                    <div className="col-3 d-flex justify-content-center"><button type="submit" className="btn btn-primary me-3">Update</button></div>
+                    <div className="col-3 d-flex justify-content-end"><button type="button" className="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Close</button></div>
                 </div>
+                <div className="my-1">
+                  <span>Current Form: {currentFormName}</span>
+                  <Button variant="primary" onClick={() => setShowSelectAppFormModal(true)}>
+                    Select Application Form
+                  </Button>
+                  {selectedFormName && <span> Selected Form: {selectedFormName}</span>}
+                </div>
+                
             </form>
           </div>
+          <SelectApplicationFormModal
+            show={showSelectAppFormModal}
+            onHide={() => setShowSelectAppFormModal(false)}
+            forms={applicationForms}
+            onSelectForm={handleSelectForm}
+          />
         </div>
       </div>
     </div>

@@ -82,6 +82,7 @@ function calculateAge(birthDateString) {
   // set the default pic to sample pet image2 
   let photo = petDetails.photo === null ? '/assets/images/sample_pet_image_2.jpg' : petDetails.photo;
   let age = calculateAge(petDetails.birth_date)
+  let gender = petDetails.sex === 0 ? "Unknown" : petDetails.sex === 1 ? "Male" : "Female"
   let description = petDetails.comments
 
   let medicalHistory = petDetails.medical_history
@@ -123,6 +124,7 @@ function calculateAge(birthDateString) {
           <div className={`tab-pane ${activeTab === 'tab1' ? 'active' : ''}`} id="tab1">
             <p>Breed: {breed}</p>
             <p>Age: {age} years</p>
+            <p>Gender: {gender}</p>
             <p>{description}</p>
             <hr />
             <h5><Link to={`/shelterdetail/${shelterId}`}>{shelterName}</Link></h5>
