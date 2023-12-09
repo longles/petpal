@@ -7,7 +7,7 @@ from rest_framework.relations import PrimaryKeyRelatedField
 from pets.models import Application
 from pets.serializers import ApplicationSerializer
 from .userSerializer import PetShelterSerializer
-from ..models import Comment, PetShelter
+from ..models import Comment, PetShelter, User
 from django.db import models
 
 
@@ -22,6 +22,10 @@ class CommentObjectRelatedField(serializers.RelatedField):
             raise Exception('Unexpected type of receiver object')
         return rep
 
+class CommentUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username')
 
 class CommentSerializer(serializers.ModelSerializer):
     receiver = CommentObjectRelatedField(read_only=True)
@@ -33,6 +37,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class ShelterCommentSerializer(serializers.ModelSerializer):
     receiver = CommentObjectRelatedField(read_only=True)
+    sender = CommentUserSerializer(read_only=True)
 
     class Meta:
         model = Comment
