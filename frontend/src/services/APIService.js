@@ -76,6 +76,12 @@ export const APIService = () => {
             result.success = true;
         }
 
+        if (response.status === 401) {
+            result.success = false
+            result.data = {"detail": "Not authorized"}
+            return result;
+        }
+
         if (method === "DELETE") {
             return result;
         } else {
