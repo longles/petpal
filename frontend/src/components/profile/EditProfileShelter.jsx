@@ -65,11 +65,11 @@ const EditProfileShelter = (props) => {
             profile_pic: image
         };
 
-        console.log("allData: ");
-        console.log(allData);
-
         let formData = new FormData();
         for (const [key, value] of Object.entries(allData)) {
+            if (key === "profile_pic" && !value) {
+                continue;
+            }
             console.log(key);
             formData.append(key, value);
         }
