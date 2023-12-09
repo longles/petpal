@@ -40,9 +40,17 @@ class Pet(models.Model):
     class Breed(models.IntegerChoices):
         UNKNOWN = '0', 'UNKNOWN'
         RAGDOLL = '1', 'RAGDOLL'
-        LABRADOR = '2', 'LABRADOR'
-        PARROT = '3', 'PARROT'
-
+        SIAMESE = '2', 'SIAMESE'
+        PERSIAN = '3', 'PERSIAN'
+        SPHYNX = '4', 'SPHYNX'
+        LABRADOR = '5', 'LABRADOR'
+        GOLDEN_RETRIEVER = '6', 'GOLDEN_RETRIEVER'
+        BULLDOG = '7', 'BULLDOG'
+        BEAGLE = '8', 'BEAGLE'
+        PARROT = '9', 'PARROT'
+        COCKATIEL = '10', 'COCKATIEL'
+        MACAW = '11', 'MACAW'
+        CANARY = '12', 'CANARY'
 
     name = models.CharField(max_length=100)
     birth_date = models.DateField(null=True, blank=True)

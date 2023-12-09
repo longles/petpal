@@ -23,8 +23,17 @@ const SizeMap = {
 const BreedMap = {
   '0': 'Unknown',
   '1': 'Ragdoll',
-  '2': 'Labrador',
-  '3': 'Parrot',
+  '2': 'Siamese',
+  '3': 'Persian',
+  '4': 'Sphynx',
+  '5': 'Labrador',
+  '6': 'Golden Retriever',
+  '7': 'Bulldog',
+  '8': 'Beagle',
+  '9': 'Parrot',
+  '10': 'Cockatiel',
+  '11': 'Macaw',
+  '12': 'Canary',
 };
 
 const mapSpecies = (speciesCode) => SpeciesMap[speciesCode] || 'Unknown';
