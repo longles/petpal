@@ -222,15 +222,6 @@ function PetCreationModal({ closeModal }) {
           forms={applicationForms}
           onSelectForm={handleSelectForm}
         />
-
-        {selectedFormId && (
-          <ApplicationModal
-            show={showApplicationFormModal}
-            closeModal={() => setShowApplicationFormModal(false)}
-            formId={selectedFormId}
-            petId={1} // You can replace this with the actual pet ID once available
-          />
-        )}
       </>
   );
 }
