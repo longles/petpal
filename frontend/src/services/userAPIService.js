@@ -20,8 +20,17 @@ export const seekerAPIService = () => {
         }
     }
 
-    const updateSeeker = async (id, to_update) => {
-        const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', to_update);
+    const updateSeeker = async (id, seekerDetails) => {
+        const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', {
+            name: seekerDetails.name,
+            bio: seekerDetails.bio,
+            phoneNum: seekerDetails.phoneNum,
+            profilePic: seekerDetails.profilePic,
+            account: {
+                username: seekerDetails.username,
+                email: seekerDetails.email
+            }
+        });
 
         if (!response.success) {
             return {

@@ -58,11 +58,11 @@ function App() {
                 element: <SignUp />
             },
             {
-                path: "accounts/seekers/",
+                path: "accounts/seekers/:userId/",
                 element: <ProfileSeeker />
             },
             {
-                path: "accounts/shelters/",
+                path: "accounts/shelters/:userId/",
                 element: <ProfileShelter />
             },
             {

@@ -28,7 +28,9 @@ function SignUpSeeker() {
             type: "petseeker",
             user: {
                 name: event.name,
-                bio: "Put your bio here!"
+                bio: "Put your bio here!",
+                phoneNum: "",
+                profilePic: ""
             }
         }
 
