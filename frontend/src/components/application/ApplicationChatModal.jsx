@@ -1,19 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { applicationCommentAPIService } from '../../services/commentAPIService';
-import '../../styles/applications.scoped.css'
+import '../../styles/applications.scoped.css';
 
-const fetchAllMessages = async (commentService, applicationId) => {
-    let allMessages = [];
-    let response = await commentService.getApplicationCommentList(applicationId, 1);
-    allMessages = allMessages.concat(response.data.results);
-
-    while (response.data.next) {
-        const nextPage = response.data.next.split('page=')[1];
-        response = await commentService.getApplicationCommentList(applicationId, nextPage);
-        allMessages = allMessages.concat(response.data.results);
-    }
-
-    return response.success ? allMessages : null;
+// Fetch messages for a specific page
+const fetchMessages = async (commentService, applicationId, page) => {
+    const response = await commentService.getApplicationCommentList(applicationId, page);
+    return response.success ? response.data : null;
 };
 
 const ChatMessage = ({ message, isCurrentUser }) => (
@@ -25,13 +17,19 @@ const ChatMessage = ({ message, isCurrentUser }) => (
 const ChatModal = ({ applicationId }) => {
     const [messages, setMessages] = useState([]);
     const [newComment, setNewComment] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
     const commentService = applicationCommentAPIService();
+    const chatContainerRef = useRef(null);
 
     useEffect(() => {
         const initFetchMessages = async () => {
-            const fetchedMessages = await fetchAllMessages(commentService, applicationId);
+            const fetchedMessages = await fetchMessages(commentService, applicationId, 1);
             if (fetchedMessages) {
-                setMessages(fetchedMessages);
+                setMessages(fetchedMessages.results);
+                setHasMore(fetchedMessages.next != null);
+                setIsInitialLoad(false);
             } else {
                 console.error('Error fetching messages');
             }
@@ -39,6 +37,46 @@ const ChatModal = ({ applicationId }) => {
 
         initFetchMessages();
     }, [applicationId]);
+
+    const loadMoreMessages = async () => {
+        if (chatContainerRef.current && hasMore && !isInitialLoad) {
+            const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
+            if (scrollTop + clientHeight >= scrollHeight - 10) {
+                const nextPage = currentPage + 1;
+                const fetchedMessages = await fetchMessages(commentService, applicationId, nextPage);
+                if (fetchedMessages) {
+                    const oldScrollHeight = chatContainerRef.current.scrollHeight;
+                    setMessages(prevMessages => [...prevMessages, ...fetchedMessages.results]);
+                    setHasMore(fetchedMessages.next != null);
+                    setCurrentPage(nextPage);
+
+                    const newScrollHeight = chatContainerRef.current.scrollHeight;
+                    const newMessagesHeight = newScrollHeight - oldScrollHeight;
+                    chatContainerRef.current.scrollTop += newMessagesHeight;
+                }
+            }
+        }
+    };
+
+    useEffect(() => {
+        const chatContainer = chatContainerRef.current;
+        if (chatContainer) {
+            chatContainer.addEventListener('scroll', loadMoreMessages);
+        }
+
+        return () => {
+            if (chatContainer) {
+                chatContainer.removeEventListener('scroll', loadMoreMessages);
+            }
+        };
+    }, [currentPage, hasMore, isInitialLoad]);
+
+    const scrollToBottom = () => {
+        const chatContainer = chatContainerRef.current;
+        if (chatContainer) {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    };
 
     const handleCommentChange = (event) => {
         setNewComment(event.target.value);
@@ -49,9 +87,10 @@ const ChatModal = ({ applicationId }) => {
         if (newComment.trim()) {
             const response = await commentService.createApplicationComment(applicationId, newComment);
             if (response.success) {
+                const newMessage = response.data; // Assuming response.data contains the new message
+                setMessages(prevMessages => [...prevMessages, newMessage]);
                 setNewComment('');
-                const updatedMessages = await fetchAllMessages(commentService, applicationId);
-                setMessages(updatedMessages || messages);
+                scrollToBottom();
             } else {
                 console.error('Error creating comment:', response.message);
             }
@@ -67,7 +106,7 @@ const ChatModal = ({ applicationId }) => {
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body chat-modal-body">
-                        <div className="chat-container">
+                        <div className="chat-container" ref={chatContainerRef}>
                             {messages.length === 0 ? <div className="no-messages">No messages</div> :
                                 messages.map(message => (
                                     <ChatMessage

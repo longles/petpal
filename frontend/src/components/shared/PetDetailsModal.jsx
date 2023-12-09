@@ -122,10 +122,11 @@ function calculateAge(birthDateString) {
         <div className="tab-content">
           {/* tab1 */}
           <div className={`tab-pane ${activeTab === 'tab1' ? 'active' : ''}`} id="tab1">
-            <p>Breed: {breed}</p>
-            <p>Age: {age} years</p>
-            <p>Gender: {gender}</p>
-            <p>{description}</p>
+            <p>Breed: {breed} . Species: {petDetails.species}</p>
+            <p>Gender: {gender} . Age: {age} years. Birthday: {petDetails.birth_date}</p>
+            <p></p>
+            <p>Size: {petDetails.size} . Weight: {petDetails.weight} kg</p>
+            <p>Description: {description}</p>
             <hr />
             <h5><Link to={`/shelterdetail/${shelterId}`}>{shelterName}</Link></h5>
             <p>{shelterAddress}</p>
