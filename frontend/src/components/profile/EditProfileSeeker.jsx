@@ -80,23 +80,6 @@ const EditProfileSeeker = (props) => {
         });
     };
 
-
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-    //     if (!image) {
-    //         alert('Please select a file first!');
-    //         return;
-    //     }
-    //
-    //     // Create a FormData object to send the file
-    //     const formData = new FormData();
-    //     formData.append('profilePic', image, selectedFile.name);
-    //
-    //     console.log('File ready for upload: ', image);
-    //     // Example: axios.post('/api/upload', formData);
-    // };
-
-
     // UI
     return (
         <div>
