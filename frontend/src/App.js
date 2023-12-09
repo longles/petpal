@@ -60,15 +60,15 @@ function App() {
                 element: <SignUp />
             },
             {
-                path: "accounts/:userId/",
+                path: "accounts/settings/",
                 element: <UserSettings />
             },
             {
-                path: "accounts/seekers/:userId/",
+                path: "accounts/seekers/",
                 element: <ProfileSeeker />
             },
             {
-                path: "accounts/shelters/:userId/",
+                path: "accounts/shelters/",
                 element: <ProfileShelter />
             },
             {
