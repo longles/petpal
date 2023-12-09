@@ -10,7 +10,7 @@ import SignUp from './components/auth/SignUp.jsx'
 import LandingPage from './components/landing/LandingPage.jsx';
 import PetListingsPage from './components/listing/listings.jsx';
 import Applications from './components/application/Application.jsx';
-import ProfileSeeker from "./components/profile/ProfileSeeker.jsx";
+import ViewProfileSeeker from "./components/profile/ViewProfileSeeker.jsx";
 import ProfileShelter from "./components/profile/ProfileShelter.jsx";
 import ShelterManagement from './components/shelter/ShelterManagement.jsx';
 import ApplicationFormUpdateModal from './components/application/ApplicationFormUpdateModal.jsx';
@@ -57,11 +57,11 @@ function App() {
                 element: <SignUp />
             },
             {
-                path: "accounts/seekers/",
-                element: <ProfileSeeker />
+                path: "accounts/seekers/:userId/",
+                element: <ViewProfileSeeker />
             },
             {
-                path: "accounts/shelters/",
+                path: "accounts/shelters/:userId/",
                 element: <ProfileShelter />
             },
             {

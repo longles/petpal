@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import '../../styles/layout.css';
 import '../../styles/profile.css';
-import {seekerAPIService, shelterAPIService} from '../../services/userAPIService'
+import {shelterAPIService} from '../../services/userAPIService'
 
 const EditProfileShelter = ({id}) => {
     const [profileData, setProfileData] = useState({
@@ -45,7 +45,7 @@ const EditProfileShelter = ({id}) => {
 
     const handleProfileSubmit = (event) => {
         event.preventDefault();
-        seekerAPIService().updateShelter(id, profileData).then(response => {
+        shelterAPIService().updateShelter(id, profileData).then(response => {
             if (response.success) {
                 setValidationError("");
                 setSuccessMessage("Profile updated successfully!");

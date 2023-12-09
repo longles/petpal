@@ -133,8 +133,7 @@ const EditProfileSeeker = ({id}) => {
                         />
                     </div>
                     <button className="btn btn-primary">Save</button>
-                    {/*<a href="profile_seeker.html" className="btn btn-dark">Discard Changes</a>*/}
-                    <Link to="/profile_seeker" id="cancel" className="btn btn-dark">Discard Changes</Link>
+                    <button className="btn btn-dark">Back</button>
                 </form>
 
                 <h2>Security and Privacy</h2>
@@ -152,6 +151,7 @@ const EditProfileSeeker = ({id}) => {
                                onChange={handleSecurityChange} required/>
                     </div>
                     <button className="btn btn-primary">Submit</button>
+                    <button className="btn btn-dark">Back</button>
                 </form>
             </div>
         </div>
