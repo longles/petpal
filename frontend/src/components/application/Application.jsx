@@ -13,8 +13,9 @@ const Applications = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const applicationService = applicationAPIService();
-    const {state} = useLocation()
+    const { state } = useLocation()
     const [defaultFilters, setDefaultFilters] = useState(state?.defaultFilters || {})
+
     const fetchApplications = async (page) => {
         const response = await applicationService.getApplicationList({
             date_sort: dateOption,
@@ -121,6 +122,7 @@ const Applications = () => {
                     {applications.map((application) => (
                         <PetCard
                             key={application.id}
+                            applicantId={application.applicant}
                             petId={application.pet}
                             status={application.status}
                             submissionDate={application.created_at.split('T')[0]}

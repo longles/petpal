@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { petAPIService } from '../../services/petAPIService';
 import { applicationAPIService } from '../../services/applicationAPIService';
 import { notificationAPIService } from '../../services/notificationAPIService';
-import { petAPIService } from '../../services/petAPIService';
+import { shelterAPIService } from '../../services/userAPIService';
 import ChatModal from './ApplicationChatModal';
 import ApplicationReviewModal from './ApplicationModal';
 import '../../styles/applications.scoped.css';
@@ -24,6 +24,7 @@ const PetCard = ({
     const petService = petAPIService();
     const applicationService = applicationAPIService();
     const notificationService = notificationAPIService();
+    const shelterService = shelterAPIService();
 
     const statusOptions = {
         1: { className: 'badge bg-warning', text: 'Pending' },
@@ -53,14 +54,27 @@ const PetCard = ({
         setShowDropdown(canShowDropdown);
     }, [user_type, status]);
 
+    const getShelterId = async (id) => {
+        const response = await shelterService.getShelterDetail(id);
+
+        if (response.success) {
+            return response.data.account.id;
+        } else {
+            console.error('Error fetching shelter detail:', response.message);
+        }
+    };
+
     const handleStatusChange = async (newStatus) => {
         setSelectedStatus(newStatus);
 
         const response = await applicationService.updateApplication(applicationId, newStatus);
         if (response.success) {
             if (localStorage.getItem('user_type') === 'petseeker') {
-                notificationService.createNotification(petInfo.shelter_id, petId, "status_update", "An applicant has updated their application status");
+                const id = await getShelterId(petInfo.shelter);
+                console.log(id);
+                notificationService.createNotification(id, petId, "status_update", "An applicant has updated their application status");
             } else {
+                console.log(applicantId)
                 notificationService.createNotification(applicantId, petId, "status_update", "A shelter has updated your application status");
             }
             console.log('Application status updated successfully.');

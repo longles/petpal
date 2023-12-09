@@ -3,6 +3,7 @@ import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import { applicationFormAPIService } from '../../services/applicationFormAPIService';
 import { applicationAPIService } from '../../services/applicationAPIService';
 import { notificationAPIService } from '../../services/notificationAPIService';
+import { shelterAPIService } from '../../services/userAPIService';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 
 const ApplicationModal = ({ closeModal, show, petId, formId, shelterId }) => {
@@ -10,6 +11,7 @@ const ApplicationModal = ({ closeModal, show, petId, formId, shelterId }) => {
     const applicationFormService = applicationFormAPIService();
     const applicationService = applicationAPIService();
     const notificationService = notificationAPIService();
+    const shelterService = shelterAPIService();
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -34,6 +36,15 @@ const ApplicationModal = ({ closeModal, show, petId, formId, shelterId }) => {
         name: "response"
     });
 
+    const getShelterId = async (id) => {
+        const response = await shelterService.getShelterDetail(id);
+
+        if (response.success) {
+            return response.data.account.id;
+        } else {
+            console.error('Error fetching shelter detail:', response.message);
+        }
+    };
 
     // Rendering works, but looks ugly
 
@@ -114,8 +125,6 @@ const ApplicationModal = ({ closeModal, show, petId, formId, shelterId }) => {
 
     const onSubmit = async (data) => {
         // Formatting responses for submission
-        console.log(data)
-
         const formattedResponses = data.response.map((responseObj, idx) => ({
             question: parseInt(questions[idx].id),
             response_object: responseObj
@@ -124,7 +133,8 @@ const ApplicationModal = ({ closeModal, show, petId, formId, shelterId }) => {
         const response = await applicationService.createApplication(petId, formId, formattedResponses);
 
         if (response.success) {
-            notificationService.createNotification(shelterId, petId, "application_creation", "You have a new application for a pet!");
+            const id = await getShelterId(shelterId);
+            notificationService.createNotification(id, petId, "application_creation", "You have a new application for a pet!");
             closeModal();
         } else {
             console.error('Error submitting application:', response.message);
