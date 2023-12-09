@@ -85,10 +85,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media'
             ],
         },
     },
 ]
+
+PHOTOS_URL = "/pet_photos/"
+PHOTOS_ROOT = os.path.join(BASE_DIR, 'pet_photos')
 
 WSGI_APPLICATION = 'pet_pal_backend.wsgi.application'
 

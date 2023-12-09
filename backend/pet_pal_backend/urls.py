@@ -9,6 +9,10 @@ from accounts.serializers import CustomTokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenRefreshView
 from accounts.views import CustomTokenObtainPairView
 
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 
 from accounts.views.notificationView import NotificationViewset
 
@@ -38,3 +42,5 @@ router.register('pets', PetViewSet, basename='pet')
 router.register(r'notifications', NotificationViewset, basename='notification')
 
 urlpatterns += router.urls
+
+urlpatterns += static(settings.PHOTOS_URL, document_root=settings.PHOTOS_ROOT)
