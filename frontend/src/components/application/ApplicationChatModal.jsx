@@ -19,6 +19,7 @@ const ChatModal = ({ applicationId }) => {
     const [newComment, setNewComment] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
+    const [isInitialLoad, setIsInitialLoad] = useState(true); // New state variable to track initial load
     const commentService = applicationCommentAPIService();
     const chatContainerRef = useRef(null);
 
@@ -28,6 +29,7 @@ const ChatModal = ({ applicationId }) => {
             if (fetchedMessages) {
                 setMessages(fetchedMessages.results);
                 setHasMore(fetchedMessages.next != null);
+                setIsInitialLoad(false); // Set initial load to false after first fetch
             } else {
                 console.error('Error fetching messages');
             }
@@ -36,23 +38,27 @@ const ChatModal = ({ applicationId }) => {
         initFetchMessages();
     }, [applicationId]);
 
-    // Load more messages when scrolled to bottom
     const loadMoreMessages = async () => {
-        if (chatContainerRef.current && hasMore) {
+        if (chatContainerRef.current && hasMore && !isInitialLoad) { // Only adjust scroll if not initial load
             const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
             if (scrollTop + clientHeight >= scrollHeight - 10) {
                 const nextPage = currentPage + 1;
                 const fetchedMessages = await fetchMessages(commentService, applicationId, nextPage);
                 if (fetchedMessages) {
+                    const oldScrollHeight = chatContainerRef.current.scrollHeight;
                     setMessages(prevMessages => [...prevMessages, ...fetchedMessages.results]);
                     setHasMore(fetchedMessages.next != null);
                     setCurrentPage(nextPage);
+
+                    // Adjust scroll position
+                    const newScrollHeight = chatContainerRef.current.scrollHeight;
+                    const newMessagesHeight = newScrollHeight - oldScrollHeight;
+                    chatContainerRef.current.scrollTop += newMessagesHeight;
                 }
             }
         }
     };
 
-    // Attach scroll event listener to chat container
     useEffect(() => {
         const chatContainer = chatContainerRef.current;
         if (chatContainer) {
@@ -64,7 +70,7 @@ const ChatModal = ({ applicationId }) => {
                 chatContainer.removeEventListener('scroll', loadMoreMessages);
             }
         };
-    }, [currentPage, hasMore]);
+    }, [currentPage, hasMore, isInitialLoad]);
 
     const handleCommentChange = (event) => {
         setNewComment(event.target.value);
@@ -80,6 +86,7 @@ const ChatModal = ({ applicationId }) => {
                 setMessages(updatedMessages.results || messages);
                 setCurrentPage(1);
                 setHasMore(updatedMessages.next != null);
+                setIsInitialLoad(false); // Ensure initial load is false after new comment is submitted
             } else {
                 console.error('Error creating comment:', response.message);
             }
