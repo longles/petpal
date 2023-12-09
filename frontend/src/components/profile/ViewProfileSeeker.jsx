@@ -4,6 +4,7 @@ import '../../styles/layout.css'
 import '../../styles/profile.scoped.css'
 import {Link} from 'react-router-dom'
 import {seekerAPIService} from "../../services/userAPIService.js";
+import defaultProfilePic from "../../assets/images/default_profile_pic.jpeg"
 
 function ViewProfileSeeker(props) {
     const seekerId = props.id;
@@ -37,12 +38,15 @@ function ViewProfileSeeker(props) {
             .catch(err => console.error('Error when fetching seeker details:', err));
     }, [seekerId]);
 
+    console.log("profilePic: " + seekerDetails.profilePic);
+
     return (
         <div>
             <div className="container my-5">
                 <div className="card">
-                    {/* TODO: change the src to profilePic */}
-                    <img className="card-img-top" src="https://via.placeholder.com/80x40" alt={seekerDetails.name}/>
+                    <img className="card-img-top profile-pic"
+                         src={seekerDetails.profilePic ? seekerDetails.profilePic : defaultProfilePic}
+                         alt={seekerDetails.name}/>
                     <div className="card-body">
                         <div className="row">
                             <div className="col-sm-3">

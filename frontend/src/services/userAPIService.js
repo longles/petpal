@@ -1,6 +1,5 @@
 import { APIService } from './APIService.js';
 
-
 export const accountAPIService = () => {
     const apiService = APIService();
 
@@ -81,13 +80,13 @@ export const seekerAPIService = () => {
         //     }
         // }
 
-        // const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', formData, 'multipart/form-data');
-        const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', {
-            name: seekerDetails.name,
-            bio: seekerDetails.bio,
-            phone_num: seekerDetails.phoneNum,
-            profile_pic: seekerDetails.profilePic
-        });
+        const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', seekerDetails, 'multipart/form-data');
+        // const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', {
+        //     name: seekerDetails.name,
+        //     bio: seekerDetails.bio,
+        //     phone_num: seekerDetails.phoneNum,
+        //     profile_pic: seekerDetails.profilePic
+        // });
 
         if (!response.success) {
             return {
