@@ -19,7 +19,7 @@ const ChatModal = ({ applicationId }) => {
     const [newComment, setNewComment] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
-    const [isInitialLoad, setIsInitialLoad] = useState(true); // New state variable to track initial load
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
     const commentService = applicationCommentAPIService();
     const chatContainerRef = useRef(null);
 
@@ -29,7 +29,7 @@ const ChatModal = ({ applicationId }) => {
             if (fetchedMessages) {
                 setMessages(fetchedMessages.results);
                 setHasMore(fetchedMessages.next != null);
-                setIsInitialLoad(false); // Set initial load to false after first fetch
+                setIsInitialLoad(false);
             } else {
                 console.error('Error fetching messages');
             }
@@ -39,7 +39,7 @@ const ChatModal = ({ applicationId }) => {
     }, [applicationId]);
 
     const loadMoreMessages = async () => {
-        if (chatContainerRef.current && hasMore && !isInitialLoad) { // Only adjust scroll if not initial load
+        if (chatContainerRef.current && hasMore && !isInitialLoad) {
             const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
             if (scrollTop + clientHeight >= scrollHeight - 10) {
                 const nextPage = currentPage + 1;
@@ -50,7 +50,6 @@ const ChatModal = ({ applicationId }) => {
                     setHasMore(fetchedMessages.next != null);
                     setCurrentPage(nextPage);
 
-                    // Adjust scroll position
                     const newScrollHeight = chatContainerRef.current.scrollHeight;
                     const newMessagesHeight = newScrollHeight - oldScrollHeight;
                     chatContainerRef.current.scrollTop += newMessagesHeight;
@@ -72,6 +71,13 @@ const ChatModal = ({ applicationId }) => {
         };
     }, [currentPage, hasMore, isInitialLoad]);
 
+    const scrollToBottom = () => {
+        const chatContainer = chatContainerRef.current;
+        if (chatContainer) {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    };
+
     const handleCommentChange = (event) => {
         setNewComment(event.target.value);
     };
@@ -81,12 +87,10 @@ const ChatModal = ({ applicationId }) => {
         if (newComment.trim()) {
             const response = await commentService.createApplicationComment(applicationId, newComment);
             if (response.success) {
+                const newMessage = response.data; // Assuming response.data contains the new message
+                setMessages(prevMessages => [...prevMessages, newMessage]);
                 setNewComment('');
-                const updatedMessages = await fetchMessages(commentService, applicationId, 1);
-                setMessages(updatedMessages.results || messages);
-                setCurrentPage(1);
-                setHasMore(updatedMessages.next != null);
-                setIsInitialLoad(false); // Ensure initial load is false after new comment is submitted
+                scrollToBottom();
             } else {
                 console.error('Error creating comment:', response.message);
             }

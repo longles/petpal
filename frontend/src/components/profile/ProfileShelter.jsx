@@ -3,8 +3,7 @@ import {useParams} from 'react-router-dom';
 import '../../styles/layout.css'
 import '../../styles/profile.scoped.css'
 import {Link} from 'react-router-dom'
-import {seekerAPIService} from "../../services/userAPIService.js";
-import { useNavigate } from 'react-router-dom';
+import {shelterAPIService} from "../../services/userAPIService.js";
 
 function ProfileShelter() {
     const navigate = useNavigate()
@@ -12,7 +11,7 @@ function ProfileShelter() {
 
     const {shelterId} = useParams();
     const [shelterDetails, setShelterDetails] = useState({
-        shelterName: '',
+        name: '',
         email: '',
         location: '',
         mission: '',
@@ -23,18 +22,12 @@ function ProfileShelter() {
     const [validationError, setValidationError] = useState("")
 
     useEffect(() => {
-        if (localStorage.user_type !== "petshelter") {
-            console.log("wrong usertype");
-            console.log("you are a");
-            console.log(localStorage.user_type);
-            navigate("/404");
-          }
-        const seekerProfileAPI = seekerAPIService();
-        seekerProfileAPI.getShelterDetail(shelterId)
+        const shelterProfileAPI = shelterAPIService();
+        shelterProfileAPI.getShelterDetail(shelterId)
             .then(res => {
                 if (res.success) {
                     setShelterDetails({
-                        shelterName: res.data.name,
+                        name: res.data.name,
                         email: res.data.email,
                         location: res.data.location,
                         mission: res.data.mission,
