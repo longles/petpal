@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from ..models import User, PetShelter, PetSeeker
-from ..serializers import PetShelterSerializer, PetSeekerSerializer, UserSerializer
+from ..serializers import PetShelterSerializer, PetSeekerSerializer, UserSerializer, PetShelterViewSerializer, PetSeekerViewSerializer
 from pets.models import Application, Pet
 from rest_framework.exceptions import PermissionDenied, MethodNotAllowed
 from rest_framework import generics
@@ -26,7 +26,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
 class PetShelterViewSet(viewsets.ModelViewSet):
     queryset = PetShelter.objects.all()
-    serializer_class = PetShelterSerializer
+    serializer_class = PetShelterViewSerializer
     http_method_names = ['head', 'get', 'put', 'patch', 'delete']
     # anyone (even not logged in) can view a list of shelters
 
@@ -65,7 +65,7 @@ class PetShelterViewSet(viewsets.ModelViewSet):
 
 
 class PetSeekerUpdateGetDelete(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = PetSeekerSerializer
+    serializer_class = PetSeekerViewSerializer
 
     permission_classes = (IsAuthenticated,)
 
