@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { applicationFormAPIService } from '../../services/applicationFormAPIService';
 import ApplicationFormUpdateModal from './ApplicationFormUpdateModal';
+import { useNavigate } from 'react-router-dom';
 
 const PAGE_SIZE = 12; // Number of items per page
 
 const ApplicationForms = () => {
+    const navigate = useNavigate()
+
     const [applicationTemplates, setApplicationTemplates] = useState([]);
     const [deletedTemplateId, setDeletedTemplateId] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
@@ -62,6 +65,9 @@ const ApplicationForms = () => {
     };
 
     useEffect(() => {
+        if (localStorage.user_type !== "petshelter") {
+            navigate("/404")
+          }
         fetchApplicationTemplates(currentPage);
     }, [deletedTemplateId, currentPage, showModal]);
 

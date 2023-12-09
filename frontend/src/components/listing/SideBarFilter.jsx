@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import FilterRow from './FilterRow';
 import { shelterAPIService } from '../../services/userAPIService';
-import SideBarSorter from './SideBarSorter'; // Import SideBarSorter
 
 const SideBarFilter = ({ manageFlag = false, updateFilters }) => {
-
   const shelterAPI = shelterAPIService();
   const statusOptions = ['Any', 'Adopted', 'Available'];
-  const breedOptions = ['Any', 'Ragdoll', 'Labrador', 'Parrot'];
+  const breedOptions = ['Any', 'Ragdoll', 'Siamese', 'Persian', 'Sphynx', 'Labrador', 'Golden Retriever', 'Bulldog', 'Beagle', 'Parrot', 'Cockatiel', 'Macaw', 'Canary'];
   const sizeOptions = ['Any', 'Small', 'Medium', 'Large'];
   const colourOptions = ['Any', 'Yellow', 'Black', 'White', 'Brown', 'Grey', 'Red', 'Blue', 'Green'];
   const sexOptions = ['Any', 'Male', 'Female'];
@@ -48,16 +46,19 @@ const SideBarFilter = ({ manageFlag = false, updateFilters }) => {
     breed: {
       unknown: '0',
       ragdoll: '1',
-      labrador: '2',
-      parrot: '3',
+      siamese: '2',
+      persian: '3',
+      sphynx: '4',
+      labrador: '5',
+      goldenRetriever: '6',
+      bulldog: '7',
+      beagle: '8',
+      parrot: '9',
+      cockatiel: '10',
+      macaw: '11',
+      canary: '12',
     },
     shelter: {},
-    species: {
-      unknown: 0,
-      dog : 1,
-      cat : 2, 
-      bird : 3,
-    }
   });
 
   useEffect(() => {
