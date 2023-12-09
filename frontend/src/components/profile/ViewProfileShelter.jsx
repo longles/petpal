@@ -96,6 +96,15 @@ function ViewProfileShelter(props) {
                         </div>
                         <hr/>
                         <div className="row">
+                            <div className="col-sm-3">
+                                <h6 className="mb-0">Mission Statement</h6>
+                            </div>
+                            <div className="col-sm-9 text-secondary">
+                                {shelterDetails.missionStatement}
+                            </div>
+                        </div>
+                        <hr/>
+                        <div className="row">
                             <div className="col-sm-12">
                                 <button className="btn btn-info edit-btn" onClick={props.editHandler}>Edit</button>
                             </div>

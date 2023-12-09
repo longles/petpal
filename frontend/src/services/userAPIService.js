@@ -159,8 +159,8 @@ export const shelterAPIService = () => {
         }
     }
 
-    const updateShelter = async (id, to_update) => {
-        const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', to_update);
+    const updateShelter = async (id, shelterDetails) => {
+        const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', shelterDetails, 'multipart/form-data');
 
         if (!response.success) {
             return {

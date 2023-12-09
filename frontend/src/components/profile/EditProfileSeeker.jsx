@@ -124,7 +124,7 @@ const EditProfileSeeker = (props) => {
                         />
                     </div>
                     <button className="btn btn-primary">Save</button>
-                    <button className="btn btn-dark" onClick={props.returnHandler}>Back</button>
+                    <button className="btn btn-dark" onClick={props.returnHandler}>Discard Changes</button>
                 </form>
             </div>
         </div>
