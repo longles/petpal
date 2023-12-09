@@ -5,11 +5,8 @@ export const petAPIService = () => {
     const apiService = APIService();
 
     // All other fields can be null; include in other_info as required
-    const createPet = async (name, other_info) => {
-        const response = await apiService.makePrivateAPICall(`${API_PATH}`, 'POST', {
-            name: name,
-            ...other_info,
-        });
+    const createPet = async (form_data) => {
+        const response = await apiService.makePrivateAPICall(`${API_PATH}`, 'POST', form_data, 'multipart/form-data');
 
         if (!response.success) {
             return {

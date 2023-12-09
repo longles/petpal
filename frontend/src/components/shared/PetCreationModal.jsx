@@ -14,7 +14,7 @@ const petCreationSchema = yup.object({
   name: yup.string().required('Name is required'),
   breed: yup.number().required('Breed is required'),
   species: yup.number().required('Species is required'),
-  sex: yup.string().required('Gender is required'),
+  sex: yup.number().required('Gender is required'),
   birth_date: yup.date().required('Date of Birth is required'),
   size: yup.number().required('Size is required'),
   weight: yup.number().required('Weight is required'),
@@ -64,14 +64,11 @@ function PetCreationModal({ closeModal }) {
   }, []);
 
   const onSubmit = async (data) => {
+    
     // Trigger validation for 'form' field
-    const isFormValid = await trigger('form');
-  
-    if (!isFormValid) {
-      return; // Stop the form submission if 'form' field is not valid
-    }
     const formattedData = {
       ...data,
+      photo: data.photo[0],
       breed: parseInt(data.breed, 10),
       sex: data.sex === "Male" ? 1 : 2, // Assuming 1 for Male and 2 for Female
       size: parseInt(data.size, 10),
@@ -81,12 +78,19 @@ function PetCreationModal({ closeModal }) {
     };
   
     console.log(formattedData);
-  
-    const response = await petAPI.createPet(formattedData.name, formattedData);
+
+    let formdata = new FormData()
+
+    for (const [key, value] of Object.entries(formattedData)) {
+      console.log(key)
+      formdata.append(key, value)
+    }
+
+    const response = await petAPI.createPet(formdata);
     if (response.success) {
       console.log('create successful');
       closeModal();
-      window.location.reload(); //delete this if we do not want a refresh
+      //window.location.reload(); //delete this if we do not want a refresh
     } else {
       console.log('create failed');
     }
@@ -141,9 +145,9 @@ function PetCreationModal({ closeModal }) {
           <div className="mb-3">
             <label htmlFor="sex" className="form-label">Sex</label>
             <select className="form-select" id="sex" {...register('sex')}>
-              <option value="unknown">Select...</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
+              <option value="0">Unknown</option>
+              <option value="1">Male</option>
+              <option value="2">Female</option>
             </select>
             {errors.sex && <div className="error-notif">{errors.sex.message}</div>}
           </div>

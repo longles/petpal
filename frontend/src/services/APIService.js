@@ -37,7 +37,7 @@ export const APIService = () => {
         return result;
     }
 
-    const makePrivateAPICall = async (path, method, data) => {
+    const makePrivateAPICall = async (path, method, data, contentType='application/json') => {
         const result = {
             success: false,
             data: {},
@@ -47,41 +47,51 @@ export const APIService = () => {
         let requestData = null;
 
         if (method === "POST" || method === "PUT" || method === "PATCH") {
-            headers.set('Content-Type', 'application/json');
             headers.set('Accept', 'application/json');
-            requestData = JSON.stringify(data);
+            if (contentType === 'application/json') {
+                headers.set('Content-Type', contentType);
+                requestData = JSON.stringify(data);
+            } else {
+                requestData = data
+            }
         }
+        console.log(requestData)
 
         const token = localStorage.getItem('token'); // Fetch token from local storage
 
         if (token) {
             headers.set('Authorization', `Bearer ${token}`);
         }
+        if (contentType !== 'application/json') {
+            //console.log(requestData.get('name'))
+        }
 
-        return fetch(`${API_URL}${path}`, {
+        const response = await fetch(`${API_URL}${path}`, {
             method: method,
             headers: headers,
             body: requestData,
-        }).then(async (response) => {
-            if (response.ok) {
-                result.success = true;
-            }
+        });
 
-            if (response.status === 401) {
-                result.success = false
-                result.data = {"detail": "Not authorized"}
-                return result;
-            }
-    
-            if (method === "DELETE") {
-                return result;
-            } else {
-                result.data = await response.json();
-            }
-    
+        if (response.ok) {
+            result.success = true;
+        }
+
+        if (response.status === 401) {
+            result.success = false
+            result.data = {"detail": "Not authorized"}
             return result;
-        })
+        }
+
+        if (method === "DELETE") {
+            return result;
+        } else {
+            result.data = await response.json();
+        }
+
+        return result;
     }
+
+    
 
     return {
         makeAPICall,
