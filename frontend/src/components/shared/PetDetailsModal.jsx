@@ -5,6 +5,32 @@ import { petAPIService } from '../../services/petAPIService';
 import { shelterAPIService } from '../../services/userAPIService';
 import { Link } from 'react-router-dom';
 
+
+// Mapping components
+const SpeciesMap = {
+  0: 'Unknown',
+  1: 'Dog',
+  2: 'Cat',
+  3: 'Bird',
+};
+
+const SizeMap = {
+  1: 'Large',
+  2: 'Medium',
+  3: 'Small',
+};
+
+const BreedMap = {
+  '0': 'Unknown',
+  '1': 'Ragdoll',
+  '2': 'Labrador',
+  '3': 'Parrot',
+};
+
+const mapSpecies = (speciesCode) => SpeciesMap[speciesCode] || 'Unknown';
+const mapSize = (sizeCode) => SizeMap[sizeCode] || 'Unknown';
+const mapBreed = (breedCode) => BreedMap[breedCode] || 'Unknown';
+
 // pet detail should get a pet id and fetch info from server
 const PetDetailsModal = ({ petId, closeModal, openApplicationModal }) => {
   const [activeTab, setActiveTab] = useState('tab1');
@@ -78,7 +104,10 @@ function calculateAge(birthDateString) {
 
   return roundedAge;
 }
-  let breed = petDetails.breed
+  let breed = mapBreed(petDetails.breed);
+  let species = mapSpecies(petDetails.species);
+  let size = mapSize(petDetails.size);
+
   // set the default pic to sample pet image2 
   let photo = petDetails.photo === null ? '/assets/images/sample_pet_image_2.jpg' : petDetails.photo;
   let age = calculateAge(petDetails.birth_date)
@@ -122,10 +151,10 @@ function calculateAge(birthDateString) {
         <div className="tab-content">
           {/* tab1 */}
           <div className={`tab-pane ${activeTab === 'tab1' ? 'active' : ''}`} id="tab1">
-            <p>Breed: {breed} . Species: {petDetails.species}</p>
+            <p>Breed: {breed} . Species: {species}</p>
             <p>Gender: {gender} . Age: {age} years. Birthday: {petDetails.birth_date}</p>
             <p></p>
-            <p>Size: {petDetails.size} . Weight: {petDetails.weight} kg</p>
+            <p>Size: {size} . Weight: {petDetails.weight} kg</p>
             <p>Description: {description}</p>
             <hr />
             <h5><Link to={`/shelterdetail/${shelterId}`}>{shelterName}</Link></h5>
