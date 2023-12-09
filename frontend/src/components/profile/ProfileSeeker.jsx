@@ -20,9 +20,9 @@ function ProfileSeeker() {
     return (
         <div>
             {editMode ? (
-                <EditProfileSeeker id={userId} returnHandler={handleReturn} />
+                <EditProfileSeeker id={userId} returnHandler={handleReturn} editMode={editMode}/>
             ) : (
-                <ViewProfileSeeker id={userId} editHandler={handleEdit} />
+                <ViewProfileSeeker id={userId} editHandler={handleEdit} editMode={editMode}/>
             )}
         </div>
     );

@@ -4,7 +4,7 @@ import '../../styles/layout.css';
 import '../../styles/profile.css';
 import {seekerAPIService} from '../../services/userAPIService'
 
-const EditProfileSeeker = ({id}) => {
+const EditProfileSeeker = (props) => {
     // temporary placeholders
     const [profileData, setProfileData] = useState({
             username: "",
@@ -133,7 +133,7 @@ const EditProfileSeeker = ({id}) => {
                         />
                     </div>
                     <button className="btn btn-primary">Save</button>
-                    <button className="btn btn-dark">Back</button>
+                    <button className="btn btn-dark" onClick={props.returnHandler}>Back</button>
                 </form>
 
                 <h2>Security and Privacy</h2>
@@ -151,7 +151,7 @@ const EditProfileSeeker = ({id}) => {
                                onChange={handleSecurityChange} required/>
                     </div>
                     <button className="btn btn-primary">Submit</button>
-                    <button className="btn btn-dark">Back</button>
+                    <button className="btn btn-dark" onClick={props.returnHandler}>Back</button>
                 </form>
             </div>
         </div>
