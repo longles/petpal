@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import '../../styles/layout.css';
-import '../../styles/profile.css';
+import '../../styles/profile.scoped.css'
 import {seekerAPIService} from '../../services/userAPIService'
 
 const EditProfileSeeker = (props) => {
@@ -47,7 +47,7 @@ const EditProfileSeeker = (props) => {
 
     const handleProfileSubmit = (event) => {
         event.preventDefault();
-        seekerAPIService().updateSeeker(id, profileData).then(response => {
+        seekerAPIService().updateSeeker(props.id, profileData).then(response => {
             if (response.success) {
                 setValidationError("");
                 setSuccessMessage("Profile updated successfully!");

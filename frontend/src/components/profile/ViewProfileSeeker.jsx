@@ -23,8 +23,8 @@ function ViewProfileSeeker(props) {
             .then(res => {
                 if (res.success) {
                     setSeekerDetails({
-                        username: res.data.username,
-                        email: res.data.email,
+                        username: res.data.account.username,
+                        email: res.data.account.email,
                         name: res.data.name,
                         bio: res.data.bio,
                         profilePic: res.data.profile_pic,
@@ -39,66 +39,64 @@ function ViewProfileSeeker(props) {
 
     return (
         <div>
-            {!props.editMode &&
-                <div className="container my-5">
-                    <div className="card">
-                        {/* TODO: change the src to profilePic */}
-                        <img className="card-img-top" src="https://via.placeholder.com/80x40" alt={seekerDetails.name}/>
-                        <div className="card-body">
-                            <div className="row">
-                                <div className="col-sm-3">
-                                    <h6 className="mb-0">Username</h6>
-                                </div>
-                                <div className="col-sm-9 text-secondary">
-                                    {seekerDetails.username}
-                                </div>
+            <div className="container my-5">
+                <div className="card">
+                    {/* TODO: change the src to profilePic */}
+                    <img className="card-img-top" src="https://via.placeholder.com/80x40" alt={seekerDetails.name}/>
+                    <div className="card-body">
+                        <div className="row">
+                            <div className="col-sm-3">
+                                <h6 className="mb-0">Username</h6>
                             </div>
-                            <hr/>
-                            <div className="row">
-                                <div className="col-sm-3">
-                                    <h6 className="mb-0">Your Real Name</h6>
-                                </div>
-                                <div className="col-sm-9 text-secondary">
-                                    {seekerDetails.name}
-                                </div>
+                            <div className="col-sm-9 text-secondary">
+                                {seekerDetails.username}
                             </div>
-                            <hr/>
-                            <div className="row">
-                                <div className="col-sm-3">
-                                    <h6 className="mb-0">Bio</h6>
-                                </div>
-                                <div className="col-sm-9 text-secondary">
-                                    {seekerDetails.bio}
-                                </div>
+                        </div>
+                        <hr/>
+                        <div className="row">
+                            <div className="col-sm-3">
+                                <h6 className="mb-0">Your Real Name</h6>
                             </div>
-                            <hr/>
-                            <div className="row">
-                                <div className="col-sm-3">
-                                    <h6 className="mb-0">Email</h6>
-                                </div>
-                                <div className="col-sm-9 text-secondary">
-                                    {seekerDetails.email}
-                                </div>
+                            <div className="col-sm-9 text-secondary">
+                                {seekerDetails.name}
                             </div>
-                            <hr/>
-                            <div className="row">
-                                <div className="col-sm-3">
-                                    <h6 className="mb-0">Phone Number</h6>
-                                </div>
-                                <div className="col-sm-9 text-secondary">
-                                    {seekerDetails.phoneNum}
-                                </div>
+                        </div>
+                        <hr/>
+                        <div className="row">
+                            <div className="col-sm-3">
+                                <h6 className="mb-0">Bio</h6>
                             </div>
-                            <hr/>
-                            <div className="row">
-                                <div className="col-sm-12">
-                                    <button className="btn btn-info edit-btn" onClick={props.editHandler}>Edit</button>
-                                </div>
+                            <div className="col-sm-9 text-secondary">
+                                {seekerDetails.bio}
+                            </div>
+                        </div>
+                        <hr/>
+                        <div className="row">
+                            <div className="col-sm-3">
+                                <h6 className="mb-0">Email</h6>
+                            </div>
+                            <div className="col-sm-9 text-secondary">
+                                {seekerDetails.email}
+                            </div>
+                        </div>
+                        <hr/>
+                        <div className="row">
+                            <div className="col-sm-3">
+                                <h6 className="mb-0">Phone Number</h6>
+                            </div>
+                            <div className="col-sm-9 text-secondary">
+                                {seekerDetails.phoneNum}
+                            </div>
+                        </div>
+                        <hr/>
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <button className="btn btn-info edit-btn" onClick={props.editHandler}>Edit</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            }
+            </div>
         </div>
     );
 }

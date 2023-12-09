@@ -1,8 +1,6 @@
 import React, {useState} from 'react'
 import ViewProfileSeeker from "./ViewProfileSeeker.jsx";
 import EditProfileSeeker from "./EditProfileSeeker.jsx";
-import '../../styles/layout.css'
-import '../../styles/profile.scoped.css'
 
 
 function ProfileSeeker() {
