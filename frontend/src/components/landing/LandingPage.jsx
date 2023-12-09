@@ -1,5 +1,6 @@
 import '../../styles/layout.css';
 import '../../styles/index.scoped.css';
+import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
   return (
@@ -9,18 +10,17 @@ const LandingPage = () => {
         <div className="search-container">
           {/* Removed the search bar input */}
           {/* Updated the button to link to the listings page */}
-          <a href="/pets/" className="search-btn btn btn-primary">Find Your Pet</a>
+          <Link to="/pets/" className="search-btn btn btn-primary">Find Your Pet</Link>
         </div>
         <div className="search-help">
           <h2>Looking to adopt?</h2>
         </div>
         <div className="animal-cards">
-          {/* Ensure these links apply filters correctly on the listings page */}
-          <a href="/pets/?species=1" className="animal-card" data-animal="dogs">
+          <Link to="/pets/?species=1" className="animal-card" data-animal="dogs">
             <div className="card-content">
               <p>Dogs</p>
             </div>
-          </a>
+          </Link>
           <a href="/pets/?species=2" className="animal-card" data-animal="cats">
             <div className="card-content">
               <p>Cats</p>
