@@ -118,7 +118,7 @@ const PetCard = ({
                                             {statusOptions[selectedStatus].text}
                                         </button>
                                         <div className="dropdown-menu" aria-labelledby="statusDropdown">
-                                            {user_type === 'petseeker' && (status === 1 || status === 2) && (
+                                            {user_type === 'petseeker' && (selectedStatus === 1 || selectedStatus === 2) && (
                                                 <button className="dropdown-item" onClick={() => handleStatusChange(4)}>
                                                     Withdrawn
                                                 </button>
