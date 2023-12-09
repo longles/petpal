@@ -5,7 +5,7 @@ import '../../styles/profile.scoped.css'
 import {shelterAPIService} from '../../services/userAPIService'
 
 const EditProfileShelter = (props) => {
-    const shelterId = localStorage.getItem('user_id');
+    const shelterId = props.id;
 
     const [shelterDetails, setShelterDetails] = useState({
             name: "",
@@ -32,6 +32,9 @@ const EditProfileShelter = (props) => {
     }, [shelterId]);
 
     const [validationError, setValidationError] = useState("");
+
+    console.log("shelterDetails");
+    console.log(shelterDetails);
 
     // Event handlers
     function handleProfileChange(event) {
@@ -62,6 +65,9 @@ const EditProfileShelter = (props) => {
             profile_pic: image
         };
 
+        console.log("allData: ");
+        console.log(allData);
+
         let formData = new FormData();
         for (const [key, value] of Object.entries(allData)) {
             console.log(key);
@@ -87,12 +93,15 @@ const EditProfileShelter = (props) => {
                 <div className="form-group">
                     <label htmlFor="username">Shelter Name</label>
                     <input type="text" className="form-control" id="username" placeholder="Name of your shelter"
-                           value={shelterDetails.name} onChange={handleProfileChange} />
+                           name="name"
+                           value={shelterDetails.name}
+                           onChange={handleProfileChange}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="location">Shelter Location</label>
                     <input type="text" className="form-control" id="location"
-                           value={shelterDetails.location} onChange={handleProfileChange} />
+                           name="location"
+                           value={shelterDetails.location} onChange={handleProfileChange}/>
                 </div>
                 {/*<div className="form-group">*/}
                 {/*    <label htmlFor="mission">Mission Statement</label>*/}
@@ -105,9 +114,10 @@ const EditProfileShelter = (props) => {
                 {/*              value={shelterDetails.aboutUs} onChange={handleProfileChange} />*/}
                 {/*</div>*/}
                 <div className="form-group">
-                    <label htmlFor="mobile">Mobile</label>
-                    <input type="text" className="form-control" id="mobile" placeholder="xxx-xxx-xxxx"
-                           value={shelterDetails.mobile} onChange={handleProfileChange}
+                    <label htmlFor="phoneNum">Mobile</label>
+                    <input type="text" className="form-control" id="phoneNum" placeholder="xxx-xxx-xxxx"
+                           name="phoneNum"
+                           value={shelterDetails.phoneNum} onChange={handleProfileChange}
                     />
                     <small className="form-text text-muted">We'll never share your phone number with anyone
                         else.</small>
@@ -115,7 +125,8 @@ const EditProfileShelter = (props) => {
                 <div className="form-group">
                     <label htmlFor="profilePic">Change Shelter Pic</label>
                     <input type="file" className="form-control" id="profilePic"
-                           onChange={handleImageChange} />
+                           name="profilePic"
+                           onChange={handleImageChange}/>
                 </div>
                 <button className="btn btn-primary">Save</button>
                 <button className="btn btn-dark" onClick={props.returnHandler}>Discard Changes</button>

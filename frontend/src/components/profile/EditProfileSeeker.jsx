@@ -5,7 +5,7 @@ import {seekerAPIService} from '../../services/userAPIService'
 import {Link} from "react-router-dom";
 
 const EditProfileSeeker = (props) => {
-    const seekerId = localStorage.getItem('user_id');
+    const seekerId = localStorage.getItem('user_object_id');
     const [seekerDetails, setSeekerDetails] = useState({
         name: '',
         bio: '',

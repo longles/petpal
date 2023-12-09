@@ -11,7 +11,7 @@ function ProfileShelter() {
         console.log(localStorage.user_type);
         navigate("/404");
       }
-    const userId = localStorage.getItem('user_id');
+    const userId = localStorage.getItem('user_object_id');
     const [editMode, setEditMode] = useState(false);
 
     const handleEdit = () => {

@@ -1,4 +1,4 @@
-import { APIService } from './APIService.js';
+import {APIService} from './APIService.js';
 
 export const accountAPIService = () => {
     const apiService = APIService();
@@ -160,6 +160,9 @@ export const shelterAPIService = () => {
     }
 
     const updateShelter = async (id, shelterDetails) => {
+        for (const pair of shelterDetails.entries()) {
+            console.log(`${pair[0]}, ${pair[1]}`);
+        }
         const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', shelterDetails, 'multipart/form-data');
 
         if (!response.success) {
