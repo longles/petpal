@@ -19,6 +19,8 @@ const SideBarSorter = ({ sortOrder, setSortOrder }) => {
           <select className="form-select" onChange={handleSortChange} value={sortOrder}>
             <option value="-birth_date">Latest Birth Date</option>
             <option value="birth_date">Earliest Birth Date</option>
+            <option value="weight">Largest Weight First</option>
+            <option value="-weight">Smallest Weight First</option>
           </select>
         </div>
         {/* <button onClick={applySort} className="btn btn-primary">Apply Sort</button> */}

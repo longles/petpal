@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .applicationFormSerializer import ApplicationQuestionSerializer
-from ..models import Application, QuestionResponse, TextareaResponse, DropdownResponse, RadioResponse, CheckboxResponse, FileResponse
+from ..models import Application, QuestionResponse, TextareaResponse, DropdownResponse, RadioResponse, CheckboxResponse, FileResponse, Pet
 from ..models import QuestionType
 
 
@@ -81,14 +81,27 @@ class QuestionResponseSerializer(serializers.ModelSerializer):
         model = QuestionResponse
         fields = ('id', 'question', 'response_object')
 
+class ApplicationPetSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Pet
+        fields = ('id', 'photo')
+
+    def to_representation(self, instance):
+        self._context = self.parent.context
+        return super().to_representation(instance)
 
 class ApplicationSerializer(serializers.ModelSerializer):
     responses = QuestionResponseSerializer(many=True)
+    pet = ApplicationPetSerializer(read_only=True)
 
     class Meta:
         model = Application
         fields = ('id', 'pet', 'applicant', 'form', 'status', 'responses', 'created_at', 'last_updated')
 
+    def get_pet_serializer(self, obj):
+        serializer = ApplicationPetSerializer(obj.pet, context=self.context)
+        return serializer.data
 
     def create(self, validated_data):
         response_data = validated_data.pop('responses')
