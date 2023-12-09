@@ -85,6 +85,9 @@ const NavBar = () => {
                     <li>
                         <Link className="dropdown-item" to={`/accounts/${userType.slice(3)}s/${userId}/`}>View Profile
                         </Link></li>
+                    <li>
+                        <Link className="dropdown-item" to={`/accounts/${userId}`}>Settings</Link>
+                    </li>
                     {/*<li><Link className="dropdown-item" to="/profile/edit">Update Profile</Link></li>*/}
                     <li>
                         <button className="dropdown-item btn" onClick={() => {

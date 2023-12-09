@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from ..models import User, PetShelter, PetSeeker
-from ..serializers import PetShelterSerializer, PetSeekerSerializer, UserSerializer, PetShelterViewSerializer, PetSeekerViewSerializer
+from ..serializers import PetShelterSerializer, PetSeekerSerializer, UserSerializer, PetShelterViewSerializer, PetSeekerViewSerializer, UserUpdateSerializer
 from pets.models import Application, Pet
 from rest_framework.exceptions import PermissionDenied, MethodNotAllowed
 from rest_framework import generics
@@ -18,6 +18,12 @@ from ..serializers import CustomTokenObtainPairSerializer
 
 class AccountCreateView(generics.CreateAPIView):
     serializer_class = UserSerializer
+
+class AccountUpdateView(generics.UpdateAPIView):
+    serializer_class = UserUpdateSerializer
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        return User.objects.filter(pk=self.request.user.pk)
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):

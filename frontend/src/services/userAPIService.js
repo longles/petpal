@@ -1,5 +1,50 @@
 import { APIService } from './APIService.js';
 
+
+export const accountAPIService = () => {
+    const apiService = APIService();
+
+    const updateUser = async (id, userData) => {
+        const response = await apiService.makePrivateAPICall(`accounts/${id}/`, 'PATCH', {
+            username: userData.username,
+            email: userData.email
+        });
+        if (!response.success) {
+            return {
+                success: false,
+                message: response.data.detail,
+            }
+        }
+
+        return {
+            success: true,
+            data: response.data,
+        }
+    }
+
+    const updatePwd = async (id, pwd) => {
+        const response = await apiService.makePrivateAPICall(`accounts/${id}/`, 'PATCH', {
+            password: pwd
+        });
+        if (!response.success) {
+            return {
+                success: false,
+                message: response.data.detail,
+            }
+        }
+
+        return {
+            success: true,
+            data: response.data,
+        }
+    }
+
+    return {
+        updateUser,
+        updatePwd
+    }
+}
+
 export const seekerAPIService = () => {
     const API_PATH = 'accounts/seekers/';
     const apiService = APIService();
@@ -21,15 +66,27 @@ export const seekerAPIService = () => {
     }
 
     const updateSeeker = async (id, seekerDetails) => {
+        // let formData = new FormData()
+        // formData.append('name', seekerDetails.name)
+        // formData.append('account', JSON.stringify({username: seekerDetails.username, email: seekerDetails.email}))
+        // console.log(formData.get('account'))
+        // {
+        //     name: seekerDetails.name,
+        //     bio: seekerDetails.bio,
+        //     phoneNum: seekerDetails.phoneNum,
+        //     profilePic: seekerDetails.profilePic,
+        //     account: {
+        //         username: seekerDetails.username,
+        //         // email: seekerDetails.email
+        //     }
+        // }
+
+        // const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', formData, 'multipart/form-data');
         const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', {
             name: seekerDetails.name,
             bio: seekerDetails.bio,
-            phoneNum: seekerDetails.phoneNum,
-            profilePic: seekerDetails.profilePic,
-            account: {
-                username: seekerDetails.username,
-                email: seekerDetails.email
-            }
+            phone_num: seekerDetails.phoneNum,
+            profile_pic: seekerDetails.profilePic
         });
 
         if (!response.success) {
