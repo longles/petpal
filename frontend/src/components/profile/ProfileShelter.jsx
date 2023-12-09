@@ -4,8 +4,10 @@ import '../../styles/layout.css'
 import '../../styles/profile.scoped.css'
 import {Link} from 'react-router-dom'
 import {shelterAPIService} from "../../services/userAPIService.js";
+import { useNavigate } from 'react-router-dom';
 
 function ProfileShelter() {
+    const navigate = useNavigate()
     const {shelterId} = useParams();
     const [shelterDetails, setShelterDetails] = useState({
         name: '',
@@ -19,6 +21,12 @@ function ProfileShelter() {
     const [validationError, setValidationError] = useState("")
 
     useEffect(() => {
+        if (localStorage.user_type !== "petshelter") {
+            console.log("wrong usertype");
+            console.log("you are a");
+            console.log(localStorage.user_type);
+            navigate("/404");
+          }
         const shelterProfileAPI = shelterAPIService();
         shelterProfileAPI.getShelterDetail(shelterId)
             .then(res => {

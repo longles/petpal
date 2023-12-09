@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { applicationAPIService } from '../../services/applicationAPIService';
 import PetCard from './ApplicationTile';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const PAGE_SIZE = 5; // Number of items per page
 
 const Applications = () => {
+    const navigate = useNavigate()
+
     const [applications, setApplications] = useState([]);
     const [statusOption, setStatusOption] = useState("0");
     const [dateOption, setDateOption] = useState('last_updated_asc');
@@ -35,6 +38,12 @@ const Applications = () => {
     };
 
     useEffect(() => {
+        if (localStorage.user_type !== "petshelter") {
+            console.log("wrong usertype");
+            console.log("you are a");
+            console.log(localStorage.user_type);
+            navigate("/404");
+          }
         fetchApplications(currentPage);
     }, [statusOption, dateOption, petNameFilter, currentPage]);
 
