@@ -1,22 +1,38 @@
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
 import '../../styles/layout.css';
 import '../../styles/profile.scoped.css'
 import {seekerAPIService} from '../../services/userAPIService'
 
 const EditProfileSeeker = (props) => {
-    // temporary placeholders
-    const [profileData, setProfileData] = useState({
-            username: "",
-            bio: "",
-            firstName: "",
-            lastName: "",
-            email: "",
-            mobile: "",
-            location: "",
-            profilePic: ""
-        }
-    );
+    const seekerId = props.id;
+    const [seekerDetails, setSeekerDetails] = useState({
+        username: '',
+        email: '',
+        name: '',
+        bio: '',
+        profilePic: '',
+        phoneNum: ''
+    });
+
+    useEffect(() => {
+        const seekerProfileAPI = seekerAPIService();
+        seekerProfileAPI.getSeekerDetail(seekerId)
+            .then(res => {
+                if (res.success) {
+                    setSeekerDetails({
+                        username: res.data.account.username,
+                        email: res.data.account.email,
+                        name: res.data.name,
+                        bio: res.data.bio,
+                        profilePic: res.data.profile_pic,
+                        phoneNum: res.data.phone_num
+                    });
+                } else {
+                    console.log(res.message);
+                }
+            })
+            .catch(err => console.error('Error when fetching seeker details:', err));
+    }, [seekerId]);
 
     const [securityData, setSecurityData] = useState({
         newPassword1: "",
@@ -28,7 +44,7 @@ const EditProfileSeeker = (props) => {
 
     // Event handlers
     function handleProfileChange(event) {
-        setProfileData(prevState => {
+        setSeekerDetails(prevState => {
             return {
                 ...prevState,
                 [event.target.name]: event.target.value
@@ -47,7 +63,7 @@ const EditProfileSeeker = (props) => {
 
     const handleProfileSubmit = (event) => {
         event.preventDefault();
-        seekerAPIService().updateSeeker(props.id, profileData).then(response => {
+        seekerAPIService().updateSeeker(props.id, seekerDetails).then(response => {
             if (response.success) {
                 setValidationError("");
                 setSuccessMessage("Profile updated successfully!");
@@ -75,60 +91,52 @@ const EditProfileSeeker = (props) => {
                     <div className="form-group">
                         <label htmlFor="username">Username</label>
                         <input type="text" className="form-control" id="username" placeholder="Username"
-                               defaultValue={profileData.username} value={profileData.username}
+                               name="username"
+                               value={seekerDetails.username}
                                onChange={handleProfileChange}
                         />
                     </div>
                     <div className="form-group">
                         <label htmlFor="bio">Bio</label>
                         <textarea className="form-control" id="bio" rows="3"
-                                  defaultValue={profileData.bio} value={profileData.bio}
+                                  name="bio"
+                                  value={seekerDetails.bio}
                                   onChange={handleProfileChange}
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="firstName">First Name</label>
-                        <input type="text" className="form-control" id="firstName" placeholder="First name"
-                               defaultValue={profileData.firstName} value={profileData.firstName}
-                               onChange={handleProfileChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="lastName">Last Name</label>
-                        <input type="text" className="form-control" id="lastName" placeholder="Last name"
-                               defaultValue={profileData.lastName} value={profileData.lastName}
+                        <label htmlFor="name">Your Name</label>
+                        <input type="text" className="form-control" id="firstName" placeholder="Actual name"
+                               name="name"
+                               value={seekerDetails.firstName}
                                onChange={handleProfileChange}
                         />
                     </div>
                     <div className="form-group">
                         <label htmlFor="email" aria-describedby="emailHelp">Email</label>
                         <input type="text" className="form-control" id="email" placeholder="email"
-                               defaultValue={profileData.email} value={profileData.email}
+                               name="email"
+                               value={seekerDetails.email}
                                onChange={handleProfileChange}
                         />
                         <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone
                             else.</small>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="mobile">Mobile</label>
+                        <label htmlFor="phoneNum">Mobile</label>
                         <input type="text" className="form-control" id="mobile" placeholder="xxx-xxx-xxxx"
-                               defaultValue={profileData.mobile} value={profileData.mobile}
+                               name="phoneNum"
+                               defaultValue={seekerDetails.mobile} value={seekerDetails.mobile}
                                onChange={handleProfileChange}
                         />
                         <small className="form-text text-muted">We'll never share your phone number with anyone
                             else.</small>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="location">Location</label>
-                        <input type="text" className="form-control" id="location"
-                               defaultValue={profileData.location} value={profileData.location}
-                               onChange={handleProfileChange}
-                        />
-                    </div>
-                    <div className="form-group">
                         <label htmlFor="profilePic">Change Profile Pic</label>
                         <input type="file" className="form-control" id="profilePic"
-                               defaultValue={profileData.profilePic} value={profileData.profilePic}
+                               name="profilePic"
+                               value={seekerDetails.profilePic}
                                onChange={handleProfileChange}
                         />
                     </div>
@@ -142,7 +150,7 @@ const EditProfileSeeker = (props) => {
                         <label htmlFor="newPassword1">New Password</label>
                         <input type="password" className="form-control" id="newPassword1" name="newPassword1"
                                value={securityData.newPassword1}
-                                onChange={handleSecurityChange} required/>
+                               onChange={handleSecurityChange} required/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="newPassword2">Confirm New Password</label>
