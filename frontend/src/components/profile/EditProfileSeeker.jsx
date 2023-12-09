@@ -42,6 +42,7 @@ const EditProfileSeeker = (props) => {
     const [successMessage, setSuccessMessage] = useState("");
     const [validationError, setValidationError] = useState("");
 
+    console.log(seekerDetails);
     // Event handlers
     function handleProfileChange(event) {
         setSeekerDetails(prevState => {
@@ -77,7 +78,7 @@ const EditProfileSeeker = (props) => {
 
     const handleSecuritySubmit = (event) => {
         event.preventDefault();
-        console.log(event);
+        // console.log(event);
     };
 
     // UI
@@ -126,7 +127,7 @@ const EditProfileSeeker = (props) => {
                         <label htmlFor="phoneNum">Mobile</label>
                         <input type="text" className="form-control" id="mobile" placeholder="xxx-xxx-xxxx"
                                name="phoneNum"
-                               defaultValue={seekerDetails.mobile} value={seekerDetails.mobile}
+                               value={seekerDetails.phoneNum}
                                onChange={handleProfileChange}
                         />
                         <small className="form-text text-muted">We'll never share your phone number with anyone
