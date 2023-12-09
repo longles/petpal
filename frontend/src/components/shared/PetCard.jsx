@@ -47,7 +47,7 @@ const PetCard = ({ manageFlag = false, petId, data }) => {
         setIsApplicationModalOpen(false);
     };
 
-    const photo = petDetails.photo === null ? '/assets/images/sample_pet_image_2.jpg' : petDetails.photo;
+    const photo = petDetails.photo === null ? '/assets/images/select_image.jpg' : petDetails.photo;
     return (
         <div className="col-md-4 mb-4 d-flex align-items-stretch">
           <div className="card listing-box" style={{ width: '100%' }}>

@@ -17,6 +17,7 @@ import ApplicationFormUpdateModal from './components/application/ApplicationForm
 import PetUpdateModal from './components/shared/PetUpdateModal.jsx';
 import ApplicationForms from './components/application/ApplicationForm.jsx';
 import UserSettings from "./components/profile/UserSettings.jsx";
+import ShelterListing from './components/listing/shelterlistings.jsx';
 
 const RootLayout = () => {
     return (<div id="body">
@@ -89,6 +90,10 @@ function App() {
             {
                 path: "test/",
                 element: <ApplicationFormUpdateModal />
+            },
+            {
+                path: "shelters/",
+                element: <ShelterListing/>
             }]
         }
     ]);
