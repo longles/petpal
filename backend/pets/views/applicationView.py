@@ -32,7 +32,7 @@ class ApplicationCreateListView(APIView, ApplicationPagination):
             return Response({'detail': 'Application form not available for application.'}, status=status.HTTP_400_BAD_REQUEST)
 
         data = {'pet': pet_id, 'form': form_id, 'applicant': request.user.user_object.pk, 'responses': responses}
-        serializer = ApplicationSerializer(data=data)
+        serializer = ApplicationSerializer(data=data, context={'request': request})
 
         if serializer.is_valid():
             serializer.save()
@@ -93,7 +93,7 @@ class ApplicationCreateListView(APIView, ApplicationPagination):
             applications = applications.filter(pet__name__icontains=pet_name)
 
         results = self.paginate_queryset(applications, request, view=self)
-        serializer = ApplicationSerializer(results, many=True)
+        serializer = ApplicationSerializer(results, many=True, context={'request': request})
         return self.get_paginated_response(serializer.data)
 
 
@@ -115,7 +115,7 @@ class ApplicationUpdateDetailView(APIView):
             return Response({'detail': "Unauthorized user type."}, status=status.HTTP_403_FORBIDDEN)
 
         application = get_object_or_404(Application, **filter)
-        serializer = ApplicationSerializer(application)
+        serializer = ApplicationSerializer(application, context={'request': request})
 
         return Response(serializer.data)
 
@@ -144,7 +144,7 @@ class ApplicationUpdateDetailView(APIView):
         # Update application status if allowed
         new_status = request.data.get('status')
         if new_status in allowed_status_changes:
-            serializer = ApplicationUpdateSerializer(application, data={'status': new_status}, partial=True)
+            serializer = ApplicationUpdateSerializer(application, data={'status': new_status}, partial=True, context={'request': request})
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)

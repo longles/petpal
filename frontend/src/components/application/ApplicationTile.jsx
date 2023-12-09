@@ -6,11 +6,11 @@ import { shelterAPIService } from '../../services/userAPIService';
 import ChatModal from './ApplicationChatModal';
 import ApplicationReviewModal from './ApplicationModal';
 import '../../styles/applications.scoped.css';
-import dog from '../../assets/images/dog.png';
 
 const PetCard = ({
     applicantId,
     petId,
+    petPhoto,
     status,
     submissionDate,
     applicationId,
@@ -25,6 +25,8 @@ const PetCard = ({
     const applicationService = applicationAPIService();
     const notificationService = notificationAPIService();
     const shelterService = shelterAPIService();
+
+    let displayPhoto = petPhoto || '/assets/images/select_image.png'
 
     const statusOptions = {
         1: { className: 'badge bg-warning', text: 'Pending' },
@@ -88,7 +90,7 @@ const PetCard = ({
             <div className="card mb-4">
                 <div className="row no-gutters">
                     <div className="col-md-4">
-                        <img src={dog} className="card-img" alt="Dog" />
+                        <img src={displayPhoto} className="card-img" alt="Dog" />
                     </div>
                     <div className="col-md-8">
                         <div className="card-body">

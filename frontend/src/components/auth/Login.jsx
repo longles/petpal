@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { ErrorMessage } from "@hookform/error-message"
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const loginSchema = yup
   .object({
@@ -20,7 +21,8 @@ const loginSchema = yup
 function Login() {
     const loginAPI = authAPIService();
     let navigate = useNavigate(); 
-    const [validationError, setValidationError] = useState("")
+    let {state} = useLocation();
+    const [validationError, setValidationError] = useState(state?.errorMsg || "")
     const onLogin = (data) => {
         // Create an alert div and append it to the alertContainer
         console.log(data)
