@@ -39,6 +39,9 @@ const NavBar = () => {
         <li className="nav-item">
           <Link className="nav-link active" to="/applications/">Applications</Link>
         </li>
+        <li className="nav-item">
+          <Link className="nav-link active" to="/appform/">Application Forms</Link>
+        </li>
     </>
 
   );
@@ -53,9 +56,6 @@ const NavBar = () => {
         </li>
         <li className="nav-item">
           <Link className="nav-link active" to="/applications/">Applications</Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link active" to="/appform/">Application Forms</Link>
         </li>
     </>
   );
