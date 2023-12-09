@@ -7,6 +7,8 @@ import { petAPIService } from '../../services/petAPIService';
 import { applicationFormAPIService } from '../../services/applicationFormAPIService';
 import ColourOptions from './ColorOptions';
 import { useState, useEffect } from 'react';
+import SelectApplicationFormModal from './SelectApplicationFormModal';
+import ApplicationModal from './ApplicationModal';
 
 const petCreationSchema = yup.object({
   name: yup.string().required('Name is required'),
@@ -22,22 +24,36 @@ const petCreationSchema = yup.object({
   behaviour: yup.string().required('Behaviour is required'),
   special_needs: yup.string().required('Special Needs is required'),
   comments: yup.string().required('Comments are required'),
+  form: yup.number().required('Form is required'),
 }).required();
 
 function PetCreationModal({ closeModal }) {
+  const [showApplicationFormModal, setShowApplicationFormModal] = useState(false);
+  const [selectedFormId, setSelectedFormId] = useState(null);
+  const [selectedFormName, setSelectedFormName] = useState('');
   const [applicationForms, setApplicationForms] = useState([]);
   const appFormAPI = applicationFormAPIService();
   const petAPI = petAPIService();
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const [showSelectAppFormModal, setShowSelectAppFormModal] = useState(false);
+
+  const { register, handleSubmit, setValue, trigger, formState: { errors } } = useForm({
     resolver: yupResolver(petCreationSchema)
   });
+
+  const handleSelectForm = (formId, formName) => {
+    setSelectedFormId(formId);
+    setSelectedFormName(formName);
+    setValue('form', formId); // This sets the value of 'form' field
+    setShowApplicationFormModal(true);
+    setShowSelectAppFormModal(false); // Close the selection modal
+  };
 
   useEffect(() => {
     const fetchApplicationForms = async () => {
       const response = await appFormAPI.getApplicationFormList(1); // assuming page 1 for demo
       if (response.success) {
-        setApplicationForms(response.data);
-        console.log(response.data);
+        setApplicationForms(response.data.results); // Update this line
+        console.log(response.data.results); // Log the correct data
       } else {
         // Handle error
         console.error('Failed to fetch application forms:', response.message);
@@ -47,7 +63,13 @@ function PetCreationModal({ closeModal }) {
     fetchApplicationForms();
   }, []);
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
+    // Trigger validation for 'form' field
+    const isFormValid = await trigger('form');
+  
+    if (!isFormValid) {
+      return; // Stop the form submission if 'form' field is not valid
+    }
     const formattedData = {
       ...data,
       breed: parseInt(data.breed, 10),
@@ -79,6 +101,7 @@ function PetCreationModal({ closeModal }) {
   };
 
   return (
+    <>
     <Modal show={true} onHide={closeModal} size="lg">
       <Modal.Header closeButton>
         <Modal.Title>Create New Pet</Modal.Title>
@@ -173,12 +196,18 @@ function PetCreationModal({ closeModal }) {
             {errors.special_needs && <div className="error-notif">{errors.special_needs.message}</div>}
 
           </div>
+
           <div className="mb-3">
             <label htmlFor="comments" className="form-label">Comments</label>
             <textarea className="form-control" id="comments" {...register('comments')}></textarea>
             {errors.comments && <div className="error-notif">{errors.comments.message}</div>}
 
           </div>
+          <Button variant="primary" onClick={() => setShowSelectAppFormModal(true)}>
+          Select Application Form
+        </Button>
+        {selectedFormName && <span> Selected Form: {selectedFormName}</span>}
+        {errors.form && <div className="error-notif">{errors.form.message}</div>}
         </form>
       </Modal.Body>
       <Modal.Footer>
@@ -186,6 +215,22 @@ function PetCreationModal({ closeModal }) {
         <Button variant="primary" type="submit" onClick={handleSubmit(onSubmit)}>Create Pet</Button>
       </Modal.Footer>
     </Modal>
+      <SelectApplicationFormModal
+          show={showSelectAppFormModal}
+          onHide={() => setShowSelectAppFormModal(false)}
+          forms={applicationForms}
+          onSelectForm={handleSelectForm}
+        />
+
+        {selectedFormId && (
+          <ApplicationModal
+            show={showApplicationFormModal}
+            closeModal={() => setShowApplicationFormModal(false)}
+            formId={selectedFormId}
+            petId={1} // You can replace this with the actual pet ID once available
+          />
+        )}
+      </>
   );
 }
 export default PetCreationModal;
