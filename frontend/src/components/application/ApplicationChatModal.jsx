@@ -63,10 +63,8 @@ const ChatModal = ({ applicationId, showModal, setShowModal }) => {
     };
 
     useEffect(() => {
-        if (bottom.current) {
-            bottom.current.scrollIntoView({ behavior: 'smooth' })
-        }
-    }, [isInitialLoad])
+        scrollToBottom()
+    }, [isInitialLoad, newComment])
 
     useEffect(() => {
         const chatContainer = chatContainerRef.current;
@@ -89,10 +87,7 @@ const ChatModal = ({ applicationId, showModal, setShowModal }) => {
     }, [currentPage, hasMore, isInitialLoad]);
 
     const scrollToBottom = () => {
-        // const chatContainer = chatContainerRef.current;
-        // if (chatContainer) {
-        //     chatContainer.scrollTop = chatContainer.scrollHeight;
-        // }
+        chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
     };
 
     const handleCommentChange = (event) => {
@@ -105,7 +100,7 @@ const ChatModal = ({ applicationId, showModal, setShowModal }) => {
             const response = await commentService.createApplicationComment(applicationId, newComment);
             if (response.success) {
                 const newMessage = response.data; // Assuming response.data contains the new message
-                setMessages(prevMessages => [...prevMessages, newMessage]);
+                setMessages(prevMessages => [newMessage, ...prevMessages]);
                 setNewComment('');
                 scrollToBottom();
             } else {
