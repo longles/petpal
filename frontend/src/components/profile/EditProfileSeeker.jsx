@@ -5,7 +5,7 @@ import {seekerAPIService} from '../../services/userAPIService'
 import {Link} from "react-router-dom";
 
 const EditProfileSeeker = (props) => {
-    const seekerId = localStorage.getItem('user_id');
+    const seekerId = localStorage.getItem('user_object_id');
     const [seekerDetails, setSeekerDetails] = useState({
         name: '',
         bio: '',
@@ -80,23 +80,6 @@ const EditProfileSeeker = (props) => {
         });
     };
 
-
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-    //     if (!image) {
-    //         alert('Please select a file first!');
-    //         return;
-    //     }
-    //
-    //     // Create a FormData object to send the file
-    //     const formData = new FormData();
-    //     formData.append('profilePic', image, selectedFile.name);
-    //
-    //     console.log('File ready for upload: ', image);
-    //     // Example: axios.post('/api/upload', formData);
-    // };
-
-
     // UI
     return (
         <div>
@@ -141,7 +124,7 @@ const EditProfileSeeker = (props) => {
                         />
                     </div>
                     <button className="btn btn-primary">Save</button>
-                    <button className="btn btn-dark" onClick={props.returnHandler}>Back</button>
+                    <button className="btn btn-dark" onClick={props.returnHandler}>Discard Changes</button>
                 </form>
             </div>
         </div>
