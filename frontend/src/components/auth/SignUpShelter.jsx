@@ -14,7 +14,7 @@ const signUpShelterSchema = yup.object({
     location: yup.string().required("Location is required"),
     email: yup.string().required("Email is required"),
     password1: yup.string().required("Password is required"),
-    password2: yup.string().required("Need to confirm your password")
+    password2: yup.string().oneOf([yup.ref('password1'), null], 'Passwords must match')
 })
 
 function SignUpShelter() {
