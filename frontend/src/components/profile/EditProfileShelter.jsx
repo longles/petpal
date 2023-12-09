@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import '../../styles/layout.css';
-import '../../styles/profile.css';
+import '../../styles/profile.scoped.css'
 import {shelterAPIService} from '../../services/userAPIService'
 
 const EditProfileShelter = ({id}) => {
@@ -129,3 +129,5 @@ const EditProfileShelter = ({id}) => {
         </div>
     )
 }
+
+export default EditProfileShelter;
