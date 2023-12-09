@@ -110,15 +110,43 @@ function PetUpdateModal({ petId }) {
   }, [petDetails, reset]);
 
   const onSubmit = async (data) => {
-    console.log(data);
-    const updatedData = { ...data, form: selectedFormId };
-    console.log(updatedData);
-    const response = await petAPI.updatePet(petId, data);
-    if (response.success) {
-      console.log("Update successful");
-    } else {
-      console.log("Update failed");
-    }
+  
+  // Trigger validation for 'form' field
+  const formattedData = {
+    ...data,
+    photo: data.photo[0],
+    breed: parseInt(data.breed, 10),
+    sex: data.sex === "Male" ? 1 : 2, // Assuming 1 for Male and 2 for Female
+    size: parseInt(data.size, 10),
+    colour: parseInt(data.colour, 10),
+    birth_date: formatDate(data.birth_date)
+    // Add other fields that need conversion here
+  };
+
+  console.log(formattedData);
+
+  let formData = new FormData()
+
+  for (const [key, value] of Object.entries(formattedData)) {
+    console.log(key)
+    formData.append(key, value)
+  }
+
+  const response = await petAPI.updatePet(petId, formData);
+  if (response.success) {
+    console.log("Update successful");
+    console.log(response)
+  } else {
+    console.log("Update failed");
+  }
+};
+  
+  const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+    const year = date.getFullYear();
+    const month = `${date.getMonth() + 1}`.padStart(2, '0');
+    const day = `${date.getDate()}`.padStart(2, '0');
+    return `${year}-${month}-${day}`;
   };
 
   if (loading || !petDetails || !shelterDetails) {
@@ -152,6 +180,15 @@ function PetUpdateModal({ petId }) {
               id="petUpdateForm"
               className="mx-2 px-md-5"
             >
+              <div className="my-1">
+                <label htmlFor="photo" className="form-label">Photo</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  id="photo"
+                  {...register("photo")}
+                />
+              </div>
               <div className="my-1">
                 <label className="form-label" htmlFor="name">
                   Name

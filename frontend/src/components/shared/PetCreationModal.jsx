@@ -91,7 +91,7 @@ function PetCreationModal({ closeModal }) {
     if (response.success) {
       console.log('create successful');
       closeModal();
-      //window.location.reload(); //delete this if we do not want a refresh
+      window.location.reload(); //delete this if we do not want a refresh
     } else {
       console.log('create failed');
     }

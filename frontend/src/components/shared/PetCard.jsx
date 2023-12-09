@@ -50,11 +50,13 @@ const PetCard = ({ manageFlag = false, petId, data }) => {
     const photo = petDetails.photo === null ? '/assets/images/sample_pet_image_2.jpg' : petDetails.photo;
     return (
         <div className="col-md-4 mb-4 d-flex align-items-stretch">
-        <div className="card d-flex flex-column h-100">
-            <img src={photo} className="card-img-top pet-photo" alt={petDetails.name} />
-            <div className="card-body d-flex flex-column">
-                <h4 className="card-title">{petDetails.name}</h4>
-                <p className="card-text">{petDetails.comments}</p>
+          <div className="card listing-box" style={{ width: '100%' }}>
+            <div className="img-container" style={{ height: '200px', overflow: 'hidden' }}>
+              <img src={photo} className="card-img-top" alt={petDetails.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </div>
+            <div className="card-body">
+              <h4 className="card-title">{petDetails.name}</h4>
+              <p className="card-text">{petDetails.comments}</p>
                 <div className="mt-auto">
                     {!manageFlag && (
                         <>
