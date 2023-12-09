@@ -1,33 +1,35 @@
 import React, {useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
 import '../../styles/layout.css'
 import '../../styles/profile.scoped.css'
-import {Link} from 'react-router-dom'
-import {seekerAPIService} from "../../services/userAPIService.js";
+import {shelterAPIService} from "../../services/userAPIService.js";
 import defaultProfilePic from "../../assets/images/default_profile_pic.jpeg"
 
-function ViewProfileSeeker(props) {
-    const seekerId = props.id;
-    const [seekerDetails, setSeekerDetails] = useState({
+function ViewProfileShelter(props) {
+    const shelterId = props.id;
+    const [shelterDetails, setShelterDetails] = useState({
         username: '',
         email: '',
         name: '',
-        bio: '',
+        location: '',
+        missionStatement: '',
+        aboutUs: '',
         profilePic: '',
         phoneNum: ''
     });
     const [validationError, setValidationError] = useState("")
 
     useEffect(() => {
-        const seekerProfileAPI = seekerAPIService();
-        seekerProfileAPI.getSeekerDetail(seekerId)
+        const shelterProfileAPI = shelterAPIService();
+        shelterProfileAPI.getShelterDetail(shelterId)
             .then(res => {
                 if (res.success) {
-                    setSeekerDetails({
+                    setShelterDetails({
                         username: res.data.account.username,
                         email: res.data.account.email,
                         name: res.data.name,
-                        bio: res.data.bio,
+                        location: res.data.location,
+                        missionStatement: res.data.missionStatement,
+                        aboutUs: res.data.aboutUs,
                         profilePic: res.data.profile_pic,
                         phoneNum: res.data.phone_num
                     });
@@ -36,42 +38,42 @@ function ViewProfileSeeker(props) {
                 }
             })
             .catch(err => console.error('Error when fetching seeker details:', err));
-    }, [seekerId]);
+    }, [shelterId]);
 
-    console.log("profilePic: " + seekerDetails.profilePic);
+    console.log("profilePic: " + shelterDetails.profilePic);
 
     return (
         <div>
             <div className="container my-5">
                 <div className="card">
                     <img className="card-img-top profile-pic"
-                         src={seekerDetails.profilePic ? seekerDetails.profilePic : defaultProfilePic}
-                         alt={seekerDetails.name}/>
+                         src={shelterDetails.profilePic ? shelterDetails.profilePic : defaultProfilePic}
+                         alt={shelterDetails.name}/>
                     <div className="card-body">
                         <div className="row">
                             <div className="col-sm-3">
                                 <h6 className="mb-0">Username</h6>
                             </div>
                             <div className="col-sm-9 text-secondary">
-                                {seekerDetails.username}
+                                {shelterDetails.username}
                             </div>
                         </div>
                         <hr/>
                         <div className="row">
                             <div className="col-sm-3">
-                                <h6 className="mb-0">My Real Name</h6>
+                                <h6 className="mb-0">Shelter Name</h6>
                             </div>
                             <div className="col-sm-9 text-secondary">
-                                {seekerDetails.name}
+                                {shelterDetails.name}
                             </div>
                         </div>
                         <hr/>
                         <div className="row">
                             <div className="col-sm-3">
-                                <h6 className="mb-0">Bio</h6>
+                                <h6 className="mb-0">Location</h6>
                             </div>
                             <div className="col-sm-9 text-secondary">
-                                {seekerDetails.bio}
+                                {shelterDetails.location}
                             </div>
                         </div>
                         <hr/>
@@ -80,7 +82,7 @@ function ViewProfileSeeker(props) {
                                 <h6 className="mb-0">Email</h6>
                             </div>
                             <div className="col-sm-9 text-secondary">
-                                {seekerDetails.email}
+                                {shelterDetails.email}
                             </div>
                         </div>
                         <hr/>
@@ -89,7 +91,16 @@ function ViewProfileSeeker(props) {
                                 <h6 className="mb-0">Phone Number</h6>
                             </div>
                             <div className="col-sm-9 text-secondary">
-                                {seekerDetails.phoneNum}
+                                {shelterDetails.phoneNum}
+                            </div>
+                        </div>
+                        <hr/>
+                        <div className="row">
+                            <div className="col-sm-3">
+                                <h6 className="mb-0">Mission Statement</h6>
+                            </div>
+                            <div className="col-sm-9 text-secondary">
+                                {shelterDetails.missionStatement}
                             </div>
                         </div>
                         <hr/>
@@ -105,4 +116,4 @@ function ViewProfileSeeker(props) {
     );
 }
 
-export default ViewProfileSeeker;
+export default ViewProfileShelter;

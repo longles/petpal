@@ -6,11 +6,11 @@ import { shelterAPIService } from '../../services/userAPIService';
 import ChatModal from './ApplicationChatModal';
 import ApplicationReviewModal from './ApplicationModal';
 import '../../styles/applications.scoped.css';
-import dog from '../../assets/images/dog.png';
 
 const PetCard = ({
     applicantId,
     petId,
+    petPhoto,
     status,
     submissionDate,
     applicationId,
@@ -25,6 +25,9 @@ const PetCard = ({
     const applicationService = applicationAPIService();
     const notificationService = notificationAPIService();
     const shelterService = shelterAPIService();
+    const [showChat, setShowChat] = useState(false)
+
+    let displayPhoto = petPhoto || '/assets/images/select_image.png'
 
     const statusOptions = {
         1: { className: 'badge bg-warning', text: 'Pending' },
@@ -88,7 +91,7 @@ const PetCard = ({
             <div className="card mb-4">
                 <div className="row no-gutters">
                     <div className="col-md-4">
-                        <img src={dog} className="card-img" alt="Dog" />
+                        <img src={displayPhoto} className="card-img" alt="Dog" />
                     </div>
                     <div className="col-md-8">
                         <div className="card-body">
@@ -104,7 +107,7 @@ const PetCard = ({
                             <button type="button" className="btn btn-primary" style={{ marginRight: '15px' }} data-bs-toggle="modal" data-bs-target={`#applicationReviewModal${applicationId}`}>
                                 View Application
                             </button>
-                            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#chatModal${applicationId}`}>
+                            <button type="button" className="btn btn-primary" onClick={() => {setShowChat(true)}}>
                                 Open Chat
                             </button>
                             {showDropdown && (
@@ -115,7 +118,7 @@ const PetCard = ({
                                             {statusOptions[selectedStatus].text}
                                         </button>
                                         <div className="dropdown-menu" aria-labelledby="statusDropdown">
-                                            {user_type === 'petseeker' && (status === 1 || status === 2) && (
+                                            {user_type === 'petseeker' && (selectedStatus === 1 || selectedStatus === 2) && (
                                                 <button className="dropdown-item" onClick={() => handleStatusChange(4)}>
                                                     Withdrawn
                                                 </button>
@@ -138,7 +141,7 @@ const PetCard = ({
                     </div>
                 </div>
             </div>
-            <ChatModal applicationId={applicationId} />
+            {showChat && <ChatModal applicationId={applicationId} showModal={showChat} setShowModal={setShowChat} />}
             <ApplicationReviewModal applicationId={applicationId} formId={formId} responses={responses} />
         </>
     );

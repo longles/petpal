@@ -1,32 +1,44 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import '../../styles/layout.css';
-import '../../styles/profile.css';
+import '../../styles/profile.scoped.css'
 import {shelterAPIService} from '../../services/userAPIService'
 
-const EditProfileShelter = ({id}) => {
-    const [profileData, setProfileData] = useState({
-            shelterName: "",
+const EditProfileShelter = (props) => {
+    const shelterId = props.id;
+
+    const [shelterDetails, setShelterDetails] = useState({
+            name: "",
             location: "",
-            missionStatement: "",
-            aboutUs: "",
-            email: "",
-            mobile: "",
-            profilePic: ""
+            phoneNum: "",
         }
     );
 
-    const [securityData, setSecurityData] = useState({
-        newPassword1: "",
-        newPassword2: ""
-    });
+    useEffect(() => {
+        const shelterProfileAPI = shelterAPIService();
+        shelterProfileAPI.getShelterDetail(shelterId)
+            .then(res => {
+                if (res.success) {
+                    setShelterDetails({
+                        name: res.data.name,
+                        location: res.data.location,
+                        phoneNum: res.data.phone_num
+                    });
+                } else {
+                    console.log(res.message);
+                }
+            })
+            .catch(err => console.error('Error when fetching shelter details:', err));
+    }, [shelterId]);
 
-    const [successMessage, setSuccessMessage] = useState("");
     const [validationError, setValidationError] = useState("");
+
+    console.log("shelterDetails");
+    console.log(shelterDetails);
 
     // Event handlers
     function handleProfileChange(event) {
-        setProfileData(prevState => {
+        setShelterDetails(prevState => {
             return {
                 ...prevState,
                 [event.target.name]: event.target.value
@@ -34,69 +46,78 @@ const EditProfileShelter = ({id}) => {
         });
     }
 
-    function handleSecurityChange(event) {
-        setSecurityData(prevState => {
-            return {
-                ...prevState,
-                [event.target.name]: event.target.value
-            }
-        })
-    }
+    // image uploading
+    const [image, setImage] = useState(null);
+
+    const handleImageChange = (event) => {
+        // Check if any file is selected
+        if (event.target.files && event.target.files[0]) {
+            setImage(event.target.files[0]);
+        }
+    };
 
     const handleProfileSubmit = (event) => {
         event.preventDefault();
-        shelterAPIService().updateShelter(id, profileData).then(response => {
+        const allData = {
+            name: shelterDetails.name,
+            location: shelterDetails.location,
+            phone_num: shelterDetails.phoneNum,
+            profile_pic: image
+        };
+
+        let formData = new FormData();
+        for (const [key, value] of Object.entries(allData)) {
+            if (key === "profile_pic" && !value) {
+                continue;
+            }
+            console.log(key);
+            formData.append(key, value);
+        }
+        shelterAPIService().updateShelter(shelterId, formData).then(response => {
             if (response.success) {
                 setValidationError("");
-                setSuccessMessage("Profile updated successfully!");
                 console.log(response.data);
+                window.location.reload();
             } else {
-                setSuccessMessage("");
-                setValidationError("Some of the fields are incorrect!");
+                setValidationError(response.message);
             }
         });
-    };
-
-    const handleSecuritySubmit = (event) => {
-        event.preventDefault();
-        console.log(event);
     };
 
     return (
         <div className="container my-5">
             <h2>Edit Shelter Information</h2>
+            {validationError !== "" &&
+                <div className="alert alert-danger alert-dismissible fade show">{validationError}</div>}
             <form onSubmit={handleProfileSubmit}>
                 <div className="form-group">
                     <label htmlFor="username">Shelter Name</label>
                     <input type="text" className="form-control" id="username" placeholder="Name of your shelter"
-                           value={profileData.shelterName} onChange={handleProfileChange} />
+                           name="name"
+                           value={shelterDetails.name}
+                           onChange={handleProfileChange}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="location">Shelter Location</label>
                     <input type="text" className="form-control" id="location"
-                           value={profileData.location} onChange={handleProfileChange} />
+                           name="location"
+                           value={shelterDetails.location} onChange={handleProfileChange}/>
                 </div>
+                {/*<div className="form-group">*/}
+                {/*    <label htmlFor="mission">Mission Statement</label>*/}
+                {/*    <textarea className="form-control" id="mission" rows="3"*/}
+                {/*              value={shelterDetails.missionStatement} onChange={handleProfileChange} />*/}
+                {/*</div>*/}
+                {/*<div className="form-group">*/}
+                {/*    <label htmlFor="aboutUsProfile">About Us</label>*/}
+                {/*    <textarea className="form-control" id="aboutUsProfile" rows="3"*/}
+                {/*              value={shelterDetails.aboutUs} onChange={handleProfileChange} />*/}
+                {/*</div>*/}
                 <div className="form-group">
-                    <label htmlFor="mission">Mission Statement</label>
-                    <textarea className="form-control" id="mission" rows="3"
-                              value={profileData.missionStatement} onChange={handleProfileChange} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="aboutUsProfile">About Us</label>
-                    <textarea className="form-control" id="aboutUsProfile" rows="3"
-                              value={profileData.aboutUs} onChange={handleProfileChange} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="email" aria-describedby="emailHelp">Email</label>
-                    <input type="text" className="form-control" id="email" placeholder="email"
-                           value={profileData.email} onChange={handleProfileChange} />
-                    <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone
-                        else.</small>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="mobile">Mobile</label>
-                    <input type="text" className="form-control" id="mobile" placeholder="xxx-xxx-xxxx"
-                           value={profileData.mobile} onChange={handleProfileChange}
+                    <label htmlFor="phoneNum">Mobile</label>
+                    <input type="text" className="form-control" id="phoneNum" placeholder="xxx-xxx-xxxx"
+                           name="phoneNum"
+                           value={shelterDetails.phoneNum} onChange={handleProfileChange}
                     />
                     <small className="form-text text-muted">We'll never share your phone number with anyone
                         else.</small>
@@ -104,28 +125,14 @@ const EditProfileShelter = ({id}) => {
                 <div className="form-group">
                     <label htmlFor="profilePic">Change Shelter Pic</label>
                     <input type="file" className="form-control" id="profilePic"
-                           value={profileData.profilePic} onChange={handleProfileChange} />
+                           name="profilePic"
+                           onChange={handleImageChange}/>
                 </div>
-                <Link to="#" className="btn btn-primary" id="showAlert">Save</Link>
-                <Link to="/profile_shelter" id="cancel" className="btn btn-dark">Discard Changes</Link>
-                {/*<a href="#" className="btn btn-primary" id="showAlert">Save</a>*/}
-                {/*<a href="profile_shelter.html" id="cancel" className="btn btn-dark">Discard Changes</a>*/}
-            </form>
-
-            <h2>Security and Privacy</h2>
-            <form onSubmit={handleSecuritySubmit}>
-                <div className="form-group">
-                    <label htmlFor="newPassword">New Password</label>
-                    <input type="password" className="form-control" id="newPassword1"
-                           value={securityData.newPassword1} onChange={handleSecurityChange} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="newPassword2">Confirm New Password</label>
-                    <input type="password" className="form-control" id="newPassword2"
-                           value={securityData.newPassword2} onChange={handleSecurityChange} />
-                </div>
-                <button className="btn btn-primary" id="showAlert2">Submit</button>
+                <button className="btn btn-primary">Save</button>
+                <button className="btn btn-dark" onClick={props.returnHandler}>Discard Changes</button>
             </form>
         </div>
     )
 }
+
+export default EditProfileShelter;

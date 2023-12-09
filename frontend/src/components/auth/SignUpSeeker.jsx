@@ -29,7 +29,7 @@ function SignUpSeeker() {
             user: {
                 name: event.name,
                 bio: "Put your bio here!",
-                phoneNum: "000-000-0000",
+                phoneNum: "999-999-9999",
                 profilePic: ""
             }
         }

@@ -19,7 +19,7 @@ const NotificationModal = ({showModal, setShowModal}) => {
         console.log(ret.message)
         if (ret.message.toLowerCase() === 'not authorized') {
           localStorage.clear()
-          navigate("/accounts/login")
+          navigate("/accounts/login", {errorMsg: "You have been logged out automatically for inactivity. Please login again."})
         }
       }
     }).catch(e => console.log(e.message))

@@ -44,3 +44,4 @@ router.register(r'notifications', NotificationViewset, basename='notification')
 urlpatterns += router.urls
 
 urlpatterns += static(settings.PHOTOS_URL, document_root=settings.PHOTOS_ROOT)
+urlpatterns += static(settings.PROFILE_PIC_URL, document_root=settings.PROFILE_PIC_ROOT)

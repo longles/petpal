@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 const NavBar = () => {
     // Retrieve userType from localStorage
     const userType = localStorage.getItem('user_type') || 'none';
-    const userId = localStorage.getItem('user_id');
+    const userId = localStorage.getItem('user_object_id');
     const logoutAPI = authAPIService()
     const navigate = useNavigate()
     const [showNotifications, setShowNotifications] = useState(false)
