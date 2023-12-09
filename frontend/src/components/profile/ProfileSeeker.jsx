@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 function ProfileSeeker() {
     const navigate = useNavigate();
-    if (localStorage.user_type !== "petshelter") {
+    if (localStorage.user_type !== "petseeker") {
         console.log("wrong usertype");
         console.log("you are a");
         console.log(localStorage.user_type);
