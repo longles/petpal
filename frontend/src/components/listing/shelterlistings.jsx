@@ -76,7 +76,7 @@ const ShelterListing = ({ manageFlag = false, defaultFilters = {} }) => {
               {petIDs.map((petID) => (
                 <PetCard manageFlag={manageFlag} key={petID} petId={petID} />
               ))}
-              <ShelterCard/>
+              {/* <ShelterCard/> */}
             </div>
             <div className="d-flex justify-content-center mt-3">
               <Pagination>{paginationItems}</Pagination>
