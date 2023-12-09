@@ -9,7 +9,6 @@ const EditProfileSeeker = (props) => {
     const [seekerDetails, setSeekerDetails] = useState({
         name: '',
         bio: '',
-        profilePic: '',
         phoneNum: ''
     });
 
@@ -21,7 +20,6 @@ const EditProfileSeeker = (props) => {
                     setSeekerDetails({
                         name: res.data.name,
                         bio: res.data.bio,
-                        profilePic: res.data.profile_pic,
                         phoneNum: res.data.phone_num
                     });
                 } else {
@@ -34,6 +32,7 @@ const EditProfileSeeker = (props) => {
     const [validationError, setValidationError] = useState("");
 
     console.log(seekerDetails);
+
     // Event handlers
     function handleProfileChange(event) {
         setSeekerDetails(prevState => {
@@ -46,7 +45,18 @@ const EditProfileSeeker = (props) => {
 
     const handleProfileSubmit = (event) => {
         event.preventDefault();
-        seekerAPIService().updateSeeker(seekerId, seekerDetails).then(response => {
+        const allData = {
+            ...seekerDetails,
+            profilePic: event.target.files[0]
+        }
+        console.log(allData);
+
+        let formData = new FormData();
+        for (const [key, value] of Object.entries(allData)) {
+            console.log(key);
+            formData.append(key, value);
+        }
+        seekerAPIService().updateSeeker(seekerId, formData).then(response => {
             if (response.success) {
                 setValidationError("");
                 console.log(response.data);
@@ -57,13 +67,40 @@ const EditProfileSeeker = (props) => {
         });
     };
 
+    // image uploading
+    const [image, setImage] = useState(null);
+
+    const handleImageChange = (event) => {
+        // Check if any file is selected
+        if (event.target.files && event.target.files[0]) {
+            setImage(event.target.files[0]);
+        }
+    };
+
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     if (!image) {
+    //         alert('Please select a file first!');
+    //         return;
+    //     }
+    //
+    //     // Create a FormData object to send the file
+    //     const formData = new FormData();
+    //     formData.append('profilePic', image, selectedFile.name);
+    //
+    //     console.log('File ready for upload: ', image);
+    //     // Example: axios.post('/api/upload', formData);
+    // };
+
+
     // UI
     return (
         <div>
             {/* Profile Edit Form */}
             <div className="container my-5">
                 <h2>Edit Profile</h2>
-                {validationError !== "" && <div className="alert alert-danger alert-dismissible fade show">{validationError}</div>}
+                {validationError !== "" &&
+                    <div className="alert alert-danger alert-dismissible fade show">{validationError}</div>}
                 <form onSubmit={handleProfileSubmit}>
                     {/* Username */}
                     <div className="form-group">
@@ -96,8 +133,7 @@ const EditProfileSeeker = (props) => {
                         <label htmlFor="profilePic">Change Profile Pic</label>
                         <input type="file" className="form-control" id="profilePic"
                                name="profilePic"
-                               value={seekerDetails.profilePic}
-                               onChange={handleProfileChange}
+                               onChange={handleImageChange}
                         />
                     </div>
                     <button className="btn btn-primary">Save</button>
