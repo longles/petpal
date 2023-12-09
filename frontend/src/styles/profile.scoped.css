@@ -16,7 +16,6 @@
 .btn {
     margin-top: 8px;
     margin-right: 5px;
-    margin-bottom: 10px;
 }
 
 .edit-btn:hover {
@@ -31,4 +30,12 @@
 
 .profile-footer {
     margin-top: auto;
+}
+
+h2 {
+    margin-top: 20px;
+}
+
+.back-btn {
+    margin-top: 25px;
 }

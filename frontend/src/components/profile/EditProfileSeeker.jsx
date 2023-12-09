@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import '../../styles/layout.css';
 import '../../styles/profile.scoped.css'
 import {seekerAPIService} from '../../services/userAPIService'
+import {Link} from "react-router-dom";
 
 const EditProfileSeeker = (props) => {
     const seekerId = props.id;
@@ -81,6 +82,19 @@ const EditProfileSeeker = (props) => {
         // console.log(event);
     };
 
+    const deleteAccount = () => {
+        seekerAPIService().deleteSeeker(seekerId).then(response => {
+            if (response.success) {
+                setValidationError("");
+                setSuccessMessage("Account deleted!");
+                console.log(response.data);
+            } else {
+                setSuccessMessage("");
+                setValidationError("Something went wrong. Account cannot be deleted!");
+            }
+        })
+    }
+
     // UI
     return (
         <div>
@@ -142,7 +156,7 @@ const EditProfileSeeker = (props) => {
                         />
                     </div>
                     <button className="btn btn-primary">Save</button>
-                    <button className="btn btn-dark" onClick={props.returnHandler}>Back</button>
+                    {/*<button className="btn btn-dark" onClick={props.returnHandler}>Back</button>*/}
                 </form>
 
                 <h2>Security and Privacy</h2>
@@ -160,8 +174,13 @@ const EditProfileSeeker = (props) => {
                                onChange={handleSecurityChange} required/>
                     </div>
                     <button className="btn btn-primary">Submit</button>
-                    <button className="btn btn-dark" onClick={props.returnHandler}>Back</button>
+                    {/*<button className="btn btn-dark" onClick={props.returnHandler}>Back</button>*/}
                 </form>
+                <h2>Delete Account</h2>
+                <Link to="/accounts/login" className="btn btn-danger" onClick={deleteAccount}>Delete</Link>
+                <div>
+                    <button className="btn btn-dark back-btn" onClick={props.returnHandler}>Back</button>
+                </div>
             </div>
         </div>
     );
