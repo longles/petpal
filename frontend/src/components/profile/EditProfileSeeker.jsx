@@ -3,6 +3,7 @@ import '../../styles/layout.css';
 import '../../styles/profile.scoped.css'
 import {seekerAPIService} from '../../services/userAPIService'
 import {Link} from "react-router-dom";
+import defaultProfilePic from '../../assets/images/default_profile_pic.jpeg'
 
 const EditProfileSeeker = (props) => {
     const seekerId = localStorage.getItem('user_object_id');
@@ -61,11 +62,12 @@ const EditProfileSeeker = (props) => {
             phone_num: seekerDetails.phoneNum,
             profile_pic: image
         };
-        console.log("allData: ");
-        console.log(allData);
 
         let formData = new FormData();
         for (const [key, value] of Object.entries(allData)) {
+            if (key === "profile_pic" && !value) {
+                continue;
+            }
             console.log(key);
             formData.append(key, value);
         }
