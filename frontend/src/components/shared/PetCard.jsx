@@ -82,6 +82,7 @@ const PetCard = ({ manageFlag = false, petId, data }) => {
                     closeModal={closeApplicationModal}
                     petId={petId}
                     formId={petDetails.form}
+                    shelterId={petDetails.shelter}
                 />
             )}
         </div>
