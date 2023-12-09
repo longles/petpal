@@ -109,6 +109,10 @@ function PetCreationModal({ closeModal }) {
       <Modal.Body>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
+            <label htmlFor="photo" className="form-label">Photo</label>
+            <input className="form-control" type="file" id="photo" {...register('photo')}/>
+          </div>
+          <div className="mb-3">
             <label htmlFor="name" className="form-label">Name</label>
             <input className="form-control" id="name" {...register('name')} />
             {errors.name && <div className="error-notif">{errors.name.message}</div>}
