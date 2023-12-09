@@ -2,24 +2,7 @@ import { APIService } from './APIService.js';
 
 
 export const accountAPIService = () => {
-    const API_PATH = 'accounts/';
     const apiService = APIService();
-
-    // const getAccountData = async (id) => {
-    //     const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'GET');
-    //
-    //     if (!response.success) {
-    //         return {
-    //             success: false,
-    //             message: response.data.detail,
-    //         }
-    //     }
-    //
-    //     return {
-    //         success: true,
-    //         data: response.data,
-    //     }
-    // }
 
     const updateUser = async (id, userData) => {
         const response = await apiService.makePrivateAPICall(`accounts/${id}/`, 'PATCH', {
@@ -99,10 +82,13 @@ export const seekerAPIService = () => {
         // }
 
         // const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', formData, 'multipart/form-data');
-        const response = await apiService.makePrivateAPICall(`accounts/${id}/`, 'PATCH', {
-            username: seekerDetails.username,
-            email: seekerDetails.email
+        const response = await apiService.makePrivateAPICall(`${API_PATH}${id}/`, 'PATCH', {
+            name: seekerDetails.name,
+            bio: seekerDetails.bio,
+            phone_num: seekerDetails.phoneNum,
+            profile_pic: seekerDetails.profilePic
         });
+
         if (!response.success) {
             return {
                 success: false,

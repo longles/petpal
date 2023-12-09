@@ -5,7 +5,7 @@ import {seekerAPIService} from '../../services/userAPIService'
 import {Link} from "react-router-dom";
 
 const EditProfileSeeker = (props) => {
-    const seekerId = props.id;
+    const seekerId = localStorage.getItem('user_id');
     const [seekerDetails, setSeekerDetails] = useState({
         name: '',
         bio: '',
@@ -31,7 +31,6 @@ const EditProfileSeeker = (props) => {
             .catch(err => console.error('Error when fetching seeker details:', err));
     }, [seekerId]);
 
-    const [successMessage, setSuccessMessage] = useState("");
     const [validationError, setValidationError] = useState("");
 
     console.log(seekerDetails);
@@ -45,34 +44,18 @@ const EditProfileSeeker = (props) => {
         });
     }
 
-
     const handleProfileSubmit = (event) => {
         event.preventDefault();
-        seekerAPIService().updateSeeker(props.id, seekerDetails).then(response => {
+        seekerAPIService().updateSeeker(seekerId, seekerDetails).then(response => {
             if (response.success) {
                 setValidationError("");
-                setSuccessMessage("Profile updated successfully!");
                 console.log(response.data);
+                window.location.reload();
             } else {
-                setSuccessMessage("");
-                setValidationError("Some of the fields are incorrect!");
+                setValidationError(response.message);
             }
         });
     };
-
-
-    const deleteAccount = () => {
-        seekerAPIService().deleteSeeker(seekerId).then(response => {
-            if (response.success) {
-                setValidationError("");
-                setSuccessMessage("Account deleted!");
-                console.log(response.data);
-            } else {
-                setSuccessMessage("");
-                setValidationError("Something went wrong. Account cannot be deleted!");
-            }
-        })
-    }
 
     // UI
     return (
@@ -80,6 +63,7 @@ const EditProfileSeeker = (props) => {
             {/* Profile Edit Form */}
             <div className="container my-5">
                 <h2>Edit Profile</h2>
+                {validationError !== "" && <div className="alert alert-danger alert-dismissible fade show">{validationError}</div>}
                 <form onSubmit={handleProfileSubmit}>
                     {/* Username */}
                     <div className="form-group">
@@ -117,14 +101,8 @@ const EditProfileSeeker = (props) => {
                         />
                     </div>
                     <button className="btn btn-primary">Save</button>
-                    {/*<button className="btn btn-dark" onClick={props.returnHandler}>Back</button>*/}
+                    <button className="btn btn-dark" onClick={props.returnHandler}>Back</button>
                 </form>
-
-                <h2>Delete Account</h2>
-                <Link to="/accounts/login" className="btn btn-danger" onClick={deleteAccount}>Delete</Link>
-                <div>
-                    <button className="btn btn-dark back-btn" onClick={props.returnHandler}>Back</button>
-                </div>
             </div>
         </div>
     );
