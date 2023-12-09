@@ -73,7 +73,7 @@ const EditProfileSeeker = (props) => {
             if (response.success) {
                 setValidationError("");
                 console.log(response.data);
-                // window.location.reload();
+                window.location.reload();
             } else {
                 setValidationError(response.message);
             }

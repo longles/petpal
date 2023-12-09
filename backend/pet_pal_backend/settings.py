@@ -94,8 +94,8 @@ TEMPLATES = [
 PHOTOS_URL = "/pet_photos/"
 PHOTOS_ROOT = os.path.join(BASE_DIR, 'pet_photos')
 
-PROFILE_PIC_URL = "/profile_pics/"
-PROFILE_PIC_ROOT = os.path.join(BASE_DIR, 'profile_pics')
+PROFILE_PIC_URL = "/profile_pic/"
+PROFILE_PIC_ROOT = os.path.join(BASE_DIR, 'profile_pic')
 
 WSGI_APPLICATION = 'pet_pal_backend.wsgi.application'
 

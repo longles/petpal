@@ -38,7 +38,7 @@ function ViewProfileSeeker(props) {
             .catch(err => console.error('Error when fetching seeker details:', err));
     }, [seekerId]);
 
-    console.log(seekerDetails.profilePic);
+    console.log("profilePic: " + seekerDetails.profilePic);
 
     return (
         <div>
