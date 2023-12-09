@@ -42,14 +42,13 @@ const ShelterListing = () => {
 
   return (
     <div>
-      <div className="container main-content">
+      <div className="mt-5">
         <div className="d-flex mb-4 align-items-center justify-content-center">
           <h2 className="me-2 my-auto">Shelter Listings</h2>
         </div>
         
-        <div className="row justify-content-center">
-          <div className="col-md-9">
-            <div className="row no-gutters">
+        <div className="">
+            <div className="d-flex flex-wrap justify-content-around no-gutters">
               {shelterIDs.map((shelterId) => (
                 <ShelterCard key={shelterId} shelterId={shelterId} />
               ))}
@@ -57,7 +56,6 @@ const ShelterListing = () => {
             <div className="d-flex justify-content-center mt-3">
               <Pagination>{paginationItems}</Pagination>
             </div>
-          </div>
         </div>
       </div>
     </div>

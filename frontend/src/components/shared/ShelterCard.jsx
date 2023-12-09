@@ -28,9 +28,9 @@ const ShelterCard = ({ manageFlag = false, shelterId }) => {
   }
 
   return (
-    <div className="col-md-4 mb-4 d-flex align-items-stretch">
+    <div className="col-md-3 mb-4 d-flex justify-content-center align-items-stretch">
       <Link to={`/shelterDetail/${shelterId}`} style={{ textDecoration: 'none' }}>
-        <div className="card listing-box" style={{ width: '150px', height: '150px' }}>
+        <div className="card listing-box">
           <div className="card-body">
             <h4 className="card-title">{shelterDetails.name}</h4>
             <p className="card-text">{shelterDetails.description}</p>
