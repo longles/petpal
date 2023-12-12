@@ -69,8 +69,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'http://localhost:8000',
-    'http://18.227.134.63:8000'
+    'https://petpal-client-46cff752a7a7.herokuapp.com'
 ]
 
 ROOT_URLCONF = 'pet_pal_backend.urls'
