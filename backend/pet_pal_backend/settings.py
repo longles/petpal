@@ -69,7 +69,8 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'http://18.227.134.63:8000/'
+    'http://localhost:8000',
+    'http://18.227.134.63:8000'
 ]
 
 ROOT_URLCONF = 'pet_pal_backend.urls'
