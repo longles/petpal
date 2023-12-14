@@ -2,3 +2,4 @@
 .DS_Store
 backend/pet_photos/
 backend/profile_pic/
+backend/db.sqlite3

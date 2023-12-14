@@ -8,7 +8,7 @@ import PetListingsPage from '../listing/listings';
 
 function ShelterManagement() {
     const navigate = useNavigate()
-    if (localStorage.user_type !== "petshelter") {
+    if (localStorage.getItem('user_type') !== "petshelter") {
       navigate("/404")
     }
     
