@@ -6,7 +6,7 @@ from rest_framework.pagination import PageNumberPagination
 from django.shortcuts import get_object_or_404
 
 from ..models import Application, Pet, ApplicationForm
-from ..serializers import ApplicationSerializer, ApplicationUpdateSerializer
+from ..serializers import ApplicationSerializer, ApplicationUpdateSerializer, ApplicationSerializerGet
 from accounts.permission import IsPetSeeker, IsShelter
 from ..utils import method_permission_classes
 
@@ -115,7 +115,7 @@ class ApplicationUpdateDetailView(APIView):
             return Response({'detail': "Unauthorized user type."}, status=status.HTTP_403_FORBIDDEN)
 
         application = get_object_or_404(Application, **filter)
-        serializer = ApplicationSerializer(application, context={'request': request})
+        serializer = ApplicationSerializerGet(application, context={'request': request})
 
         return Response(serializer.data)
 

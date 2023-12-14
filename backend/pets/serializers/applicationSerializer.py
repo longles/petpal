@@ -91,7 +91,7 @@ class ApplicationPetSerializer(serializers.ModelSerializer):
         self._context = self.parent.context
         return super().to_representation(instance)
 
-class ApplicationSerializer(serializers.ModelSerializer):
+class ApplicationSerializerGet(serializers.ModelSerializer):
     responses = QuestionResponseSerializer(many=True)
     pet = ApplicationPetSerializer(read_only=True)
 
@@ -102,6 +102,13 @@ class ApplicationSerializer(serializers.ModelSerializer):
     def get_pet_serializer(self, obj):
         serializer = ApplicationPetSerializer(obj.pet, context=self.context)
         return serializer.data
+
+class ApplicationSerializer(serializers.ModelSerializer):
+    responses = QuestionResponseSerializer(many=True)
+
+    class Meta:
+        model = Application
+        fields = ('id', 'pet', 'applicant', 'form', 'status', 'responses', 'created_at', 'last_updated')
 
     def create(self, validated_data):
         response_data = validated_data.pop('responses')
