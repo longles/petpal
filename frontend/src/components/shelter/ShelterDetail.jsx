@@ -17,7 +17,9 @@ function ShelterDetail() {
 
   const API = shelterAPIService()
 
-  const petRenderFunc = (x) => {return <PetCard key={x.id} petId={x.id} data={x} manageFlag={true}/>}
+  const [manageFlag, setManageFlag] = useState(false)
+
+  const petRenderFunc = (x) => {return <PetCard key={x.id} petId={x.id} data={x} manageFlag={manageFlag}/>}
 
   useEffect(() => {
     console.log("Hi")
@@ -27,6 +29,9 @@ function ShelterDetail() {
         setData(ret.data)
       }
     })
+    if (localStorage.getItem("user_type")=='petshelter' && localStorage.getItem("user_object_id") == shelterId) {
+      setManageFlag(true)
+    }
   }, [])
   console.log(data)
   return (

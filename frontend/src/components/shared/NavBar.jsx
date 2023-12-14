@@ -8,6 +8,7 @@ const NavBar = () => {
     // Retrieve userType from localStorage
     const userType = localStorage.getItem('user_type') || 'none';
     const userId = localStorage.getItem('user_object_id');
+    console.log(userType)
     const logoutAPI = authAPIService()
     const navigate = useNavigate()
     const [showNotifications, setShowNotifications] = useState(false)
@@ -114,7 +115,7 @@ const NavBar = () => {
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             {userType === 'petseeker' && renderSeekerNavbar()}
                             {userType === 'petshelter' && renderShelterNavbar()}
-                            {/* Other common links */}
+                            {userType === 'none' && renderNoneNavbar()}
                         </ul>
                         <ul className="navbar-nav ml-auto">
                             {userType === 'none' && renderLogin()}
