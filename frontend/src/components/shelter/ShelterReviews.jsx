@@ -9,7 +9,7 @@ import CreateShelterReview from './CreateShelterReview';
 
 const PAGE_SIZE = 3
 
-const ShelterReviews = ({id}) => {
+const ShelterReviews = ({id, account_id}) => {
     const [page, setPage] = useState(1)
 
     const [results, setResults] = useState([])
@@ -52,7 +52,7 @@ const ShelterReviews = ({id}) => {
         return (
             <>
                 <p className="text-center">This shelter has no reviews yet.</p>
-                <CreateShelterReview id={id}/>
+                <CreateShelterReview id={id} account_id={account_id}/>
             </>
         );
 
@@ -69,7 +69,7 @@ const ShelterReviews = ({id}) => {
                     <Pagination.Last onClick={() => onPageClick(count)}/>
                 </Pagination>
             </div>
-            <CreateShelterReview id={id}/>
+            <CreateShelterReview id={id} account_id={account_id}/>
         </>
     );
 };

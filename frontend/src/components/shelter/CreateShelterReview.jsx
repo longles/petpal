@@ -19,6 +19,7 @@ const shelterCommentSchema = yup
   .required()
 
 const CreateShelterReview = ({id, account_id}) => {
+    console.log(account_id)
 
     const API = shelterCommentAPIService()
     const notificationAPI = notificationAPIService()
@@ -32,6 +33,7 @@ const CreateShelterReview = ({id, account_id}) => {
                 setValidationError("")
                 console.log(response.data)
                 notificationAPI.createNotification(account_id, id, 'shelter_comment', "A review has been created for your shelter!")
+                window.location.reload(false);
             } else {
                 setValidationError(response.message)
             }

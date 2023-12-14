@@ -10,6 +10,7 @@ export const notificationAPIService = () => {
             link_id: link_id,
             notification_type: notif_type,
             content: content,
+            is_read: false
         });
 
         if (!response.success) {
