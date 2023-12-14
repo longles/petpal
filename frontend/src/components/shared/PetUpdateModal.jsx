@@ -19,9 +19,6 @@ function PetUpdateModal({ petId }) {
     const [selectedFormName, setSelectedFormName] = useState("");
     const [applicationForms, setApplicationForms] = useState([]);
     const [showSelectAppFormModal, setShowSelectAppFormModal] = useState(false);
-    const [showApplicationFormModal, setShowApplicationFormModal] = useState(
-        false
-    );
     const appFormAPI = applicationFormAPIService(); // New API call
 
     const petAPI = petAPIService();
@@ -87,7 +84,6 @@ function PetUpdateModal({ petId }) {
     const handleSelectForm = (formId, formName) => {
         setSelectedFormId(formId);
         setSelectedFormName(formName);
-        setShowApplicationFormModal(true);
         setShowSelectAppFormModal(false);
     };
 

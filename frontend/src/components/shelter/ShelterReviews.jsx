@@ -50,7 +50,10 @@ const ShelterReviews = ({id}) => {
 
     if (count === 0) {
         return (
-            <p className="text-center">This shelter has no reviews yet.</p>
+            <>
+                <p className="text-center">This shelter has no reviews yet.</p>
+                <CreateShelterReview id={id}/>
+            </>
         );
 
     }
