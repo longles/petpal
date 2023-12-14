@@ -29,7 +29,6 @@ const petCreationSchema = yup.object({
 }).required();
 
 function PetCreationModal({ showModal, setShowModal }) {
-  const [showApplicationFormModal, setShowApplicationFormModal] = useState(false);
   const [selectedFormId, setSelectedFormId] = useState(null);
   const [selectedFormName, setSelectedFormName] = useState('');
   const [applicationForms, setApplicationForms] = useState([]);
@@ -56,7 +55,7 @@ function PetCreationModal({ showModal, setShowModal }) {
     setSelectedFormId(formId);
     setSelectedFormName(formName);
     setValue('form', formId); // This sets the value of 'form' field
-    setShowApplicationFormModal(true);
+    setShowModal(true)
     setShowSelectAppFormModal(false); // Close the selection modal
   };
 
