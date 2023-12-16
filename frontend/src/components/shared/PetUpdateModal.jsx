@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { petAPIService } from "../../services/petAPIService";
 import { shelterAPIService } from "../../services/userAPIService";
@@ -28,6 +28,7 @@ function PetUpdateModal({ petId }) {
     const [shelterDetails, setShelterDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const modalId = getUpdateModalId(petId);
+    const modalFormRef = useRef(null)
     const {
         register,
         handleSubmit,
@@ -136,7 +137,8 @@ function PetUpdateModal({ petId }) {
             console.log("Update successful");
             console.log(response)
             setUpdateSuccess(true);
-            window.location.reload();
+            modalFormRef.current.scrollTop = 0
+            //window.location.reload();
         } else {
             console.log("Update failed");
             setUpdateSuccess(false)
@@ -177,7 +179,7 @@ function PetUpdateModal({ petId }) {
                         />
                     </div>
                     
-                    <div className="modal-body">
+                    <div className="modal-body" ref={modalFormRef}>
                         {updateSuccess && (
                             <div className="alert alert-success" role="alert">
                                 Update successful!
