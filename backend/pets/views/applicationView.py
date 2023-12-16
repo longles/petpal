@@ -93,7 +93,7 @@ class ApplicationCreateListView(APIView, ApplicationPagination):
             applications = applications.filter(pet__name__icontains=pet_name)
 
         results = self.paginate_queryset(applications, request, view=self)
-        serializer = ApplicationSerializer(results, many=True, context={'request': request})
+        serializer = ApplicationSerializerGet(results, many=True, context={'request': request})
         return self.get_paginated_response(serializer.data)
 
 
