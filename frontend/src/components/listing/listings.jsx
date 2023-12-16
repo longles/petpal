@@ -17,7 +17,7 @@ const PetListingsPage = ({ manageFlag = false, defaultFilters = {} }) => {
   const [petFilters, setPetFilters] = useState(defaultFilters)
 
   const updateFilters = useCallback((newFilters) => {
-    setPetFilters(newFilters)
+    setPetFilters({...petFilters, ...newFilters})
   }, []);
 
   const fetchPetList = useCallback(async (page = currentPage, sort = sortOrder) => {

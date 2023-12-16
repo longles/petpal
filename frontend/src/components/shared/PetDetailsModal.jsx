@@ -40,6 +40,8 @@ const mapSpecies = (speciesCode) => SpeciesMap[speciesCode] || 'Unknown';
 const mapSize = (sizeCode) => SizeMap[sizeCode] || 'Unknown';
 const mapBreed = (breedCode) => BreedMap[breedCode] || 'Unknown';
 
+const canAdopt = localStorage.getItem('user_type') === 'seeker'
+
 // pet detail should get a pet id and fetch info from server
 const PetDetailsModal = ({ petId, closeModal, openApplicationModal }) => {
   const [activeTab, setActiveTab] = useState('tab1');
@@ -180,7 +182,7 @@ function calculateAge(birthDateString) {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={() => openApplicationModal()}>
+        <Button variant="primary" onClick={() => openApplicationModal()} disabled={!canAdopt}>
           Adopt
         </Button>
       </Modal.Footer>
