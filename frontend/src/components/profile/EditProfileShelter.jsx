@@ -10,7 +10,9 @@ const EditProfileShelter = (props) => {
     const [shelterDetails, setShelterDetails] = useState({
             name: "",
             location: "",
-            phoneNum: "",
+            phone_num: "",
+            mission: "",
+            about_us: ""
         }
     );
 
@@ -22,7 +24,9 @@ const EditProfileShelter = (props) => {
                     setShelterDetails({
                         name: res.data.name,
                         location: res.data.location,
-                        phoneNum: res.data.phone_num
+                        phone_num: res.data.phone_num,
+                        mission: res.data.mission,
+                        about_us: res.data.about_us
                     });
                 } else {
                     console.log(res.message);
@@ -59,9 +63,7 @@ const EditProfileShelter = (props) => {
     const handleProfileSubmit = (event) => {
         event.preventDefault();
         const allData = {
-            name: shelterDetails.name,
-            location: shelterDetails.location,
-            phone_num: shelterDetails.phoneNum,
+            ...shelterDetails,
             profile_pic: image
         };
 
@@ -103,21 +105,23 @@ const EditProfileShelter = (props) => {
                            name="location"
                            value={shelterDetails.location} onChange={handleProfileChange}/>
                 </div>
-                {/*<div className="form-group">*/}
-                {/*    <label htmlFor="mission">Mission Statement</label>*/}
-                {/*    <textarea className="form-control" id="mission" rows="3"*/}
-                {/*              value={shelterDetails.missionStatement} onChange={handleProfileChange} />*/}
-                {/*</div>*/}
-                {/*<div className="form-group">*/}
-                {/*    <label htmlFor="aboutUsProfile">About Us</label>*/}
-                {/*    <textarea className="form-control" id="aboutUsProfile" rows="3"*/}
-                {/*              value={shelterDetails.aboutUs} onChange={handleProfileChange} />*/}
-                {/*</div>*/}
                 <div className="form-group">
-                    <label htmlFor="phoneNum">Mobile</label>
-                    <input type="text" className="form-control" id="phoneNum" placeholder="xxx-xxx-xxxx"
-                           name="phoneNum"
-                           value={shelterDetails.phoneNum} onChange={handleProfileChange}
+                    <label htmlFor="mission">Mission Statement</label>
+                    <input type="text" className="form-control" id="mission"
+                           name="mission"
+                           value={shelterDetails.mission} onChange={handleProfileChange}/>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="about_us">About Us</label>
+                    <textarea type="text" className="form-control" id="about_us" rows="3"
+                           name="about_us"
+                           value={shelterDetails.about_us} onChange={handleProfileChange}/>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="phone_num">Mobile</label>
+                    <input type="text" className="form-control" id="phone_num" placeholder="xxx-xxx-xxxx"
+                           name="phone_num"
+                           value={shelterDetails.phone_num} onChange={handleProfileChange}
                     />
                     <small className="form-text text-muted">We'll never share your phone number with anyone
                         else.</small>

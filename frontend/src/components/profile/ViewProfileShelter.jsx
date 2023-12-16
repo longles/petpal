@@ -11,10 +11,10 @@ function ViewProfileShelter(props) {
         email: '',
         name: '',
         location: '',
-        missionStatement: '',
-        aboutUs: '',
+        mission: '',
+        about_us: '',
         profilePic: '',
-        phoneNum: ''
+        phone_num: ''
     });
     const [validationError, setValidationError] = useState("")
 
@@ -28,10 +28,10 @@ function ViewProfileShelter(props) {
                         email: res.data.account.email,
                         name: res.data.name,
                         location: res.data.location,
-                        missionStatement: res.data.missionStatement,
-                        aboutUs: res.data.aboutUs,
+                        mission: res.data.mission,
+                        about_us: res.data.about_us,
                         profilePic: res.data.profile_pic,
-                        phoneNum: res.data.phone_num
+                        phone_num: res.data.phone_num || ''
                     });
                 } else {
                     setValidationError(res.message);
@@ -91,7 +91,7 @@ function ViewProfileShelter(props) {
                                 <h6 className="mb-0">Phone Number</h6>
                             </div>
                             <div className="col-sm-9 text-secondary">
-                                {shelterDetails.phoneNum}
+                                {shelterDetails.phone_num}
                             </div>
                         </div>
                         <hr/>
@@ -100,7 +100,16 @@ function ViewProfileShelter(props) {
                                 <h6 className="mb-0">Mission Statement</h6>
                             </div>
                             <div className="col-sm-9 text-secondary">
-                                {shelterDetails.missionStatement}
+                                {shelterDetails.mission}
+                            </div>
+                        </div>
+                        <hr/>
+                        <div className="row">
+                            <div className="col-sm-3">
+                                <h6 className="mb-0">About Us</h6>
+                            </div>
+                            <div className="col-sm-9 text-secondary">
+                                {shelterDetails.about_us}
                             </div>
                         </div>
                         <hr/>
