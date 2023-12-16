@@ -176,12 +176,13 @@ function PetUpdateModal({ petId }) {
                             aria-label="Close"
                         />
                     </div>
-                    {updateSuccess && (
-                        <div className="alert alert-success" role="alert">
-                            Update successful!
-                        </div>
-                    )}
+                    
                     <div className="modal-body">
+                        {updateSuccess && (
+                            <div className="alert alert-success" role="alert">
+                                Update successful!
+                            </div>
+                        )}
                         <form
                             onSubmit={handleSubmit(onSubmit)}
                             id="petUpdateForm"
