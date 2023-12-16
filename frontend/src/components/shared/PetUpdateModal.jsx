@@ -34,7 +34,7 @@ function PetUpdateModal({ petId }) {
         formState: { errors },
     } = useForm();
     const [formInitialized, setFormInitialized] = useState(false);
-
+    
     const fetchPetDetail = async () => {
         try {
             const response = await petAPI.getPetDetail(petId);
@@ -100,7 +100,7 @@ function PetUpdateModal({ petId }) {
 
     useEffect(() => {
         if (petDetails) {
-            reset(petDetails);
+            reset({...petDetails, photo: null});
             setFormInitialized(true);
         }
     }, [petDetails, reset]);
@@ -127,7 +127,6 @@ function PetUpdateModal({ petId }) {
             if (key === "photo" && !value) {
                 continue;
             }
-            console.log(key)
             formData.append(key, value)
         }
 
