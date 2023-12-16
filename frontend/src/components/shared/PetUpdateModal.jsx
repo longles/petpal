@@ -14,6 +14,7 @@ export function getUpdateModalId(petId) {
 }
 
 function PetUpdateModal({ petId }) {
+    const [updateSuccess, setUpdateSuccess] = useState(false);
     const [currentFormName, setCurrentFormName] = useState("None");
     const [selectedFormId, setSelectedFormId] = useState(null);
     const [selectedFormName, setSelectedFormName] = useState("");
@@ -41,10 +42,9 @@ function PetUpdateModal({ petId }) {
             if (response.success) {
                 setPetDetails(response.data);
 
-                // Check if the pet has an associated form and update state
                 if (response.data.form) {
-                    setCurrentFormName(response.data.form.name); // Assuming 'form' object has a 'name' property
-                    setSelectedFormId(response.data.form.id); // Assuming 'form' object has an 'id' property
+                    setCurrentFormName(response.data.form.name); 
+                    setSelectedFormId(response.data.form.id);
                 }
 
                 return response.data.shelter;
@@ -72,9 +72,11 @@ function PetUpdateModal({ petId }) {
         const fetchApplicationForms = async () => {
             const response = await appFormAPI.getApplicationFormList(1); // assuming page 1 for demo
             if (response.success) {
+                setUpdateSuccess(true);
                 setApplicationForms(response.data.results);
             } else {
                 console.error("Failed to fetch application forms:", response.message);
+                setUpdateSuccess(false);
             }
         };
 
@@ -107,34 +109,36 @@ function PetUpdateModal({ petId }) {
 
     const onSubmit = async (data) => {
 
-        // Trigger validation for 'form' field
         const formattedData = {
             ...data,
-            photo: data.photo ? data.photo[0] : null,
+            photo: data.photo ? data.photo : null,
             breed: parseInt(data.breed, 10),
-            sex: data.sex === "Male" ? 1 : 2, // Assuming 1 for Male and 2 for Female
             size: parseInt(data.size, 10),
             colour: parseInt(data.colour, 10),
             birth_date: formatDate(data.birth_date)
-            // Add other fields that need conversion here
         };
-
+        console.log("formattedData")
         console.log(formattedData);
 
         let formData = new FormData()
 
         for (const [key, value] of Object.entries(formattedData)) {
+            // console.log("inside");
             if (key === "photo" && !value) {
                 continue;
             }
-            console.log(key)
-            formData.append(key, value)
+            console.log(key,value)
+            formData.append(key, value);
         }
+        console.log("Form Data")
+
+        console.log(formData);
 
         const response = await petAPI.updatePet(petId, formData);
         if (response.success) {
             console.log("Update successful");
             console.log(response)
+            window.location.reload();
         } else {
             console.log("Update failed");
         }
@@ -261,14 +265,14 @@ function PetUpdateModal({ petId }) {
                                     {...register("weight")}
                                 />
                             </div>
-                            <div className="my-2">
+                            {/* <div className="my-2">
                                 <label htmlFor="location">Location</label>
                                 <input
                                     className="form-control"
                                     id="location"
                                     {...register("location")}
                                 />
-                            </div>
+                            </div> */}
                             <div className="my-2">
                                 <label htmlFor="medical_history">Medical History</label>
                                 <textarea
@@ -340,6 +344,11 @@ function PetUpdateModal({ petId }) {
                         forms={applicationForms}
                         onSelectForm={handleSelectForm}
                     />
+                    {updateSuccess && (
+                    <div className="alert alert-success" role="alert">
+                        Update successful!
+                    </div>
+                    )}
                 </div>
             </div>
         </div>

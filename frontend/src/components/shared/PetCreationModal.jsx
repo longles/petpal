@@ -20,7 +20,7 @@ const petCreationSchema = yup.object({
   size: yup.number().required('Size is required'),
   weight: yup.number().required('Weight is required'),
   colour: yup.number().required('Color is required'),
-  location: yup.string().required('Location is required'),
+  // location: yup.string().required('Location is required'),
   medical_history: yup.string().required('Medical History is required'),
   behaviour: yup.string().required('Behaviour is required'),
   special_needs: yup.string().required('Special Needs is required'),
@@ -81,7 +81,6 @@ function PetCreationModal({ showModal, setShowModal }) {
       ...data,
       photo: data.photo[0],
       breed: parseInt(data.breed, 10),
-      sex: data.sex === "Male" ? 1 : 2, // Assuming 1 for Male and 2 for Female
       size: parseInt(data.size, 10),
       colour: parseInt(data.colour, 10),
       birth_date: formatDate(data.birth_date)
@@ -187,12 +186,12 @@ function PetCreationModal({ showModal, setShowModal }) {
             {errors.colour && <div className="error-notif">{errors.colour.message}</div>}
 
           </div>
-          <div className="mb-3">
+          {/* <div className="mb-3">
             <label htmlFor="location" className="form-label">Location</label>
             <input className="form-control" id="location" {...register('location')} />
             {errors.location && <div className="error-notif">{errors.location.message}</div>}
 
-          </div>
+          </div> */}
           <div className="mb-3">
             <label htmlFor="medical_history" className="form-label">Medical History</label>
             <textarea className="form-control" id="medical_history" {...register('medical_history')}></textarea>
