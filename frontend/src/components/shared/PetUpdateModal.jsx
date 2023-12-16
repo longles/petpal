@@ -72,11 +72,9 @@ function PetUpdateModal({ petId }) {
         const fetchApplicationForms = async () => {
             const response = await appFormAPI.getApplicationFormList(1); // assuming page 1 for demo
             if (response.success) {
-                setUpdateSuccess(true);
                 setApplicationForms(response.data.results);
             } else {
                 console.error("Failed to fetch application forms:", response.message);
-                setUpdateSuccess(false);
             }
         };
 
@@ -137,9 +135,11 @@ function PetUpdateModal({ petId }) {
         if (response.success) {
             console.log("Update successful");
             console.log(response)
+            setUpdateSuccess(true);
             window.location.reload();
         } else {
             console.log("Update failed");
+            setUpdateSuccess(false)
         }
     };
 
@@ -176,6 +176,11 @@ function PetUpdateModal({ petId }) {
                             aria-label="Close"
                         />
                     </div>
+                    {updateSuccess && (
+                        <div className="alert alert-success" role="alert">
+                            Update successful!
+                        </div>
+                    )}
                     <div className="modal-body">
                         <form
                             onSubmit={handleSubmit(onSubmit)}
@@ -343,11 +348,7 @@ function PetUpdateModal({ petId }) {
                         forms={applicationForms}
                         onSelectForm={handleSelectForm}
                     />
-                    {updateSuccess && (
-                    <div className="alert alert-success" role="alert">
-                        Update successful!
-                    </div>
-                    )}
+                    
                 </div>
             </div>
         </div>
