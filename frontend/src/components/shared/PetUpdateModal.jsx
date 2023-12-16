@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { petAPIService } from "../../services/petAPIService";
 import { shelterAPIService } from "../../services/userAPIService";
@@ -28,6 +28,7 @@ function PetUpdateModal({ petId }) {
     const [shelterDetails, setShelterDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const modalId = getUpdateModalId(petId);
+    const modalFormRef = useRef(null)
     const {
         register,
         handleSubmit,
@@ -35,7 +36,7 @@ function PetUpdateModal({ petId }) {
         formState: { errors },
     } = useForm();
     const [formInitialized, setFormInitialized] = useState(false);
-
+    
     const fetchPetDetail = async () => {
         try {
             const response = await petAPI.getPetDetail(petId);
@@ -72,11 +73,9 @@ function PetUpdateModal({ petId }) {
         const fetchApplicationForms = async () => {
             const response = await appFormAPI.getApplicationFormList(1); // assuming page 1 for demo
             if (response.success) {
-                setUpdateSuccess(true);
                 setApplicationForms(response.data.results);
             } else {
                 console.error("Failed to fetch application forms:", response.message);
-                setUpdateSuccess(false);
             }
         };
 
@@ -102,7 +101,7 @@ function PetUpdateModal({ petId }) {
 
     useEffect(() => {
         if (petDetails) {
-            reset(petDetails);
+            reset({...petDetails, photo: null});
             setFormInitialized(true);
         }
     }, [petDetails, reset]);
@@ -127,7 +126,6 @@ function PetUpdateModal({ petId }) {
             if (key === "photo" && !value) {
                 continue;
             }
-            console.log(key,value)
             formData.append(key, value);
         }
         console.log("Form Data")
@@ -138,9 +136,12 @@ function PetUpdateModal({ petId }) {
         if (response.success) {
             console.log("Update successful");
             console.log(response)
-            window.location.reload();
+            setUpdateSuccess(true);
+            modalFormRef.current.scrollTop = 0
+            //window.location.reload();
         } else {
             console.log("Update failed");
+            setUpdateSuccess(false)
         }
     };
 
@@ -177,7 +178,13 @@ function PetUpdateModal({ petId }) {
                             aria-label="Close"
                         />
                     </div>
-                    <div className="modal-body">
+                    
+                    <div className="modal-body" ref={modalFormRef}>
+                        {updateSuccess && (
+                            <div className="alert alert-success" role="alert">
+                                Update successful!
+                            </div>
+                        )}
                         <form
                             onSubmit={handleSubmit(onSubmit)}
                             id="petUpdateForm"
@@ -344,11 +351,7 @@ function PetUpdateModal({ petId }) {
                         forms={applicationForms}
                         onSelectForm={handleSelectForm}
                     />
-                    {updateSuccess && (
-                    <div className="alert alert-success" role="alert">
-                        Update successful!
-                    </div>
-                    )}
+                    
                 </div>
             </div>
         </div>

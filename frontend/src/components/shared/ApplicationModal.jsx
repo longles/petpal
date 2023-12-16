@@ -5,6 +5,7 @@ import { applicationAPIService } from '../../services/applicationAPIService';
 import { notificationAPIService } from '../../services/notificationAPIService';
 import { shelterAPIService } from '../../services/userAPIService';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom'
 
 const ApplicationModal = ({ closeModal, show, petId, formId, shelterId }) => {
     const [questions, setQuestions] = useState([]);
@@ -12,6 +13,7 @@ const ApplicationModal = ({ closeModal, show, petId, formId, shelterId }) => {
     const applicationService = applicationAPIService();
     const notificationService = notificationAPIService();
     const shelterService = shelterAPIService();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -134,8 +136,10 @@ const ApplicationModal = ({ closeModal, show, petId, formId, shelterId }) => {
 
         if (response.success) {
             const id = await getShelterId(shelterId);
-            notificationService.createNotification(id, petId, "application_creation", "You have a new application for a pet!");
+            console.log(response)
+            notificationService.createNotification(id, response.data.id, "application_creation", "You have a new application for a pet!");
             closeModal();
+            navigate('/applications', {state: {defaultFilters: {id: response.data.id}}})
         } else {
             console.error('Error submitting application:', response.message);
         }
