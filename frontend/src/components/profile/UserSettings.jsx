@@ -8,7 +8,7 @@ import {shelterAPIService} from "../../services/userAPIService.js";
 
 function UserSettings() {
     const navigate = useNavigate();
-    const userId = localStorage.getItem('user_object_id');
+    const userId = localStorage.getItem('user_id');
     const userType = localStorage.getItem('user_type');
     const getUserDetail = userType === 'petseeker' ?
         seekerAPIService().getSeekerDetail : shelterAPIService().getShelterDetail;
